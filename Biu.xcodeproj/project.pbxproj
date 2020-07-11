@@ -1,0 +1,839 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BF1A744724B823E200C888DA /* FavouriteFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A744624B823E200C888DA /* FavouriteFolderView.swift */; };
+		BF247E5B24B546D300AA695C /* FavouriteCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF247E5A24B546D300AA695C /* FavouriteCategoryCell.swift */; };
+		BF2AFD9624B1E80600A5B65D /* BKRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2AFD9524B1E80600A5B65D /* BKRequest.swift */; };
+		BF2AFD9924B1F89000A5B65D /* BKPassportEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2AFD9824B1F89000A5B65D /* BKPassportEndpoint.swift */; };
+		BF4157F124B0BEC700B08EAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4157F024B0BEC700B08EAC /* AppDelegate.swift */; };
+		BF4157F324B0BEC700B08EAC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4157F224B0BEC700B08EAC /* SceneDelegate.swift */; };
+		BF4157F624B0BEC700B08EAC /* Biu.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BF4157F424B0BEC700B08EAC /* Biu.xcdatamodeld */; };
+		BF4157F824B0BEC700B08EAC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4157F724B0BEC700B08EAC /* ContentView.swift */; };
+		BF4157FA24B0BEC800B08EAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF4157F924B0BEC800B08EAC /* Assets.xcassets */; };
+		BF4157FD24B0BEC800B08EAC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF4157FC24B0BEC800B08EAC /* Preview Assets.xcassets */; };
+		BF41580024B0BEC800B08EAC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF4157FE24B0BEC800B08EAC /* LaunchScreen.storyboard */; };
+		BF41581024B0BED700B08EAC /* BiliKit.h in Headers */ = {isa = PBXBuildFile; fileRef = BF41580E24B0BED700B08EAC /* BiliKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BF41581324B0BED700B08EAC /* BiliKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF41580C24B0BED700B08EAC /* BiliKit.framework */; };
+		BF41581424B0BED700B08EAC /* BiliKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BF41580C24B0BED700B08EAC /* BiliKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BF41581C24B0C04500B08EAC /* RequestKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41581B24B0C04500B08EAC /* RequestKeys.swift */; };
+		BF41581E24B0C2A900B08EAC /* BKKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41581D24B0C2A900B08EAC /* BKKeys.swift */; };
+		BF41582224B0C3BF00B08EAC /* RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41581F24B0C3BF00B08EAC /* RSA.swift */; };
+		BF41582324B0C3BF00B08EAC /* BKSec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41582024B0C3BF00B08EAC /* BKSec.swift */; };
+		BF41582424B0C3BF00B08EAC /* MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41582124B0C3BF00B08EAC /* MD5.swift */; };
+		BF41582A24B0CB6900B08EAC /* URLSession+Bili.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41582924B0CB6900B08EAC /* URLSession+Bili.swift */; };
+		BF41582C24B0CBA700B08EAC /* BKResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41582B24B0CBA700B08EAC /* BKResponse.swift */; };
+		BF41582E24B0CC5000B08EAC /* BKEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41582D24B0CC5000B08EAC /* BKEndpoint.swift */; };
+		BF57B54124B8ABFA00A2B8CF /* FavouriteItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF57B54024B8ABFA00A2B8CF /* FavouriteItemCell.swift */; };
+		BFAB91ED24B5657500EFA921 /* FavouriteFolderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB91EC24B5657500EFA921 /* FavouriteFolderCell.swift */; };
+		BFAD631324B9ACD500356452 /* MediaPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD631224B9ACD500356452 /* MediaPlayerView.swift */; };
+		BFAD631524B9ACF200356452 /* MediaPlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD631424B9ACF200356452 /* MediaPlayerModel.swift */; };
+		BFAD631724B9CC3E00356452 /* BKAppEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD631624B9CC3E00356452 /* BKAppEndpoint.swift */; };
+		BFAD631924B9CC7B00356452 /* BKAppEndpointModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD631824B9CC7B00356452 /* BKAppEndpointModels.swift */; };
+		BFBDD7F524B576E40018761B /* PlaceHolders.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBDD7F424B576E30018761B /* PlaceHolders.swift */; };
+		BFBDD7F724B59DF40018761B /* WebImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBDD7F624B59DF40018761B /* WebImageView.swift */; };
+		BFCC9B5B24B369A600F97E55 /* BKPassportModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCC9B5A24B369A600F97E55 /* BKPassportModels.swift */; };
+		BFCC9B5D24B3716D00F97E55 /* BKClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCC9B5C24B3716D00F97E55 /* BKClient.swift */; };
+		BFCC9B5F24B378F200F97E55 /* BKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCC9B5E24B378F200F97E55 /* BKError.swift */; };
+		BFCC9B6124B402E500F97E55 /* BKUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCC9B6024B402E500F97E55 /* BKUserInfo.swift */; };
+		BFCC9B6324B43B8000F97E55 /* BKMainEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCC9B6224B43B8000F97E55 /* BKMainEndpoint.swift */; };
+		BFCC9B6524B43DD900F97E55 /* BKMainEndpointModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCC9B6424B43DD900F97E55 /* BKMainEndpointModels.swift */; };
+		BFFFEB2324B4BD470090B444 /* FavouriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFFEB2224B4BD470090B444 /* FavouriteView.swift */; };
+		BFFFEB2724B4BE020090B444 /* FavouriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFFEB2624B4BE010090B444 /* FavouriteModel.swift */; };
+		D4084FF449AC60447D0438E6 /* Pods_Biu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0292B466E730C5716B9EA52 /* Pods_Biu.framework */; };
+		E6D3C18D57708E03C53B025E /* Pods_BiliKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427128A645EFDB2724260CC8 /* Pods_BiliKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BF41581124B0BED700B08EAC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BF4157E524B0BEC700B08EAC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BF41580B24B0BED700B08EAC;
+			remoteInfo = Bili;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BF41581824B0BED700B08EAC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BF41581424B0BED700B08EAC /* BiliKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		427128A645EFDB2724260CC8 /* Pods_BiliKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BiliKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CCA80FF96064B9142F38680 /* Pods-Biu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biu.release.xcconfig"; path = "Target Support Files/Pods-Biu/Pods-Biu.release.xcconfig"; sourceTree = "<group>"; };
+		60CC19351E4F43DCD48A312D /* Pods-BiliKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BiliKit.release.xcconfig"; path = "Target Support Files/Pods-BiliKit/Pods-BiliKit.release.xcconfig"; sourceTree = "<group>"; };
+		79FD5ABEA8F9C49F101BED16 /* Pods-Biu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biu.debug.xcconfig"; path = "Target Support Files/Pods-Biu/Pods-Biu.debug.xcconfig"; sourceTree = "<group>"; };
+		B0292B466E730C5716B9EA52 /* Pods_Biu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Biu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF1A744624B823E200C888DA /* FavouriteFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteFolderView.swift; sourceTree = "<group>"; };
+		BF247E5A24B546D300AA695C /* FavouriteCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteCategoryCell.swift; sourceTree = "<group>"; };
+		BF2AFD9424B1E23600A5B65D /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		BF2AFD9524B1E80600A5B65D /* BKRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKRequest.swift; sourceTree = "<group>"; };
+		BF2AFD9824B1F89000A5B65D /* BKPassportEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKPassportEndpoint.swift; sourceTree = "<group>"; };
+		BF4157ED24B0BEC700B08EAC /* Biu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Biu.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF4157F024B0BEC700B08EAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		BF4157F224B0BEC700B08EAC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		BF4157F524B0BEC700B08EAC /* Biu.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Biu.xcdatamodel; sourceTree = "<group>"; };
+		BF4157F724B0BEC700B08EAC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BF4157F924B0BEC800B08EAC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BF4157FC24B0BEC800B08EAC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BF4157FF24B0BEC800B08EAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		BF41580124B0BEC800B08EAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF41580C24B0BED700B08EAC /* BiliKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BiliKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF41580E24B0BED700B08EAC /* BiliKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BiliKit.h; sourceTree = "<group>"; };
+		BF41580F24B0BED700B08EAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF41581B24B0C04500B08EAC /* RequestKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestKeys.swift; sourceTree = "<group>"; };
+		BF41581D24B0C2A900B08EAC /* BKKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKKeys.swift; sourceTree = "<group>"; };
+		BF41581F24B0C3BF00B08EAC /* RSA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSA.swift; sourceTree = "<group>"; };
+		BF41582024B0C3BF00B08EAC /* BKSec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BKSec.swift; sourceTree = "<group>"; };
+		BF41582124B0C3BF00B08EAC /* MD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MD5.swift; sourceTree = "<group>"; };
+		BF41582924B0CB6900B08EAC /* URLSession+Bili.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Bili.swift"; sourceTree = "<group>"; };
+		BF41582B24B0CBA700B08EAC /* BKResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKResponse.swift; sourceTree = "<group>"; };
+		BF41582D24B0CC5000B08EAC /* BKEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKEndpoint.swift; sourceTree = "<group>"; };
+		BF57B54024B8ABFA00A2B8CF /* FavouriteItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteItemCell.swift; sourceTree = "<group>"; };
+		BFAB91EC24B5657500EFA921 /* FavouriteFolderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteFolderCell.swift; sourceTree = "<group>"; };
+		BFAD631224B9ACD500356452 /* MediaPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerView.swift; sourceTree = "<group>"; };
+		BFAD631424B9ACF200356452 /* MediaPlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerModel.swift; sourceTree = "<group>"; };
+		BFAD631624B9CC3E00356452 /* BKAppEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKAppEndpoint.swift; sourceTree = "<group>"; };
+		BFAD631824B9CC7B00356452 /* BKAppEndpointModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKAppEndpointModels.swift; sourceTree = "<group>"; };
+		BFBDD7F424B576E30018761B /* PlaceHolders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceHolders.swift; sourceTree = "<group>"; };
+		BFBDD7F624B59DF40018761B /* WebImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImageView.swift; sourceTree = "<group>"; };
+		BFCC9B5A24B369A600F97E55 /* BKPassportModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKPassportModels.swift; sourceTree = "<group>"; };
+		BFCC9B5C24B3716D00F97E55 /* BKClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKClient.swift; sourceTree = "<group>"; };
+		BFCC9B5E24B378F200F97E55 /* BKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKError.swift; sourceTree = "<group>"; };
+		BFCC9B6024B402E500F97E55 /* BKUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKUserInfo.swift; sourceTree = "<group>"; };
+		BFCC9B6224B43B8000F97E55 /* BKMainEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKMainEndpoint.swift; sourceTree = "<group>"; };
+		BFCC9B6424B43DD900F97E55 /* BKMainEndpointModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKMainEndpointModels.swift; sourceTree = "<group>"; };
+		BFFFEB2224B4BD470090B444 /* FavouriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteView.swift; sourceTree = "<group>"; };
+		BFFFEB2624B4BE010090B444 /* FavouriteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteModel.swift; sourceTree = "<group>"; };
+		F17FD41073F3EDA6ED72F3FA /* Pods-BiliKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BiliKit.debug.xcconfig"; path = "Target Support Files/Pods-BiliKit/Pods-BiliKit.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BF4157EA24B0BEC700B08EAC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF41581324B0BED700B08EAC /* BiliKit.framework in Frameworks */,
+				D4084FF449AC60447D0438E6 /* Pods_Biu.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BF41580924B0BED700B08EAC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E6D3C18D57708E03C53B025E /* Pods_BiliKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		55B324453D255F12735A8D1E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				427128A645EFDB2724260CC8 /* Pods_BiliKit.framework */,
+				B0292B466E730C5716B9EA52 /* Pods_Biu.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9F8691389370E52D775969FA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F17FD41073F3EDA6ED72F3FA /* Pods-BiliKit.debug.xcconfig */,
+				60CC19351E4F43DCD48A312D /* Pods-BiliKit.release.xcconfig */,
+				79FD5ABEA8F9C49F101BED16 /* Pods-Biu.debug.xcconfig */,
+				5CCA80FF96064B9142F38680 /* Pods-Biu.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		BF1A744324B8225400C888DA /* Favourite */ = {
+			isa = PBXGroup;
+			children = (
+				BFFFEB2224B4BD470090B444 /* FavouriteView.swift */,
+				BF247E5A24B546D300AA695C /* FavouriteCategoryCell.swift */,
+				BFAB91EC24B5657500EFA921 /* FavouriteFolderCell.swift */,
+				BF1A744624B823E200C888DA /* FavouriteFolderView.swift */,
+				BF57B54024B8ABFA00A2B8CF /* FavouriteItemCell.swift */,
+			);
+			path = Favourite;
+			sourceTree = "<group>";
+		};
+		BF2AFD9724B1F88300A5B65D /* Endpoints */ = {
+			isa = PBXGroup;
+			children = (
+				BF41582D24B0CC5000B08EAC /* BKEndpoint.swift */,
+				BF2AFD9824B1F89000A5B65D /* BKPassportEndpoint.swift */,
+				BFCC9B6224B43B8000F97E55 /* BKMainEndpoint.swift */,
+				BFAD631624B9CC3E00356452 /* BKAppEndpoint.swift */,
+			);
+			path = Endpoints;
+			sourceTree = "<group>";
+		};
+		BF2AFD9A24B1F8B000A5B65D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BFCC9B5A24B369A600F97E55 /* BKPassportModels.swift */,
+				BFCC9B6424B43DD900F97E55 /* BKMainEndpointModels.swift */,
+				BFAD631824B9CC7B00356452 /* BKAppEndpointModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		BF4157E424B0BEC700B08EAC = {
+			isa = PBXGroup;
+			children = (
+				BF4157EF24B0BEC700B08EAC /* Biu */,
+				BF41580D24B0BED700B08EAC /* BiliKit */,
+				BF4157EE24B0BEC700B08EAC /* Products */,
+				9F8691389370E52D775969FA /* Pods */,
+				55B324453D255F12735A8D1E /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		BF4157EE24B0BEC700B08EAC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BF4157ED24B0BEC700B08EAC /* Biu.app */,
+				BF41580C24B0BED700B08EAC /* BiliKit.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BF4157EF24B0BEC700B08EAC /* Biu */ = {
+			isa = PBXGroup;
+			children = (
+				BF4157F024B0BEC700B08EAC /* AppDelegate.swift */,
+				BF4157F224B0BEC700B08EAC /* SceneDelegate.swift */,
+				BFBDD7F624B59DF40018761B /* WebImageView.swift */,
+				BFFFEB2424B4BDAC0090B444 /* Views */,
+				BF57B54524B8C99300A2B8CF /* Player */,
+				BFFFEB2524B4BDBA0090B444 /* Models */,
+				BF4157F924B0BEC800B08EAC /* Assets.xcassets */,
+				BF4157FE24B0BEC800B08EAC /* LaunchScreen.storyboard */,
+				BF41580124B0BEC800B08EAC /* Info.plist */,
+				BF4157F424B0BEC700B08EAC /* Biu.xcdatamodeld */,
+				BF4157FB24B0BEC800B08EAC /* Preview Content */,
+			);
+			path = Biu;
+			sourceTree = "<group>";
+		};
+		BF4157FB24B0BEC800B08EAC /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				BF4157FC24B0BEC800B08EAC /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		BF41580D24B0BED700B08EAC /* BiliKit */ = {
+			isa = PBXGroup;
+			children = (
+				BF2AFD9424B1E23600A5B65D /* MyPlayground.playground */,
+				BF41580E24B0BED700B08EAC /* BiliKit.h */,
+				BF41580F24B0BED700B08EAC /* Info.plist */,
+				BFCC9B6024B402E500F97E55 /* BKUserInfo.swift */,
+				BFCC9B5C24B3716D00F97E55 /* BKClient.swift */,
+				BFCC9B5E24B378F200F97E55 /* BKError.swift */,
+				BF41582F24B0CC9B00B08EAC /* API */,
+				BF41582824B0CB5B00B08EAC /* Keys */,
+				BF41582524B0C3C300B08EAC /* Encryption */,
+			);
+			path = BiliKit;
+			sourceTree = "<group>";
+		};
+		BF41582524B0C3C300B08EAC /* Encryption */ = {
+			isa = PBXGroup;
+			children = (
+				BF41582024B0C3BF00B08EAC /* BKSec.swift */,
+				BF41582124B0C3BF00B08EAC /* MD5.swift */,
+				BF41581F24B0C3BF00B08EAC /* RSA.swift */,
+			);
+			path = Encryption;
+			sourceTree = "<group>";
+		};
+		BF41582824B0CB5B00B08EAC /* Keys */ = {
+			isa = PBXGroup;
+			children = (
+				BF41581B24B0C04500B08EAC /* RequestKeys.swift */,
+				BF41581D24B0C2A900B08EAC /* BKKeys.swift */,
+			);
+			path = Keys;
+			sourceTree = "<group>";
+		};
+		BF41582F24B0CC9B00B08EAC /* API */ = {
+			isa = PBXGroup;
+			children = (
+				BF2AFD9724B1F88300A5B65D /* Endpoints */,
+				BF2AFD9A24B1F8B000A5B65D /* Models */,
+				BF2AFD9524B1E80600A5B65D /* BKRequest.swift */,
+				BF41582B24B0CBA700B08EAC /* BKResponse.swift */,
+				BF41582924B0CB6900B08EAC /* URLSession+Bili.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		BF57B54524B8C99300A2B8CF /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				BFAD631224B9ACD500356452 /* MediaPlayerView.swift */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
+		BFFFEB2424B4BDAC0090B444 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BF4157F724B0BEC700B08EAC /* ContentView.swift */,
+				BF1A744324B8225400C888DA /* Favourite */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BFFFEB2524B4BDBA0090B444 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BFBDD7F424B576E30018761B /* PlaceHolders.swift */,
+				BFFFEB2624B4BE010090B444 /* FavouriteModel.swift */,
+				BFAD631424B9ACF200356452 /* MediaPlayerModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		BF41580724B0BED700B08EAC /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF41581024B0BED700B08EAC /* BiliKit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		BF4157EC24B0BEC700B08EAC /* Biu */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BF41580424B0BEC800B08EAC /* Build configuration list for PBXNativeTarget "Biu" */;
+			buildPhases = (
+				DDC493F826CDBF29B3274CE5 /* [CP] Check Pods Manifest.lock */,
+				BF4157E924B0BEC700B08EAC /* Sources */,
+				BF4157EA24B0BEC700B08EAC /* Frameworks */,
+				BF4157EB24B0BEC700B08EAC /* Resources */,
+				BF41581824B0BED700B08EAC /* Embed Frameworks */,
+				5B5E11874DEBE31135A4DC64 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BF41581224B0BED700B08EAC /* PBXTargetDependency */,
+			);
+			name = Biu;
+			packageProductDependencies = (
+			);
+			productName = Biu;
+			productReference = BF4157ED24B0BEC700B08EAC /* Biu.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BF41580B24B0BED700B08EAC /* BiliKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BF41581524B0BED700B08EAC /* Build configuration list for PBXNativeTarget "BiliKit" */;
+			buildPhases = (
+				55346B83EBFF955F05E3E40F /* [CP] Check Pods Manifest.lock */,
+				BF41580724B0BED700B08EAC /* Headers */,
+				BF41580824B0BED700B08EAC /* Sources */,
+				BF41580924B0BED700B08EAC /* Frameworks */,
+				BF41580A24B0BED700B08EAC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BiliKit;
+			productName = Bili;
+			productReference = BF41580C24B0BED700B08EAC /* BiliKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BF4157E524B0BEC700B08EAC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1200;
+				LastUpgradeCheck = 1200;
+				TargetAttributes = {
+					BF4157EC24B0BEC700B08EAC = {
+						CreatedOnToolsVersion = 12.0;
+					};
+					BF41580B24B0BED700B08EAC = {
+						CreatedOnToolsVersion = 12.0;
+						LastSwiftMigration = 1200;
+					};
+				};
+			};
+			buildConfigurationList = BF4157E824B0BEC700B08EAC /* Build configuration list for PBXProject "Biu" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BF4157E424B0BEC700B08EAC;
+			packageReferences = (
+			);
+			productRefGroup = BF4157EE24B0BEC700B08EAC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BF4157EC24B0BEC700B08EAC /* Biu */,
+				BF41580B24B0BED700B08EAC /* BiliKit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BF4157EB24B0BEC700B08EAC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF41580024B0BEC800B08EAC /* LaunchScreen.storyboard in Resources */,
+				BF4157FD24B0BEC800B08EAC /* Preview Assets.xcassets in Resources */,
+				BF4157FA24B0BEC800B08EAC /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BF41580A24B0BED700B08EAC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		55346B83EBFF955F05E3E40F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BiliKit-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5B5E11874DEBE31135A4DC64 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Biu/Pods-Biu-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Biu/Pods-Biu-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Biu/Pods-Biu-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DDC493F826CDBF29B3274CE5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Biu-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BF4157E924B0BEC700B08EAC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFBDD7F524B576E40018761B /* PlaceHolders.swift in Sources */,
+				BF4157F124B0BEC700B08EAC /* AppDelegate.swift in Sources */,
+				BF57B54124B8ABFA00A2B8CF /* FavouriteItemCell.swift in Sources */,
+				BF4157F624B0BEC700B08EAC /* Biu.xcdatamodeld in Sources */,
+				BFFFEB2724B4BE020090B444 /* FavouriteModel.swift in Sources */,
+				BFBDD7F724B59DF40018761B /* WebImageView.swift in Sources */,
+				BF4157F824B0BEC700B08EAC /* ContentView.swift in Sources */,
+				BF247E5B24B546D300AA695C /* FavouriteCategoryCell.swift in Sources */,
+				BFAB91ED24B5657500EFA921 /* FavouriteFolderCell.swift in Sources */,
+				BF1A744724B823E200C888DA /* FavouriteFolderView.swift in Sources */,
+				BFAD631324B9ACD500356452 /* MediaPlayerView.swift in Sources */,
+				BFAD631524B9ACF200356452 /* MediaPlayerModel.swift in Sources */,
+				BFFFEB2324B4BD470090B444 /* FavouriteView.swift in Sources */,
+				BF4157F324B0BEC700B08EAC /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BF41580824B0BED700B08EAC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF41582E24B0CC5000B08EAC /* BKEndpoint.swift in Sources */,
+				BFCC9B5F24B378F200F97E55 /* BKError.swift in Sources */,
+				BFCC9B6524B43DD900F97E55 /* BKMainEndpointModels.swift in Sources */,
+				BFCC9B6324B43B8000F97E55 /* BKMainEndpoint.swift in Sources */,
+				BF41581C24B0C04500B08EAC /* RequestKeys.swift in Sources */,
+				BF41582A24B0CB6900B08EAC /* URLSession+Bili.swift in Sources */,
+				BF41582424B0C3BF00B08EAC /* MD5.swift in Sources */,
+				BF41581E24B0C2A900B08EAC /* BKKeys.swift in Sources */,
+				BFCC9B5B24B369A600F97E55 /* BKPassportModels.swift in Sources */,
+				BFAD631924B9CC7B00356452 /* BKAppEndpointModels.swift in Sources */,
+				BFAD631724B9CC3E00356452 /* BKAppEndpoint.swift in Sources */,
+				BF41582324B0C3BF00B08EAC /* BKSec.swift in Sources */,
+				BF41582224B0C3BF00B08EAC /* RSA.swift in Sources */,
+				BF2AFD9924B1F89000A5B65D /* BKPassportEndpoint.swift in Sources */,
+				BFCC9B6124B402E500F97E55 /* BKUserInfo.swift in Sources */,
+				BF2AFD9624B1E80600A5B65D /* BKRequest.swift in Sources */,
+				BF41582C24B0CBA700B08EAC /* BKResponse.swift in Sources */,
+				BFCC9B5D24B3716D00F97E55 /* BKClient.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BF41581224B0BED700B08EAC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BF41580B24B0BED700B08EAC /* BiliKit */;
+			targetProxy = BF41581124B0BED700B08EAC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BF4157FE24B0BEC800B08EAC /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BF4157FF24B0BEC800B08EAC /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BF41580224B0BEC800B08EAC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		BF41580324B0BEC800B08EAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BF41580524B0BEC800B08EAC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79FD5ABEA8F9C49F101BED16 /* Pods-Biu.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Biu/Preview Content\"";
+				DEVELOPMENT_TEAM = 789MW96BQB;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Biu/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.Zerui.Biu;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BF41580624B0BEC800B08EAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5CCA80FF96064B9142F38680 /* Pods-Biu.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Biu/Preview Content\"";
+				DEVELOPMENT_TEAM = 789MW96BQB;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Biu/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.Zerui.Biu;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		BF41581624B0BED700B08EAC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F17FD41073F3EDA6ED72F3FA /* Pods-BiliKit.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 789MW96BQB;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = BiliKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.Zerui.BiliKit;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		BF41581724B0BED700B08EAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 60CC19351E4F43DCD48A312D /* Pods-BiliKit.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 789MW96BQB;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = BiliKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.Zerui.BiliKit;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BF4157E824B0BEC700B08EAC /* Build configuration list for PBXProject "Biu" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BF41580224B0BEC800B08EAC /* Debug */,
+				BF41580324B0BEC800B08EAC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BF41580424B0BEC800B08EAC /* Build configuration list for PBXNativeTarget "Biu" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BF41580524B0BEC800B08EAC /* Debug */,
+				BF41580624B0BEC800B08EAC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BF41581524B0BED700B08EAC /* Build configuration list for PBXNativeTarget "BiliKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BF41581624B0BED700B08EAC /* Debug */,
+				BF41581724B0BED700B08EAC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		BF4157F424B0BEC700B08EAC /* Biu.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				BF4157F524B0BEC700B08EAC /* Biu.xcdatamodel */,
+			);
+			currentVersion = BF4157F524B0BEC700B08EAC /* Biu.xcdatamodel */;
+			path = Biu.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = BF4157E524B0BEC700B08EAC /* Project object */;
+}
