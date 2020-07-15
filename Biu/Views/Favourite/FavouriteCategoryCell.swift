@@ -31,7 +31,7 @@ struct FavouriteCategoryCell: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             
             Spacer()
-                .frame(height: 20)
+                .frame(height: 10)
             
             // Folders List.
             ForEach(category.folders) { folder in
@@ -41,7 +41,7 @@ struct FavouriteCategoryCell: View {
                             .transition(.slide)
                         
                         Spacer()
-                            .frame(height: 20)
+                            .frame(height: 10)
                     }
                 }
                 .accentColor(.white)

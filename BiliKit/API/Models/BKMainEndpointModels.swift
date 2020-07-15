@@ -77,6 +77,7 @@ extension BKMainEndpoint {
     // MARK: Video Info
     public struct VideoInfoResponse: Codable {
         public let aid: Int
+        public let bvid: String
         public let title: String
         public let desc: String
         public let duration: Int
@@ -84,7 +85,7 @@ extension BKMainEndpoint {
         public let pages: [Page]
 
         public enum CodingKeys: String, CodingKey {
-            case aid, title, desc, duration, thumbnailURL = "pic", pages
+            case aid, bvid, title, desc, duration, thumbnailURL = "pic", pages
         }
         
         public struct Page: Codable {

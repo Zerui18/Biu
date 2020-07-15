@@ -52,14 +52,14 @@
 
 /* Begin PBXFileReference section */
 		02B6A9F6A46D1356B46E542ECA41AEC4 /* Pods-BiliKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-BiliKit-Info.plist"; sourceTree = "<group>"; };
-		0E4BF09D5B5FA1523CC35039DD4EFAF3 /* Pods_Biu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Biu.framework; path = "Pods-Biu.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E4BF09D5B5FA1523CC35039DD4EFAF3 /* Pods_Biu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Biu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		160E80E2944E3FFE08A68478E133186E /* Pods-Biu-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Biu-acknowledgements.markdown"; sourceTree = "<group>"; };
 		18D80C9A4ED02EE48684F2DA0BF3BD15 /* Nuke.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Nuke.debug.xcconfig; sourceTree = "<group>"; };
 		19D71646A083105190005D1FF219D7E2 /* Pods-BiliKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-BiliKit.modulemap"; sourceTree = "<group>"; };
 		1AEAA810720E9C527DA6409A6EAEFF38 /* Nuke-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Nuke-dummy.m"; sourceTree = "<group>"; };
 		2C18FE58E60CA23AD45F9237CE576133 /* ImageViewExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageViewExtensions.swift; path = Sources/ImageViewExtensions.swift; sourceTree = "<group>"; };
 		2CA885306745E574BE99AB924E12CDAB /* Pods-Biu-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Biu-frameworks.sh"; sourceTree = "<group>"; };
-		2DAD7D76FC007F48AE48F2FD15BF01BB /* Nuke.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Nuke.framework; path = Nuke.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DAD7D76FC007F48AE48F2FD15BF01BB /* Nuke.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Nuke.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		358398E5E0ADCECF7E0FB34FA1135EF2 /* Nuke-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Nuke-prefix.pch"; sourceTree = "<group>"; };
 		3CE4D1F7C0FC24A0CF7F719E0ADD0C36 /* ImageProcessing.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageProcessing.swift; path = Sources/ImageProcessing.swift; sourceTree = "<group>"; };
@@ -76,7 +76,7 @@
 		7D9027317E86259E0E5353A8D3DF7B11 /* DataLoader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DataLoader.swift; path = Sources/DataLoader.swift; sourceTree = "<group>"; };
 		8210EDE6165E40D8A63D7DC65ED854B1 /* Pods-Biu-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Biu-dummy.m"; sourceTree = "<group>"; };
 		9014C3287F1B4F249FE5060306157CB3 /* Deprecated.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Deprecated.swift; path = Sources/Deprecated.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A4FD5AC7763D99A5224581161E0D0C6E /* Nuke-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Nuke-umbrella.h"; sourceTree = "<group>"; };
 		A8FFA007E520DA7D758E48D39E08FCAB /* Pods-BiliKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BiliKit.release.xcconfig"; sourceTree = "<group>"; };
 		AAE3931ADB494B7B946D75B6213F5ECC /* Pods-BiliKit-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-BiliKit-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -91,7 +91,7 @@
 		DD65A8066D9920C0F4D80A0845F9B894 /* Nuke-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Nuke-Info.plist"; sourceTree = "<group>"; };
 		E1180AAD83A00ABD27C2A78EE67E5D18 /* Pods-Biu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Biu.debug.xcconfig"; sourceTree = "<group>"; };
 		E1564E5B0A86220439721FEC83D7D49D /* Pods-BiliKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-BiliKit-dummy.m"; sourceTree = "<group>"; };
-		EF1453F015D0926879D2E779C7B714EA /* Pods_BiliKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_BiliKit.framework; path = "Pods-BiliKit.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF1453F015D0926879D2E779C7B714EA /* Pods_BiliKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BiliKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F45A05FECEC145B123B69397390B34B7 /* DataCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DataCache.swift; path = Sources/DataCache.swift; sourceTree = "<group>"; };
 		FB5445C0F9B879C470BA88B7B24F92A0 /* Pods-Biu-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Biu-acknowledgements.plist"; sourceTree = "<group>"; };
 		FFFEB262F8ED21CF98A65C8558E84E03 /* ImageRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageRequest.swift; path = Sources/ImageRequest.swift; sourceTree = "<group>"; };
@@ -145,7 +145,6 @@
 				485B1E9290122417DEE202E487FA1F49 /* Task.swift */,
 				8664D1C34A17FC672B1C3E947D977D6F /* Support Files */,
 			);
-			name = Nuke;
 			path = Nuke;
 			sourceTree = "<group>";
 		};
@@ -344,7 +343,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1200;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 10.0";
@@ -465,7 +464,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Nuke/Nuke-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Nuke/Nuke-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -510,6 +509,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -677,7 +677,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Nuke/Nuke-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Nuke/Nuke-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -723,6 +723,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

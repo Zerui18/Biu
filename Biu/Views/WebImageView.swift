@@ -15,7 +15,7 @@ final class WebImageView: UIViewRepresentable {
     init(url: URL) {
         imageView.backgroundColor = .systemFill
         imageView.contentMode = .scaleToFill
-        let request = ImageRequest(url: url, processors: [ImageProcessors.Resize(height: 60)])
+        let request = ImageRequest(url: url)
         ImagePipeline.shared.loadImage(with: request) { (result) in
             self.imageView.image = try? result.get().image
         }

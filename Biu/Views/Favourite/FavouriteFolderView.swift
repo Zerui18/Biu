@@ -10,6 +10,8 @@ import SwiftUI
 struct FavouriteFolderView: View {
     
     @EnvironmentObject var model: FavouriteModel
+    @EnvironmentObject var mediaPlayerModel: MediaPlayerModel
+    
     var folder: FavouriteFolderModel
     
     var body: some View {
@@ -20,9 +22,15 @@ struct FavouriteFolderView: View {
                     VStack {
                         ForEach(items) { item in
                             FavouriteItemCell(item: item)
+                                .frame(height: 90)
                                 .transition(.opacity)
                                 .animation(.easeIn)
-                            
+                                .onTapGesture(count: 1) {
+                                    mediaPlayerModel.play(item)
+                                }
+//                                .onTapGesture(count: 2) {
+//                                    mediaPlayerModel.play(item)
+//                                }
                             Spacer()
                                 .frame(height: 20)
                         }
@@ -31,7 +39,7 @@ struct FavouriteFolderView: View {
                 }
                 // Loading / error.
                 else {
-                    VStack(alignment: .leading, spacing: 10) {
+                    VStack(spacing: 10) {
                         // Error.
                         if let error = model.fetchFoldersError {
                             Text(error.title)
@@ -53,7 +61,9 @@ struct FavouriteFolderView: View {
         }
         .navigationBarTitle(Text(folder.title))
         .onAppear {
-            model.loadFolder(folder)
+            if model.openedFavouriteFolderItems == nil {
+                model.loadFolder(folder)
+            }
         }
         .onDisappear(perform: model.closedFolder)
     }
@@ -62,6 +72,8 @@ struct FavouriteFolderView: View {
 struct FavouriteFolderView_Previews: PreviewProvider {
     static var previews: some View {
         FavouriteFolderView(folder: PlaceHolders.favouriteFolder)
+            .environmentObject(DownloadsModel())
             .environmentObject(PlaceHolders.favouritePage)
+            .environmentObject(PlaceHolders.mediaPlayer)
     }
 }

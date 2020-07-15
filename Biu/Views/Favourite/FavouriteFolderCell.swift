@@ -46,12 +46,12 @@ struct FavouriteFolderCell: View {
                 .font(.title)
                 .foregroundColor(Color(.systemFill))
         }
-        .padding()
+        .padding(10)
         .frame(maxWidth: .infinity, alignment: .leading)
         // Card background & shadow
         .background(
             Color(.secondarySystemBackground)
-                .cornerRadius(20)
+                .cornerRadius(10)
         )
     }
 }

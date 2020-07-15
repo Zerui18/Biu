@@ -6,41 +6,77 @@
 //
 
 import SwiftUI
-import BiliKit
 import Nuke
+import BiliKit
 
 struct FavouriteItemCell: View {
     
+    init(item: ResourceInfoModel) {
+        self.item = item
+        self.thumbnailImage = FetchImage(placeholder: UIImage(named: "bg_placeholder")!,
+                                         url: item.thumbnailURL)
+    }
+    
+    @EnvironmentObject var model: FavouriteModel
+    @EnvironmentObject var downloadsModel: DownloadsModel
+    
+    @ObservedObject var thumbnailImage: FetchImage
+    
+    /// The resource displayed by this cell.
     var item: ResourceInfoModel
     
     var body: some View {
         HStack {
             
             // Thumbnail.
-            WebImageView(url: item.thumbnailURL)
-                .frame(width: 1.6 * 60, height: 60)
-                .cornerRadius(5.0)
+            thumbnailImage.image
+                .resizable()
+                .frame(width: 70 * 1.6, height: 70)
+                .cornerRadius(7)
 
             Spacer()
                 .frame(width: 10)
 
-            // Title & count.
+            // Title & duration/count & downloaded.
             VStack(alignment: .leading) {
                 Text(item.title)
                     .font(.subheadline)
+                    .lineLimit(2)
+                    .layoutPriority(1)
 
                 Spacer()
 
-                Text(item.subheading)
-                    .font(.caption)
-                    .foregroundColor(.gray)
+                HStack(alignment: .bottom) {
+                    Text(item.subheading)
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                    
+                    Spacer()
+                    
+                    // Downloaded check.
+                    if downloadsModel.isDownloaded(resource: item) {
+                        Image(systemName: "checkmark")
+                            .font(.body)
+                            .foregroundColor(.accentColor)
+                    }
+                    // Or download button.
+                    else {
+                        Button {
+                            downloadsModel.initiateDownload(forResource: item)
+                        } label:  {
+                            Image(systemName: "square.and.arrow.down.on.square")
+                                .font(.body)
+                                .foregroundColor(.accentColor)
+                        }
+                    }
+                }
             }
         }
-        .padding()
+        .padding(10)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             Color(.secondarySystemBackground)
-                .cornerRadius(20)
+                .cornerRadius(10)
         )
     }
 }
@@ -48,7 +84,9 @@ struct FavouriteItemCell: View {
 struct FavouriteItemCell_Previews: PreviewProvider {
     static var previews: some View {
         FavouriteItemCell(item: PlaceHolders.resourceInfo)
+            .environmentObject(PlaceHolders.favouritePage)
+            .environmentObject(DownloadsModel())
             .padding()
-            .frame(width: 375, height: 60)
+            .frame(height: 80)
     }
 }

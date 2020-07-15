@@ -18,8 +18,9 @@ final class FavouriteModel: ObservableObject {
     init() {}
     
     /// Init with pre-existing data, used for debugging.
-    init(favouritePage: [FavouriteCategoryModel]) {
+    init(favouritePage: [FavouriteCategoryModel], openedItems: [ResourceInfoModel]) {
         self.favouriteCategories = favouritePage
+        self.openedFavouriteFolderItems = openedItems
     }
     
     // MARK: Published
@@ -132,7 +133,8 @@ typealias BKResourceInfo = BKMainEndpoint.ResourceInfo
 
 struct ResourceInfoModel: Identifiable {
 
-    let id: Int
+    let id = UUID()
+    
     let bvid: String
     let title: String
     let thumbnailURL: URL
@@ -148,8 +150,7 @@ struct ResourceInfoModel: Identifiable {
     }
     
     static func create(with resourceInfo: BKResourceInfo) -> ResourceInfoModel {
-        ResourceInfoModel(id: resourceInfo.id,
-                          bvid: resourceInfo.bvid,
+        ResourceInfoModel(bvid: resourceInfo.bvid,
                           title: resourceInfo.title,
                           thumbnailURL: resourceInfo.thumbnailURL,
                           pageCount: resourceInfo.pageCount,

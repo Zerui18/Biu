@@ -11,9 +11,6 @@ import SwiftUI
 struct FavouriteView: View {
     
     @EnvironmentObject var model: FavouriteModel
-    var categories: [FavouriteCategoryModel] {
-        model.favouriteCategories
-    }
     
     var body: some View {
         NavigationView {
@@ -21,11 +18,9 @@ struct FavouriteView: View {
                 ScrollView {
                     // Loaded favourite page.
                     if let categories = model.favouriteCategories {
-                        VStack {
-                            ForEach(categories, id: \.id) { category in
+                        Group {
+                            ForEach(categories) { category in
                                 FavouriteCategoryCell(category: category)
-                                    .transition(.opacity)
-                                    .animation(.easeIn)
                             }
                         }
                         .padding()
@@ -47,7 +42,8 @@ struct FavouriteView: View {
                                 Text("Loading")
                             }
                         }
-                        .frame(minWidth: geometry.size.width, minHeight: geometry.size.height)
+                        .frame(minWidth: geometry.size.width,
+                               minHeight: geometry.size.height)
                     }
                 }
                 .frame(height: geometry.size.height)
