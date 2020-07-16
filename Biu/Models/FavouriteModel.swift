@@ -13,6 +13,8 @@ import Nuke
 /// The model class for favourites.
 final class FavouriteModel: ObservableObject {
     
+    static let shared = FavouriteModel()
+    
     // MARK: Init
     /// Normal init.
     init() {}
@@ -61,6 +63,9 @@ final class FavouriteModel: ObservableObject {
     
     /// Start loading the contents of a folder.
     func loadFolder(_ folder: FavouriteFolderModel) {
+        // Clean up if opened new folder.
+        closedFolder()
+        // Fetch items.
         getItemsCancellable =
             // Fetch ids.
             BKMainEndpoint.getIds(forFolderWithId: folder.id)
@@ -157,18 +162,4 @@ struct ResourceInfoModel: Identifiable {
                           duration: resourceInfo.duration)
     }
     
-}
-
-// MARK: Int + Format
-fileprivate extension Int {
-    func formattedDuration() -> String {
-        let (hours, remainder) = self.quotientAndRemainder(dividingBy: 3600)
-        let (minutes, seconds) = remainder.quotientAndRemainder(dividingBy: 60)
-        if hours > 0 {
-            return "\(hours)h \(minutes):\(seconds)"
-        }
-        else {
-            return "\(minutes):\(seconds)"
-        }
-    }
 }

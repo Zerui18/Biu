@@ -16,10 +16,7 @@ struct FavouriteItemCell: View {
         self.thumbnailImage = FetchImage(placeholder: UIImage(named: "bg_placeholder")!,
                                          url: item.thumbnailURL)
     }
-    
-    @EnvironmentObject var model: FavouriteModel
-    @EnvironmentObject var downloadsModel: DownloadsModel
-    
+        
     @ObservedObject var thumbnailImage: FetchImage
     
     /// The resource displayed by this cell.
@@ -54,20 +51,22 @@ struct FavouriteItemCell: View {
                     Spacer()
                     
                     // Downloaded check.
-                    if downloadsModel.isDownloaded(resource: item) {
+                    if DownloadsModel.shared.isDownloaded(resource: item) {
                         Image(systemName: "checkmark")
                             .font(.body)
                             .foregroundColor(.accentColor)
+                            .padding([.bottom, .trailing], 3)
                     }
                     // Or download button.
                     else {
                         Button {
-                            downloadsModel.initiateDownload(forResource: item)
+                            DownloadsModel.shared.initiateDownload(forResource: item)
                         } label:  {
                             Image(systemName: "square.and.arrow.down.on.square")
                                 .font(.body)
                                 .foregroundColor(.accentColor)
                         }
+                        .padding([.bottom, .trailing], 3)
                     }
                 }
             }
@@ -84,8 +83,6 @@ struct FavouriteItemCell: View {
 struct FavouriteItemCell_Previews: PreviewProvider {
     static var previews: some View {
         FavouriteItemCell(item: PlaceHolders.resourceInfo)
-            .environmentObject(PlaceHolders.favouritePage)
-            .environmentObject(DownloadsModel())
             .padding()
             .frame(height: 80)
     }

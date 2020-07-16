@@ -9,40 +9,66 @@ import SwiftUI
 
 struct DownloadsView: View {
     
-    @EnvironmentObject var model: DownloadsModel
+    @ObservedObject var model: DownloadsModel = .shared
     
     @FetchRequest(sortDescriptors:
                     [NSSortDescriptor(keyPath: \SavedMedia.timestamp, ascending: true)],
+                  predicate: NSPredicate(format: "isDownloaded == false"),
                   animation: .easeIn)
-    var savedMedias: FetchedResults<SavedMedia>
+    var notDownloadedSavedMedias: FetchedResults<SavedMedia>
+    
+    @FetchRequest(sortDescriptors:
+                    [NSSortDescriptor(keyPath: \SavedMedia.timestamp, ascending: true)],
+                  predicate: NSPredicate(format: "isDownloaded == true"),
+                  animation: .easeIn)
+    var downloadedSavedMedias: FetchedResults<SavedMedia>
     
     var body: some View {
         NavigationView {
             ScrollView {
                 Group {
-                    let downloading = savedMedias.filter { model.isDownloading(media: $0) }
-                    Section(header:
-                        Text("正在下载")
-                            // Align leading.
-                            .fixedSize()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    ) {
-                        ForEach(downloading) { (savedMedia: SavedMedia) in
-                            DownloadsItemCell(media: savedMedia,
-                                              downloadStatePublisher: model.downloadState(forMedia: savedMedia)!)
+                    
+                    // 正在下载
+                    if !notDownloadedSavedMedias.isEmpty {
+                        Section(header:
+                            Text("正在下载")
+                                .bold()
+                                // Align leading.
+                                .fixedSize()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.bottom)
+                        ) {
+                            ForEach(notDownloadedSavedMedias) { (savedMedia: SavedMedia) in
+                                DownloadsItemCell(media: savedMedia)
+                            }
+                            .padding(.bottom, 10)
                         }
+                        
+                        Spacer()
+                            .frame(height: 30)
                     }
                     
-                    Section(header:
-                        Text("已经下载")
-                            // Align leading.
-                            .fixedSize()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    ) {
-                        ForEach(downloading) { (savedMedia: SavedMedia) in
-                            DownloadsItemCell(media: savedMedia,
-                                              downloadStatePublisher: model.downloadState(forMedia: savedMedia)!)
+                    // 已经下载
+                    if !downloadedSavedMedias.isEmpty {
+                        Section(header:
+                            Text("已经下载")
+                                .bold()
+                                // Align leading.
+                                .fixedSize()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.bottom)
+                        ) {
+                            ForEach(downloadedSavedMedias) { (savedMedia: SavedMedia) in
+                                DownloadsItemCell(media: savedMedia)
+                                    .onTapGesture {
+                                        MediaPlayerModel.shared.play(savedMedia)
+                                    }
+                            }
+                            .padding(.bottom, 10)
                         }
+                        
+                        Spacer()
+                            .frame(height: 80)
                     }
                 }
                 .padding()

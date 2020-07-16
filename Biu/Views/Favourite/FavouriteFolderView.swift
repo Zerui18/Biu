@@ -9,10 +9,10 @@ import SwiftUI
 
 struct FavouriteFolderView: View {
     
-    @EnvironmentObject var model: FavouriteModel
-    @EnvironmentObject var mediaPlayerModel: MediaPlayerModel
+    @ObservedObject var model: FavouriteModel = .shared
     
-    var folder: FavouriteFolderModel
+    let folder: FavouriteFolderModel
+    @State var hasLoadedFolder = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -26,14 +26,16 @@ struct FavouriteFolderView: View {
                                 .transition(.opacity)
                                 .animation(.easeIn)
                                 .onTapGesture(count: 1) {
-                                    mediaPlayerModel.play(item)
+                                    MediaPlayerModel.shared.play(item)
                                 }
 //                                .onTapGesture(count: 2) {
 //                                    mediaPlayerModel.play(item)
 //                                }
-                            Spacer()
-                                .frame(height: 20)
                         }
+                        .padding(.bottom, 10)
+                        
+                        Spacer()
+                            .frame(height: 80)
                     }
                     .padding()
                 }
@@ -61,19 +63,16 @@ struct FavouriteFolderView: View {
         }
         .navigationBarTitle(Text(folder.title))
         .onAppear {
-            if model.openedFavouriteFolderItems == nil {
+            if !hasLoadedFolder {
                 model.loadFolder(folder)
             }
+            hasLoadedFolder = true
         }
-        .onDisappear(perform: model.closedFolder)
     }
 }
 
 struct FavouriteFolderView_Previews: PreviewProvider {
     static var previews: some View {
         FavouriteFolderView(folder: PlaceHolders.favouriteFolder)
-            .environmentObject(DownloadsModel())
-            .environmentObject(PlaceHolders.favouritePage)
-            .environmentObject(PlaceHolders.mediaPlayer)
     }
 }

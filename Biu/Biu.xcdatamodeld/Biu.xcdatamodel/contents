@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17162" systemVersion="20A4300b" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="SavedMedia" representedClassName="SavedMedia" syncable="YES" codeGenerationType="class">
+    <entity name="SavedMedia" representedClassName="SavedMedia" syncable="YES" codeGenerationType="category">
         <attribute name="aid" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="bvid" attributeType="String"/>
+        <attribute name="cid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="desc" attributeType="String"/>
         <attribute name="duration" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="isDownloaded" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
@@ -11,6 +12,6 @@
         <attribute name="title" attributeType="String"/>
     </entity>
     <elements>
-        <element name="SavedMedia" positionX="-63" positionY="-18" width="128" height="149"/>
+        <element name="SavedMedia" positionX="-63" positionY="-18" width="128" height="164"/>
     </elements>
 </model>

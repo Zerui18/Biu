@@ -10,7 +10,7 @@ import SwiftUI
 /// Root view for favourites that displays a list of categories.
 struct FavouriteView: View {
     
-    @EnvironmentObject var model: FavouriteModel
+    @ObservedObject var model: FavouriteModel = .shared
     
     var body: some View {
         NavigationView {
@@ -18,10 +18,14 @@ struct FavouriteView: View {
                 ScrollView {
                     // Loaded favourite page.
                     if let categories = model.favouriteCategories {
-                        Group {
+                        VStack {
                             ForEach(categories) { category in
                                 FavouriteCategoryCell(category: category)
                             }
+                            .padding(.bottom, 10)
+                            
+                            Spacer()
+                                .frame(height: 80)
                         }
                         .padding()
                     }
@@ -50,13 +54,16 @@ struct FavouriteView: View {
             }
             .navigationBarTitle(Text("收藏"))
         }
-        .onAppear(perform: model.loadFavouritesPage)
+        .onAppear {
+            if model.favouriteCategories == nil {
+                model.loadFavouritesPage()
+            }
+        }
     }
 }
 
 struct FavouritesView_Previews: PreviewProvider {
     static var previews: some View {
         FavouriteView()
-            .environmentObject(PlaceHolders.favouritePage)
     }
 }

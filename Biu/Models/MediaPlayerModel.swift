@@ -14,6 +14,8 @@ import Nuke
 // MARK: Media Player Model
 final class MediaPlayerModel: ObservableObject {
     
+    static let shared = MediaPlayerModel()
+    
     // MARK: Init
     init() {}
     
@@ -22,7 +24,37 @@ final class MediaPlayerModel: ObservableObject {
     }
     
     // MARK: Published
-    @Published var currentItem: MediaInfoModel?
+    @Published var currentItem: MediaInfoModel? {
+        willSet {
+            // Clean up observations and tasks.
+            loadItemCancellable = nil
+            playRateObservation = nil
+            durationObservation = nil
+            self.currentItem?.player.removeTimeObserver(timeObservation as Any)
+            timeObservation = nil
+            imageTask = nil
+        }
+        didSet {
+            if let item = currentItem {
+                // Begin observation.
+                observePlayer(item.player)
+                // Play.
+                item.player.play()
+                // Start loading thumbnail.
+                imageTask =
+                    ImagePipeline.shared.loadImage(with: item.thumbnailURL) { result in
+                    if let image = try? result.get().image,
+                       // Check if we're still on the same item.
+                       self.currentItem?.aid == item.aid {
+                        self.thumbnailImage.wrappedValue = .init(uiImage: image)
+                    }
+                }
+            }
+            else {
+                self.thumbnailImage.wrappedValue = .init("bg_placeholder")
+            }
+        }
+    }
     @Published var resourceError: BKError?
     
     var title: String {
@@ -54,6 +86,10 @@ final class MediaPlayerModel: ObservableObject {
     
     func play(_ item: ResourceInfoModel) {
         startLoading(item: item)
+    }
+    
+    func play(_ media: SavedMedia) {
+        currentItem = MediaInfoModel(with: media)
     }
     
     func seek(to seconds: TimeInterval) {
@@ -104,18 +140,8 @@ final class MediaPlayerModel: ObservableObject {
                     self.resourceError = nil
                 }
             } receiveValue: { output in
-                let item = MediaInfoModel.create(with: output.1, mediaURL: output.0.url)
+                let item = MediaInfoModel(with: output.1, mediaURL: output.0.url)
                 self.currentItem = item
-                self.imageTask = ImagePipeline.shared.loadImage(with: self.currentItem!.thumbnailURL) { result in
-                    if let image = try? result.get().image,
-                       // Check if we're still on the same item.
-                       self.currentItem?.aid == item.aid {
-                        self.thumbnailImage.wrappedValue = SwiftUI.Image(uiImage: image)
-                    }
-                }
-                let player = self.currentItem!.player
-                self.observePlayer(player)
-                player.play()
             }
     }
     
@@ -143,21 +169,41 @@ struct MediaInfoModel {
     
     let aid: Int
     let bvid: String
+    let cid: Int
     let title: String
     let desc: String
     let duration: Int
     let mediaURL: URL
     let thumbnailURL: URL
     
-    lazy var player = AVPlayer(url: mediaURL)
+    /// Flag indicating whether this object is created from a SavedMedia object, in which case mediaURL would contain a local URL.
+    let isSavedMedia: Bool
     
-    static func create(with videoInfo: BKMainEndpoint.VideoInfoResponse, mediaURL: URL) -> MediaInfoModel {
-        MediaInfoModel(aid: videoInfo.aid,
-                       bvid: videoInfo.bvid,
-                       title: videoInfo.title,
-                       desc: videoInfo.desc,
-                       duration: videoInfo.duration,
-                       mediaURL: mediaURL,
-                       thumbnailURL: videoInfo.thumbnailURL)
+    let player: AVPlayer
+    
+    init(with videoInfo: BKMainEndpoint.VideoInfoResponse, mediaURL: URL) {
+        self.aid = videoInfo.aid
+        self.bvid = videoInfo.bvid
+        self.cid = videoInfo.pages[0].cid
+        self.title = videoInfo.title
+        self.desc = videoInfo.desc
+        self.duration = videoInfo.duration
+        self.mediaURL = mediaURL
+        self.thumbnailURL = videoInfo.thumbnailURL
+        self.isSavedMedia = false
+        self.player = AVPlayer(url: mediaURL)
+    }
+    
+    init(with savedMedia: SavedMedia) {
+        self.aid = Int(savedMedia.aid)
+        self.bvid = savedMedia.bvid!
+        self.cid = Int(savedMedia.cid)
+        self.title = savedMedia.title!
+        self.desc = savedMedia.desc!
+        self.duration = Int(savedMedia.duration)
+        self.mediaURL = savedMedia.localURL
+        self.thumbnailURL = savedMedia.thumbnailURL!
+        self.isSavedMedia = true
+        self.player = AVPlayer(url: mediaURL)
     }
 }

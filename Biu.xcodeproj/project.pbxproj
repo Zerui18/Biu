@@ -40,7 +40,13 @@
 		BF41582A24B0CB6900B08EAC /* URLSession+Bili.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41582924B0CB6900B08EAC /* URLSession+Bili.swift */; };
 		BF41582C24B0CBA700B08EAC /* BKResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41582B24B0CBA700B08EAC /* BKResponse.swift */; };
 		BF41582E24B0CC5000B08EAC /* BKEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41582D24B0CC5000B08EAC /* BKEndpoint.swift */; };
+		BF41F6F624C08AE8007812F5 /* Int+DurationFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41F6F524C08AE8007812F5 /* Int+DurationFormat.swift */; };
 		BF57B54124B8ABFA00A2B8CF /* FavouriteItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF57B54024B8ABFA00A2B8CF /* FavouriteItemCell.swift */; };
+		BF789D5224BF371800DFBAE8 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF789D5124BF371800DFBAE8 /* LoginModel.swift */; };
+		BF789D5624BF375900DFBAE8 /* QRLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF789D5324BF375900DFBAE8 /* QRLoginView.swift */; };
+		BF789D5724BF375900DFBAE8 /* CredentialsLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF789D5424BF375900DFBAE8 /* CredentialsLoginView.swift */; };
+		BF789D5824BF375900DFBAE8 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF789D5524BF375900DFBAE8 /* LoginView.swift */; };
+		BF789D5B24BF377100DFBAE8 /* Blur.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF789D5A24BF377100DFBAE8 /* Blur.swift */; };
 		BFAB91ED24B5657500EFA921 /* FavouriteFolderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB91EC24B5657500EFA921 /* FavouriteFolderCell.swift */; };
 		BFAD631324B9ACD500356452 /* MediaPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD631224B9ACD500356452 /* MediaPlayerView.swift */; };
 		BFAD631524B9ACF200356452 /* MediaPlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD631424B9ACF200356452 /* MediaPlayerModel.swift */; };
@@ -48,7 +54,6 @@
 		BFAD631924B9CC7B00356452 /* BKAppEndpointModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD631824B9CC7B00356452 /* BKAppEndpointModels.swift */; };
 		BFBBD2C624BADD8B00D19E84 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBBD2C524BADD8B00D19E84 /* ProgressBar.swift */; };
 		BFBDD7F524B576E40018761B /* PlaceHolders.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBDD7F424B576E30018761B /* PlaceHolders.swift */; };
-		BFBDD7F724B59DF40018761B /* WebImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBDD7F624B59DF40018761B /* WebImageView.swift */; };
 		BFCC9B5B24B369A600F97E55 /* BKPassportModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCC9B5A24B369A600F97E55 /* BKPassportModels.swift */; };
 		BFCC9B5D24B3716D00F97E55 /* BKClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCC9B5C24B3716D00F97E55 /* BKClient.swift */; };
 		BFCC9B5F24B378F200F97E55 /* BKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCC9B5E24B378F200F97E55 /* BKError.swift */; };
@@ -135,7 +140,14 @@
 		BF41582924B0CB6900B08EAC /* URLSession+Bili.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Bili.swift"; sourceTree = "<group>"; };
 		BF41582B24B0CBA700B08EAC /* BKResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKResponse.swift; sourceTree = "<group>"; };
 		BF41582D24B0CC5000B08EAC /* BKEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKEndpoint.swift; sourceTree = "<group>"; };
+		BF41F6F524C08AE8007812F5 /* Int+DurationFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+DurationFormat.swift"; sourceTree = "<group>"; };
 		BF57B54024B8ABFA00A2B8CF /* FavouriteItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteItemCell.swift; sourceTree = "<group>"; };
+		BF789D5124BF371800DFBAE8 /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
+		BF789D5324BF375900DFBAE8 /* QRLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRLoginView.swift; sourceTree = "<group>"; };
+		BF789D5424BF375900DFBAE8 /* CredentialsLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialsLoginView.swift; sourceTree = "<group>"; };
+		BF789D5524BF375900DFBAE8 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		BF789D5A24BF377100DFBAE8 /* Blur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Blur.swift; sourceTree = "<group>"; };
+		BF789D5C24BF41A100DFBAE8 /* BKSession+QRCodeLoginHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BKSession+QRCodeLoginHelper.swift"; sourceTree = "<group>"; };
 		BFAB91EC24B5657500EFA921 /* FavouriteFolderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteFolderCell.swift; sourceTree = "<group>"; };
 		BFAD631224B9ACD500356452 /* MediaPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerView.swift; sourceTree = "<group>"; };
 		BFAD631424B9ACF200356452 /* MediaPlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerModel.swift; sourceTree = "<group>"; };
@@ -143,7 +155,6 @@
 		BFAD631824B9CC7B00356452 /* BKAppEndpointModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKAppEndpointModels.swift; sourceTree = "<group>"; };
 		BFBBD2C524BADD8B00D19E84 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		BFBDD7F424B576E30018761B /* PlaceHolders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceHolders.swift; sourceTree = "<group>"; };
-		BFBDD7F624B59DF40018761B /* WebImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImageView.swift; sourceTree = "<group>"; };
 		BFCC9B5A24B369A600F97E55 /* BKPassportModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKPassportModels.swift; sourceTree = "<group>"; };
 		BFCC9B5C24B3716D00F97E55 /* BKClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKClient.swift; sourceTree = "<group>"; };
 		BFCC9B5E24B378F200F97E55 /* BKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKError.swift; sourceTree = "<group>"; };
@@ -288,6 +299,7 @@
 				BFFFEB2424B4BDAC0090B444 /* Views */,
 				BFFFEB2524B4BDBA0090B444 /* Models */,
 				BF4157F924B0BEC800B08EAC /* Assets.xcassets */,
+				BF41F6F524C08AE8007812F5 /* Int+DurationFormat.swift */,
 				BF4157FE24B0BEC800B08EAC /* LaunchScreen.storyboard */,
 				BF41580124B0BEC800B08EAC /* Info.plist */,
 				BF4157F424B0BEC700B08EAC /* Biu.xcdatamodeld */,
@@ -312,6 +324,7 @@
 				BF41580F24B0BED700B08EAC /* Info.plist */,
 				BFCC9B6024B402E500F97E55 /* BKUserInfo.swift */,
 				BFCC9B5C24B3716D00F97E55 /* BKClient.swift */,
+				BF789D5C24BF41A100DFBAE8 /* BKSession+QRCodeLoginHelper.swift */,
 				BFCC9B5E24B378F200F97E55 /* BKError.swift */,
 				BF41582F24B0CC9B00B08EAC /* API */,
 				BF41582824B0CB5B00B08EAC /* Keys */,
@@ -359,14 +372,25 @@
 			path = Player;
 			sourceTree = "<group>";
 		};
+		BF789D5924BF376700DFBAE8 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				BF789D5524BF375900DFBAE8 /* LoginView.swift */,
+				BF789D5424BF375900DFBAE8 /* CredentialsLoginView.swift */,
+				BF789D5324BF375900DFBAE8 /* QRLoginView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		BFFFEB2424B4BDAC0090B444 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				BF4157F724B0BEC700B08EAC /* ContentView.swift */,
-				BFBDD7F624B59DF40018761B /* WebImageView.swift */,
 				BF0B33CB24BB606C006459CA /* WebImage.swift */,
 				BFBBD2C524BADD8B00D19E84 /* ProgressBar.swift */,
 				BF1141A724BED48600BBFA0D /* FetchImage.swift */,
+				BF789D5A24BF377100DFBAE8 /* Blur.swift */,
+				BF789D5924BF376700DFBAE8 /* Login */,
 				BF1A744324B8225400C888DA /* Favourite */,
 				BF1141A024BE843800BBFA0D /* Downloads */,
 				BF57B54524B8C99300A2B8CF /* Player */,
@@ -378,6 +402,7 @@
 			isa = PBXGroup;
 			children = (
 				BFBDD7F424B576E30018761B /* PlaceHolders.swift */,
+				BF789D5124BF371800DFBAE8 /* LoginModel.swift */,
 				BFFFEB2624B4BE010090B444 /* FavouriteModel.swift */,
 				BFAD631424B9ACF200356452 /* MediaPlayerModel.swift */,
 				BF1141A324BE863500BBFA0D /* DownloadsModel.swift */,
@@ -619,22 +644,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFBDD7F524B576E40018761B /* PlaceHolders.swift in Sources */,
+				BF789D5624BF375900DFBAE8 /* QRLoginView.swift in Sources */,
+				BF789D5B24BF377100DFBAE8 /* Blur.swift in Sources */,
 				BF4157F124B0BEC700B08EAC /* AppDelegate.swift in Sources */,
+				BF789D5224BF371800DFBAE8 /* LoginModel.swift in Sources */,
 				BF1141A624BEB2A400BBFA0D /* DownloadsItemCell.swift in Sources */,
 				BF1141A224BE846A00BBFA0D /* DownloadsView.swift in Sources */,
+				BF789D5824BF375900DFBAE8 /* LoginView.swift in Sources */,
 				BF1141A824BED48600BBFA0D /* FetchImage.swift in Sources */,
 				BF57B54124B8ABFA00A2B8CF /* FavouriteItemCell.swift in Sources */,
 				BF4157F624B0BEC700B08EAC /* Biu.xcdatamodeld in Sources */,
 				BFFFEB2724B4BE020090B444 /* FavouriteModel.swift in Sources */,
-				BFBDD7F724B59DF40018761B /* WebImageView.swift in Sources */,
 				BF1141A424BE863500BBFA0D /* DownloadsModel.swift in Sources */,
 				BF4157F824B0BEC700B08EAC /* ContentView.swift in Sources */,
 				BF247E5B24B546D300AA695C /* FavouriteCategoryCell.swift in Sources */,
 				BFAB91ED24B5657500EFA921 /* FavouriteFolderCell.swift in Sources */,
 				BF1A744724B823E200C888DA /* FavouriteFolderView.swift in Sources */,
 				BF0B33CC24BB606C006459CA /* WebImage.swift in Sources */,
+				BF41F6F624C08AE8007812F5 /* Int+DurationFormat.swift in Sources */,
 				BFAD631324B9ACD500356452 /* MediaPlayerView.swift in Sources */,
 				BFAD631524B9ACF200356452 /* MediaPlayerModel.swift in Sources */,
+				BF789D5724BF375900DFBAE8 /* CredentialsLoginView.swift in Sources */,
 				BFFFEB2324B4BD470090B444 /* FavouriteView.swift in Sources */,
 				BFBBD2C624BADD8B00D19E84 /* ProgressBar.swift in Sources */,
 				BF4157F324B0BEC700B08EAC /* SceneDelegate.swift in Sources */,

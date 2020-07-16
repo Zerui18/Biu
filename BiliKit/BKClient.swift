@@ -13,21 +13,29 @@ public class BKClient {
     // MARK: Private Init
     private init() {}
     
+    @Published var isLoggedIn = false
+    
     // MARK: Privae Properties
-    private var loginResponse: BKResponse<BKPassportEndpoint.LoginResponse>? = {
+    private lazy var userPassport: BKUserPassport? = {
         // Try fetching from UserDefaults during init
-        return UserDefaults.standard.data(forKey: "loginResponse")
+        let cached = UserDefaults.standard.data(forKey: "ups")
             .flatMap {
-                try? JSONDecoder().decode(BKResponse<BKPassportEndpoint.LoginResponse>.self, from: $0)
+                try? JSONDecoder().decode(BKUserPassport.self, from: $0)
             }
+        if cached != nil {
+            isLoggedIn = true
+        }
+        return cached
     }() {
         // Write newValue into UserDefaults
         didSet {
-            if let data = loginResponse.flatMap({ try? JSONEncoder().encode($0) }) {
-                UserDefaults.standard.setValue(data, forKey: "loginResponse")
+            if let data = userPassport.flatMap({ try? JSONEncoder().encode($0) }) {
+                UserDefaults.standard.setValue(data, forKey: "ups")
+                isLoggedIn = true
             }
             else {
-                UserDefaults.standard.removeObject(forKey: "loginResponse")
+                UserDefaults.standard.removeObject(forKey: "ups")
+                isLoggedIn = false
             }
         }
     }
@@ -50,7 +58,7 @@ public class BKClient {
                 return request.fetch()
             }
             .map {
-                self.loginResponse = $0
+                self.userPassport = .init(fromResponse: $0)
                 return $0
             }
             .eraseToAnyPublisher()
@@ -59,32 +67,22 @@ public class BKClient {
     // MARK: Internal Methods
     /// Add headers which contain the authentication cookies, returns nil if no loginResponse found.
     func authenticateRequest(_ urlRequest: URLRequest) -> URLRequest? {
-        if let cookies = loginResponse?.data.cookieInfo.cookies {
-            let cookiesConcatenated = cookies.map { cookie in
-                "\(cookie.name)=\(cookie.value)"
-            }.sorted().joined(separator: ";") + ";"
-            
+        if let cookies = userPassport?.concatenatedCookies {
             var request = urlRequest
-            request.allHTTPHeaderFields!["Cookie"] = cookiesConcatenated
+            request.allHTTPHeaderFields!["Cookie"] = cookies
             return request
         }
         return nil
     }
     
     // MARK: Public API
-    public func getUserInfo() -> BKUserInfo? {
-        loginResponse.flatMap(BKUserInfo.init)
+    public func getUserId() -> Int? {
+        userPassport?.mid
     }
     
-    public func fromUserInfo<ResponseType: Codable>(transform: @escaping (BKUserInfo) -> AnyPublisher<BKResponse<ResponseType>, BKError>) -> AnyPublisher<BKResponse<ResponseType>, BKError> {
-        if let loginResponse = loginResponse {
-            if #available(iOS 14.0, *) {
-                return Just(BKUserInfo(from: loginResponse))
-                    .flatMap(transform)
-                    .eraseToAnyPublisher()
-            } else {
-                // Fallback on earlier versions
-            }
+    public func fromUserInfo<ResponseType: Codable>(transform: @escaping (BKUserPassport) -> AnyPublisher<BKResponse<ResponseType>, BKError>) -> AnyPublisher<BKResponse<ResponseType>, BKError> {
+        if let passport = userPassport {
+            return transform(passport)
         }
         return Fail(error: BKError.authenticationNeeded)
             .eraseToAnyPublisher()
@@ -93,8 +91,8 @@ public class BKClient {
     public enum LoginResult {
         case successful
         case credentialsError
-        case captchaNeeded(url: URL)
-        case unknownError(reason: String)
+        case captchaNeeded(URL)
+        case unknownError(String)
     }
     
     public func login(username: String, password: String,
@@ -105,19 +103,46 @@ public class BKClient {
                 case 0:
                     // Check for rare cases where 0 but still needs captcha
                     if let url = loginResponse.data.url {
-                        return LoginResult.captchaNeeded(url: url)
+                        return LoginResult.captchaNeeded(url)
                     }
                     return LoginResult.successful
                 case -629:
                     return LoginResult.credentialsError
                 case -105:
                     let url = loginResponse.data.url!
-                    return LoginResult.captchaNeeded(url: url)
+                    return LoginResult.captchaNeeded(url)
                 default:
-                    return LoginResult.unknownError(reason: loginResponse.message ?? "???")
+                    return LoginResult.unknownError(loginResponse.message ?? "???")
                 }
             }
             .eraseToAnyPublisher()
     }
+    
+    public func logout() {
+        userPassport = nil
+    }
+    
+}
+
+/// Object storing the authentication info of a user.
+public struct BKUserPassport: Codable {
+    
+    init(mid: Int, accessToken: String, concatenatedCookies: String) {
+        self.mid = mid
+        self.accessToken = accessToken
+        self.concatenatedCookies = concatenatedCookies
+    }
+    
+    init(fromResponse loginRespone: BKResponse<BKPassportEndpoint.LoginResponse>) {
+        let cookies = loginRespone.data.cookieInfo.cookies
+        let concatenatedCookies = cookies.reduce("") { header, cookie in
+            "\(header)\(cookie.name)=\(cookie.value);"
+        }
+        self.init(mid: loginRespone.data.userId, accessToken: loginRespone.data.accessToken, concatenatedCookies: concatenatedCookies)
+    }
+    
+    public let mid: Int
+    public let accessToken: String
+    public let concatenatedCookies: String
     
 }

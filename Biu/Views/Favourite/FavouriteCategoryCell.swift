@@ -10,11 +10,9 @@ import BiliKit
 
 /// Cell that displays a category and the folders it contains.
 struct FavouriteCategoryCell: View {
-    
-    @EnvironmentObject var model: FavouriteModel
-    
+        
     /// The category this view should display.
-    var category: FavouriteCategoryModel = PlaceHolders.favouriteCategory
+    let category: FavouriteCategoryModel
     
     var body: some View {
         VStack {
@@ -55,7 +53,6 @@ struct FavouriteCategoryCell: View {
 struct FavouriteCategoryView_Previews: PreviewProvider {
     static var previews: some View {
         FavouriteCategoryCell(category: PlaceHolders.favouriteCategory)
-            .environmentObject(FavouriteModel())
             .padding()
             .frame(maxWidth: 375, maxHeight: .infinity)
     }

@@ -10,15 +10,23 @@ import SwiftUI
 /// Cell that displays a single folder.
 struct FavouriteFolderCell: View {
     
+    init(folder: FavouriteFolderModel) {
+        self.folder = folder
+        self.thumbnailImage = FetchImage(placeholder: UIImage(named: "bg_placeholder")!, url: folder.thumbnailURL)
+    }
+    
+    @ObservedObject var thumbnailImage: FetchImage
+    
     var folder: FavouriteFolderModel
     
     var body: some View {
         HStack {
             
             // Thumbnail.
-            WebImageView(url: folder.thumbnailURL)
+            thumbnailImage.image
+                .resizable()
                 .frame(width: 1.6 * 60, height: 60)
-                .cornerRadius(5.0)
+                .cornerRadius(5)
 
             Spacer()
                 .frame(width: 10)
@@ -44,7 +52,7 @@ struct FavouriteFolderCell: View {
             // Chevron
             Image(systemName: "chevron.right")
                 .font(.title)
-                .foregroundColor(Color(.systemFill))
+                .foregroundColor(Color("AccentColor"))
         }
         .padding(10)
         .frame(maxWidth: .infinity, alignment: .leading)

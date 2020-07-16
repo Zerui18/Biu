@@ -12,24 +12,25 @@ struct ContentView: View {
     @State private var selection = 1
     @State private var isPlayerExpanded = false
     
-    let favouriteViewModel = FavouriteModel()
-    let mediaPlayerModel = MediaPlayerModel()
-    let downloadsModel = DownloadsModel()
+    @ObservedObject var loginModal = LoginModel.shared
+    @State var presentingLogin = false
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)) {
             TabView(selection: $selection) {
-                FavouriteView()
-                    .tabItem {
-                        Image(systemName: selection == 1 ? "cube.box.fill":"cube.box")
-                        Text("收藏")
-                    }.tag(1)
+                if loginModal.loggedIn {
+                    FavouriteView()
+                        .tabItem {
+                            Image(systemName: selection == 1 ? "cube.box.fill":"cube.box")
+                            Text("收藏")
+                        }.tag(1)
 
-                DownloadsView()
-                    .tabItem {
-                        Image(systemName: selection == 2 ? "tray.fill":"tray")
-                        Text("下载")
-                    }.tag(2)
+                    DownloadsView()
+                        .tabItem {
+                            Image(systemName: selection == 2 ? "tray.fill":"tray")
+                            Text("下载")
+                        }.tag(2)
+                }
             }
             .zIndex(0)
             
@@ -56,9 +57,17 @@ struct ContentView: View {
                 }
                 .zIndex(1)
         }
-        .environmentObject(favouriteViewModel)
-        .environmentObject(mediaPlayerModel)
-        .environmentObject(downloadsModel)
+        .onReceive(loginModal.$loggedIn) { loggedIn in
+            presentingLogin = !loggedIn
+        }
+        .sheet(isPresented: $presentingLogin) {
+            if !loginModal.loggedIn {
+                presentingLogin = true
+            }
+        }
+        content: {
+            LoginView()
+        }
     }
 }
 

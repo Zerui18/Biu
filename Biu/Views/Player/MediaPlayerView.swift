@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MediaPlayerView: View {
     
-    @EnvironmentObject var model: MediaPlayerModel
+    @ObservedObject var model: MediaPlayerModel = .shared
     
     // MARK: Binding
     @Binding var isExpanded: Bool
@@ -87,11 +87,13 @@ struct MediaPlayerView: View {
                     HStack {
                         Text(currentTime.formattedDuration())
                             .foregroundColor(Color(.secondaryLabel))
+                            .animation(nil)
 
                         Spacer()
 
                         Text(duration.formattedDuration())
                             .foregroundColor(Color(.secondaryLabel))
+                            .animation(nil)
                     }
                     // A tiny bit of padding on both sides.
                     .padding([.leading, .trailing], 5)
@@ -148,11 +150,9 @@ struct MediaPlayerView: View {
 struct AudioPlayerView_Previews: PreviewProvider {
     static var previews: some View {
         MediaPlayerView(isExpanded: .constant(false))
-            .environmentObject(PlaceHolders.mediaPlayer)
             .previewLayout(.fixed(width: 375, height: 80))
         
         MediaPlayerView(isExpanded: .constant(true))
-            .environmentObject(PlaceHolders.mediaPlayer)
     }
 }
 

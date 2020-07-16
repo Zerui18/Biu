@@ -38,10 +38,10 @@ public enum BKMainEndpoint: String, BKEndpoint {
     // MARK: Publishers
     public static func getFavourite() -> AnyPublisher<BKResponse<FavouritePageResponse>, BKError> {
         BKClient.shared
-            .fromUserInfo { userInfo in
+            .fromUserInfo { passport in
                 let query = [
-                    "access_key" : userInfo.accessToken,
-                    "up_mid" : String(userInfo.userId),
+                    "access_key" : passport.accessToken,
+                    "up_mid" : String(passport.mid),
                 ]
                 return BKMainEndpoint.getFavourite
                     .createRequest(using: .get, withQuery: query)
@@ -51,10 +51,10 @@ public enum BKMainEndpoint: String, BKEndpoint {
     
     public static func getIds(forFolderWithId id: Int) -> AnyPublisher<BKResponse<ResourceIdsResponse>, BKError> {
         BKClient.shared
-            .fromUserInfo { userInfo in
+            .fromUserInfo { passport in
                 let query = [
-                    "access_key" : userInfo.accessToken,
-                    "mid" : String(userInfo.userId),
+                    "access_key" : passport.accessToken,
+                    "mid" : String(passport.mid),
                     "media_id" : String(id),
                     "pn" : "1",
                 ]
@@ -66,13 +66,13 @@ public enum BKMainEndpoint: String, BKEndpoint {
     
     public static func getInfos(forResourceIds ids: [(id: Int, type: Int)]) -> AnyPublisher<BKResponse<ResourceInfosResponse>, BKError> {
         BKClient.shared
-            .fromUserInfo { userInfo in
+            .fromUserInfo { passport in
                 let resources = ids
                     .map({ "\($0.id):\($0.type)" })
                     .joined(separator: ",")
                 let query = [
-                    "access_key" : userInfo.accessToken,
-                    "mid" : String(userInfo.userId),
+                    "access_key" : passport.accessToken,
+                    "mid" : String(passport.mid),
                     "resources" : resources,
                 ]
                 return BKMainEndpoint.getInfos
