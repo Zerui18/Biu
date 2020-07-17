@@ -13,6 +13,7 @@ struct MediaPlayerView: View {
     
     // MARK: Binding
     @Binding var isExpanded: Bool
+    @Binding var shouldDisableDrag: Bool
     
     // MARK: State
     @State private var currentTime: TimeInterval = 50
@@ -74,9 +75,13 @@ struct MediaPlayerView: View {
                            in: 0...duration,
                            onEditingChanged: { (isEditing) in
                                 isSeeking = isEditing
-                                if !isEditing {
+                                shouldDisableDrag = isEditing
+                                if isEditing {
+                                    model.playPause()
+                                }
+                                else {
                                     // Seeking ended.
-                                    model.seek(to: currentTime)
+                                    model.seek(to: currentTime, play: true)
                                 }
                             }
                     ) {
@@ -149,10 +154,10 @@ struct MediaPlayerView: View {
 
 struct AudioPlayerView_Previews: PreviewProvider {
     static var previews: some View {
-        MediaPlayerView(isExpanded: .constant(false))
+        MediaPlayerView(isExpanded: .constant(false), shouldDisableDrag: .constant(true))
             .previewLayout(.fixed(width: 375, height: 80))
         
-        MediaPlayerView(isExpanded: .constant(true))
+        MediaPlayerView(isExpanded: .constant(true), shouldDisableDrag: .constant(true))
     }
 }
 

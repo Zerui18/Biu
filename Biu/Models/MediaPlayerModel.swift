@@ -92,12 +92,16 @@ final class MediaPlayerModel: ObservableObject {
         currentItem = MediaInfoModel(with: media)
     }
     
-    func seek(to seconds: TimeInterval) {
+    func seek(to seconds: TimeInterval, play: Bool) {
         guard let player = currentItem?.player else {
             return
         }
         let time = CMTime(seconds: seconds, preferredTimescale: player.currentItem?.asset.duration.timescale ?? 1)
-        player.seek(to: time)
+        player.seek(to: time) { _ in
+            if play {
+                player.play()
+            }
+        }
     }
     
     func playPause() {
@@ -107,6 +111,11 @@ final class MediaPlayerModel: ObservableObject {
         else {
             currentItem?.player.play()
         }
+    }
+    
+    func pause() {
+        playState.wrappedValue = .paused
+        currentItem?.player.pause()
     }
     
     // MARK: Private Helpers

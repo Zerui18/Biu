@@ -60,6 +60,8 @@
 		BFCC9B6124B402E500F97E55 /* BKUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCC9B6024B402E500F97E55 /* BKUserInfo.swift */; };
 		BFCC9B6324B43B8000F97E55 /* BKMainEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCC9B6224B43B8000F97E55 /* BKMainEndpoint.swift */; };
 		BFCC9B6524B43DD900F97E55 /* BKMainEndpointModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCC9B6424B43DD900F97E55 /* BKMainEndpointModels.swift */; };
+		BFD0D48624C15DC000597AF6 /* CGSize+compressed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD0D48524C15DC000597AF6 /* CGSize+compressed.swift */; };
+		BFD0D48824C16E2100597AF6 /* MediaPlayerContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD0D48724C16E2100597AF6 /* MediaPlayerContainerView.swift */; };
 		BFFFEB2324B4BD470090B444 /* FavouriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFFEB2224B4BD470090B444 /* FavouriteView.swift */; };
 		BFFFEB2724B4BE020090B444 /* FavouriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFFEB2624B4BE010090B444 /* FavouriteModel.swift */; };
 		D4084FF449AC60447D0438E6 /* Pods_Biu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0292B466E730C5716B9EA52 /* Pods_Biu.framework */; };
@@ -161,6 +163,8 @@
 		BFCC9B6024B402E500F97E55 /* BKUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKUserInfo.swift; sourceTree = "<group>"; };
 		BFCC9B6224B43B8000F97E55 /* BKMainEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKMainEndpoint.swift; sourceTree = "<group>"; };
 		BFCC9B6424B43DD900F97E55 /* BKMainEndpointModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKMainEndpointModels.swift; sourceTree = "<group>"; };
+		BFD0D48524C15DC000597AF6 /* CGSize+compressed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+compressed.swift"; sourceTree = "<group>"; };
+		BFD0D48724C16E2100597AF6 /* MediaPlayerContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerContainerView.swift; sourceTree = "<group>"; };
 		BFFFEB2224B4BD470090B444 /* FavouriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteView.swift; sourceTree = "<group>"; };
 		BFFFEB2624B4BE010090B444 /* FavouriteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteModel.swift; sourceTree = "<group>"; };
 		F17FD41073F3EDA6ED72F3FA /* Pods-BiliKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BiliKit.debug.xcconfig"; path = "Target Support Files/Pods-BiliKit/Pods-BiliKit.debug.xcconfig"; sourceTree = "<group>"; };
@@ -300,6 +304,7 @@
 				BFFFEB2524B4BDBA0090B444 /* Models */,
 				BF4157F924B0BEC800B08EAC /* Assets.xcassets */,
 				BF41F6F524C08AE8007812F5 /* Int+DurationFormat.swift */,
+				BFD0D48524C15DC000597AF6 /* CGSize+compressed.swift */,
 				BF4157FE24B0BEC800B08EAC /* LaunchScreen.storyboard */,
 				BF41580124B0BEC800B08EAC /* Info.plist */,
 				BF4157F424B0BEC700B08EAC /* Biu.xcdatamodeld */,
@@ -367,6 +372,7 @@
 		BF57B54524B8C99300A2B8CF /* Player */ = {
 			isa = PBXGroup;
 			children = (
+				BFD0D48724C16E2100597AF6 /* MediaPlayerContainerView.swift */,
 				BFAD631224B9ACD500356452 /* MediaPlayerView.swift */,
 			);
 			path = Player;
@@ -653,8 +659,10 @@
 				BF789D5824BF375900DFBAE8 /* LoginView.swift in Sources */,
 				BF1141A824BED48600BBFA0D /* FetchImage.swift in Sources */,
 				BF57B54124B8ABFA00A2B8CF /* FavouriteItemCell.swift in Sources */,
+				BFD0D48824C16E2100597AF6 /* MediaPlayerContainerView.swift in Sources */,
 				BF4157F624B0BEC700B08EAC /* Biu.xcdatamodeld in Sources */,
 				BFFFEB2724B4BE020090B444 /* FavouriteModel.swift in Sources */,
+				BFD0D48624C15DC000597AF6 /* CGSize+compressed.swift in Sources */,
 				BF1141A424BE863500BBFA0D /* DownloadsModel.swift in Sources */,
 				BF4157F824B0BEC700B08EAC /* ContentView.swift in Sources */,
 				BF247E5B24B546D300AA695C /* FavouriteCategoryCell.swift in Sources */,
