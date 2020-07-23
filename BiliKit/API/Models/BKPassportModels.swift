@@ -62,5 +62,42 @@ extension BKPassportEndpoint {
             case cookieInfo = "cookie_info", sso, status, tokenInfo = "token_info", url
         }
     }
+    
+    public struct GetQRCodeResponse: Codable {
+        public let url: URL
+        public let oauthKey: String
+    }
+    
+    /// Wrapper for fetching login info.
+    public struct LoginInfoResponse: Codable {
+        /// If has login info.
+        /// Set-Cookie if true.
+        let status: Bool
+        /// Login process status.
+        /// - See: LoginState.of(_:).
+        let data: Int
+        /// Login process status explaination.
+        let message: String
+    }
+
+//    /// Stage during login process.
+//    public enum LoginState {
+//        case errored
+//        case started
+//        case needsConfirmation
+//        case succeeded(cookies: [String])
+//        case expired
+//        case missingOAuthKey
+//        case unknown(status: Int)
+//        fileprivate static func of(_ info: LoginInfo) -> LoginState {
+//            switch info.data {
+//            case -1: return .missingOAuthKey
+//            case -2: return .expired
+//            case -4: return .started
+//            case -5: return .needsConfirmation
+//            default: return .unknown(status: info.data)
+//            }
+//        }
+//    }
 
 }

@@ -21,28 +21,37 @@ struct BottomLineTextFieldStyle: TextFieldStyle {
 
 struct CredentialsLoginView: View {
     
-    @ObservedObject var modal = LoginModel.shared
+    @ObservedObject var model = LoginModel.shared
     
     var body: some View {
-        VStack(spacing: 30) {
+        ZStack {
+            VStack(spacing: 30) {
+                
+                TextField("Username", text:
+                            $model.username)
+                    .frame(maxWidth: 240)
+                
+                SecureField("Password", text: $model.password)
+                    .frame(maxWidth: 240)
+                
+                Spacer()
+                    .frame(height: 0)
+                
+                if !model.username.isEmpty && !model.password.isEmpty {
+                    Button("Login") {
+                        model.beginLogin()
+                    }
+                    .foregroundColor(.white)
+                    .font(.title)
+                    .frame(width: 240, height: 56)
+                    .background(Color.accentColor)
+                    .cornerRadius(28)
+                }
+            }
+            .zIndex(0)
             
-            TextField("Username", text:
-                        $modal.username)
-                .frame(maxWidth: 240)
-            
-            SecureField("Password", text: $modal.password)
-                .frame(maxWidth: 240)
-            
-            Spacer()
-                .frame(height: 0)
-            
-            if !modal.username.isEmpty && !modal.password.isEmpty {
-                Button("Login", action: modal.beginLogin)
-                .foregroundColor(.white)
-                .font(.title)
-                .frame(width: 240, height: 56)
-                .background(Color.accentColor)
-                .cornerRadius(28)
+            if case let .captchaNeeded(url) = model.loginState, model.captchaValidate == nil {
+                CaptchaWebview(url: url, validate: $model.captchaValidate)
             }
         }
         .textFieldStyle(BottomLineTextFieldStyle())

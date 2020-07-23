@@ -12,13 +12,13 @@ struct DownloadsView: View {
     @ObservedObject var model: DownloadsModel = .shared
     
     @FetchRequest(sortDescriptors:
-                    [NSSortDescriptor(keyPath: \SavedMedia.timestamp, ascending: true)],
+                    [NSSortDescriptor(keyPath: \SavedMedia.timestamp, ascending: false)],
                   predicate: NSPredicate(format: "isDownloaded == false"),
                   animation: .easeIn)
     var notDownloadedSavedMedias: FetchedResults<SavedMedia>
     
     @FetchRequest(sortDescriptors:
-                    [NSSortDescriptor(keyPath: \SavedMedia.timestamp, ascending: true)],
+                    [NSSortDescriptor(keyPath: \SavedMedia.timestamp, ascending: false)],
                   predicate: NSPredicate(format: "isDownloaded == true"),
                   animation: .easeIn)
     var downloadedSavedMedias: FetchedResults<SavedMedia>

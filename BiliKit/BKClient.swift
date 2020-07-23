@@ -5,7 +5,7 @@
 //  Created by Zerui Chen on 6/7/20.
 //
 
-import Foundation
+import UIKit
 import Combine
 
 public class BKClient {
@@ -93,6 +93,8 @@ public class BKClient {
         case credentialsError
         case captchaNeeded(URL)
         case unknownError(String)
+        /// Special case for QRCode.
+        case waiting
     }
     
     public func login(username: String, password: String,
@@ -115,7 +117,61 @@ public class BKClient {
                     return LoginResult.unknownError(loginResponse.message ?? "???")
                 }
             }
+            // Catch edge case when captcha is needed
+            // and the returned data is incomplete and
+            // causes decoding error.
+            .tryCatch { (error) -> Just<LoginResult> in
+                if case let .decodingError(_, raw) = error,
+                   let captchaNeededResponse = try? JSONDecoder().decode(BKResponse<CaptchaNeededResponse>.self, from: raw.data(using: .utf8)!) {
+                    return Just(.captchaNeeded(captchaNeededResponse.data.url))
+                }
+                else {
+                    throw error
+                }
+            }
+            .print()
+            .mapError { $0 as! BKError }
             .eraseToAnyPublisher()
+    }
+    
+    public func qrLogin() -> (qrCode: AnyPublisher<UIImage, BKError>, loginResult: AnyPublisher<LoginResult, BKError>) {
+        let qrcodeInfo = Deferred { Just(Date()) }
+            .append(
+                Timer.publish(every: 170, tolerance: 1, on: .main, in: .default, options: nil)
+                .autoconnect())
+            .setFailureType(to: BKError.self)
+            .flatMap {_ in
+                BKPassportEndpoint.createGetQRCodeRequest()
+                    .fetch()
+            }
+        let qrCode = qrcodeInfo
+            .map {
+                $0.data.url.absoluteString.generateQRCode()!
+            }
+            .eraseToAnyPublisher()
+        let loginResult = qrcodeInfo
+            .flatMap { qrcodeInfo in
+                Timer.publish(every: 1, tolerance: 0.2, on: .main, in: .default, options: nil)
+                    .autoconnect()
+                    .setFailureType(to: BKError.self)
+                    .flatMap(maxPublishers: .unlimited) {_ -> AnyPublisher<(BKPassportEndpoint.LoginInfoResponse, URLResponse), BKError> in
+                        URLSession.shared.fetchWithResponse(BKPassportEndpoint.createGetQRLoginResultRequest(oauthKey: qrcodeInfo.data.oauthKey))
+                    }
+                    .map { info, response -> LoginResult in
+                        if info.status {
+                            // Save cookies.
+                            let response = response as! HTTPURLResponse
+                            let cookies = (response.allHeaderFields as! [String:String])["Set-Cookie"]
+                            return .successful
+                        }
+                        else {
+                            return .waiting
+                        }
+                    }
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+        return (qrCode: qrCode, loginResult: loginResult)
     }
     
     public func logout() {
@@ -145,4 +201,8 @@ public struct BKUserPassport: Codable {
     public let accessToken: String
     public let concatenatedCookies: String
     
+}
+
+fileprivate struct CaptchaNeededResponse: Codable {
+    let url: URL
 }

@@ -15,7 +15,7 @@ enum BKKeys: String {
     /**
      * 默认 UA, 用于大多数访问
      */
-    case defaultUserAgent = "Mozilla/5.0 BiliDroid/6.4.0 (bbcallen@gmail.com) os/android model/Android SDK built for x86_64 mobi_app/android build/6040500 channel/bili innerVer/6040500 osVer/9 network/2"
+    case defaultUserAgent = "Mozilla/5.0 BiliDroid/6.5.0 (bbcallen@gmail.com) os/android model/Android SDK built for x86_64 mobi_app/android build/6050500 channel/bili innerVer/6050500 osVer/9 network/2"
 
     /**
      * Android 平台的 appKey(该默认值为普通版客户端, 非概念版)
@@ -51,7 +51,7 @@ enum BKKeys: String {
     /**
      * 硬件 ID, 尚不明确生成算法
      */
-    case hardwareId = "aBRoDWAVeRhsA3FDewMzS3lLMwM"
+    case hardwareId = "Pw09DT0NOQ04DTsNcQ1x"
 
     /**
      * 屏幕尺寸, 大屏手机(已经没有小屏手机了)统一为 xxhdpi

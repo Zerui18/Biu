@@ -1,39 +1,13 @@
 import BiliKit
 import PlaygroundSupport
 
-//let handle = BKClient.shared.login(username: "84685638", password: "A2Bzx578436").sink { (completion) in
+//let handle = BKClient.shared.login(username: "84685638", password: "asdfasdfa").sink { (completion) in
 //    print(completion)
 //} receiveValue: { (response) in
 //    print(response)
 //}
 
-let url = URL(string: "http://upos-hz-mirrorakam.akamaized.net/upgcxcode/50/58/210655850/210655850_nb2-1-30280.m4s?e=ig8euxZM2rNcNbdlhoNvNC8BqJIzNbfqXBvEuENvNC8aNEVEtEvE9IMvXBvE2ENvNCImNEVEIj0Y2J_aug859r1qXg8xNEVE5XREto8GuFGv2U7SuxI72X6fTr859IB_&uipk=5&nbs=1&deadline=1594489186&gen=playurl&os=akam&oi=461222012&trid=0c60ac56c3404e73a89445438848e0d6u&platform=android&upsig=2fdfeb85ef24e477930b318d546cf28f&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,platform&hdnts=exp=1594489186~hmac=1b7d705b8a3719b549c3593fa5ab21546958ae44ce786604768f5f26bf66f6d9&mid=0&orderid=0,1&agrr=0&logo=80000000")!
+print(BKSec.calculateSign(from: "appkey=bca7e84c2d947ac6&bili_local_id=86de45ac33d29d1b324af076ff106ca7202007221400349a8c8468afc1ae867d&build=6050500&buvid=XY0BB210515E35F2DBD8DFF2C75B2263BA9F6&c_locale=en_US&challenge=49895670b2db5a9e6c14f60418c432e6l8&channel=bili&device=phone&&device_name=unknownAndroid%20SDK%20built%20for%20x86_64&device_platform=Android9unknownAndroid%20SDK%20built%20for%20x86_64&dt=lORG75hgG0Amp%2Bw8b2mgIV%2F2FO7%2BWjjniZJdIpqOsGRQQYFXzrpFR7ZolkOR4iTLOH6V%2B6zoxumc%0AkZCFOrzpzeTYiMgbE6XD7DlaGoNngXnC6iv7i%2BXsWD3Qcs1BQ3Sa309fkR6JCickLpbtiO02n2Wl%0AoVRU%2FsXvx19o2RK3ijs%3D%0A&local_id=XY0BB210515E35F2DBD8DFF2C75B2263BA9F6&mobi_app=android&password=wMXoRL4vd6nmRMKSj%2Byl4AbJKpLe%2FjnXR0%2BSc4uN3WeqcV0yCNLeLe1GmVONq5vTNk4eVr7pOxqS%0A3pLrw%2BWuIlwe5MGB4HqgEtAanuPiM8gDbYaSUJnmgiQt6U6XM6%2FY0is4lYBZCr6Ou2zscpjs1Kdq%0Ax0arBpNci84XTyuZbRY%3D%0A&platform=android&s_locale=en_US&seccode=3f9edf010b5cdd9708f65085a4151791%7Cjordan&statistics=%7B%22appId%22%3A1%2C%22platform%22%3A3%2C%22version%22%3A%226.5.0%22%2C%22abtest%22%3A%22%22%7D&ts=1595427258&username=84685638&validate=3f9edf010b5cdd9708f65085a4151791"))
 
-//let query = [
-//    "force_host" : "0",
-//    "fnval" : "16",
-//    "qn" : "32",
-//    "npcybs" : "0",
-////    "cid" : "210655850",
-//    "fnver" : "0",
-//    "aid" : "626292014",
-//]
-//
-//let request: BKRequest<[Int]> = BKAnyEndpoint(url: url).createRequest(using: .get, withQuery: query)
-//
-//let urlRequest = request.createURLRequest()
-//
-//URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
-//    guard error == nil else {
-//        print("error:", error!)
-//        return
-//    }
-//    print(String(data: data!, encoding: .utf8)!)
-//    print()
-//    print()
-//
-//    let json = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments)
-//    print(json)
-//}.resume()
-//
+
 //PlaygroundPage.current.needsIndefiniteExecution = true

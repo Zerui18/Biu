@@ -7,7 +7,6 @@
 
 import Combine
 
-
 // MARK: Constants
 /// The api init time, to be used in certain requests.
 fileprivate let initTime = Int(Date().timeIntervalSinceReferenceDate)
@@ -17,8 +16,12 @@ fileprivate let commonHeaders = [
     RequestHeader.displayId.rawValue : "\(BKKeys.buildVersionId.rawValue)-\(initTime)",
     RequestHeader.buildVersionId.rawValue : BKKeys.buildVersionId.rawValue,
     RequestHeader.userAgent.rawValue : BKKeys.defaultUserAgent.rawValue,
-    RequestHeader.deviceId.rawValue : BKKeys.hardwareId.rawValue
+    RequestHeader.deviceId.rawValue : BKKeys.hardwareId.rawValue,
+//    "content-type" : "application/x-www-form-urlencoded; charset=utf-8",
+//    "host" : "passport.bilibili.com"
 ]
+
+//['user-agent', 'display-id', 'buvid', 'device-id', 'content-type', 'content-length', 'host']
 
 /// Dictionary of common parameters.
 fileprivate let commonParams = [
@@ -27,7 +30,6 @@ fileprivate let commonParams = [
     RequestParam.channel.rawValue : BKKeys.channel.rawValue,
     RequestParam.mobileApp.rawValue : BKKeys.platform.rawValue,
     RequestParam.platform.rawValue : BKKeys.platform.rawValue,
-    RequestParam.timestamp.rawValue : String(Int(Date().timeIntervalSince1970))
 ]
 
 // MARK: Percent Encoding

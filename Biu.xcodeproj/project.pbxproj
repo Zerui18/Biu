@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BF0B33CC24BB606C006459CA /* WebImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0B33CB24BB606C006459CA /* WebImage.swift */; };
 		BF1141A224BE846A00BBFA0D /* DownloadsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1141A124BE846A00BBFA0D /* DownloadsView.swift */; };
 		BF1141A424BE863500BBFA0D /* DownloadsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1141A324BE863500BBFA0D /* DownloadsModel.swift */; };
 		BF1141A624BEB2A400BBFA0D /* DownloadsItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1141A524BEB2A400BBFA0D /* DownloadsItemCell.swift */; };
@@ -42,6 +41,16 @@
 		BF41582E24B0CC5000B08EAC /* BKEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41582D24B0CC5000B08EAC /* BKEndpoint.swift */; };
 		BF41F6F624C08AE8007812F5 /* Int+DurationFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41F6F524C08AE8007812F5 /* Int+DurationFormat.swift */; };
 		BF57B54124B8ABFA00A2B8CF /* FavouriteItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF57B54024B8ABFA00A2B8CF /* FavouriteItemCell.swift */; };
+		BF6967DF24C4079400676EA3 /* String+QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6967DE24C4079400676EA3 /* String+QRCode.swift */; };
+		BF7177C224C5D42400343835 /* Interceptor.h in Headers */ = {isa = PBXBuildFile; fileRef = BF7177C024C5D42400343835 /* Interceptor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BF7177C524C5D42400343835 /* Interceptor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF7177BE24C5D42400343835 /* Interceptor.framework */; };
+		BF7177C624C5D42400343835 /* Interceptor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BF7177BE24C5D42400343835 /* Interceptor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BF7177CC24C5D49000343835 /* NSURLProtocol+WKWebViewSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7177CA24C5D49000343835 /* NSURLProtocol+WKWebViewSupport.m */; };
+		BF7177CD24C5D49000343835 /* NSURLProtocol+WKWebViewSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = BF7177CB24C5D49000343835 /* NSURLProtocol+WKWebViewSupport.h */; };
+		BF7177CF24C5D4C300343835 /* Interceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7177CE24C5D4C300343835 /* Interceptor.m */; };
+		BF7177D224C5D53200343835 /* URLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7177D024C5D53200343835 /* URLProtocol.m */; };
+		BF7177D324C5D53200343835 /* URLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = BF7177D124C5D53200343835 /* URLProtocol.h */; };
+		BF7177D824C5D7B000343835 /* CaptchaWebview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7177D724C5D7B000343835 /* CaptchaWebview.swift */; };
 		BF789D5224BF371800DFBAE8 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF789D5124BF371800DFBAE8 /* LoginModel.swift */; };
 		BF789D5624BF375900DFBAE8 /* QRLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF789D5324BF375900DFBAE8 /* QRLoginView.swift */; };
 		BF789D5724BF375900DFBAE8 /* CredentialsLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF789D5424BF375900DFBAE8 /* CredentialsLoginView.swift */; };
@@ -65,7 +74,6 @@
 		BFFFEB2324B4BD470090B444 /* FavouriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFFEB2224B4BD470090B444 /* FavouriteView.swift */; };
 		BFFFEB2724B4BE020090B444 /* FavouriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFFEB2624B4BE010090B444 /* FavouriteModel.swift */; };
 		D4084FF449AC60447D0438E6 /* Pods_Biu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0292B466E730C5716B9EA52 /* Pods_Biu.framework */; };
-		E6D3C18D57708E03C53B025E /* Pods_BiliKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427128A645EFDB2724260CC8 /* Pods_BiliKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +91,13 @@
 			remoteGlobalIDString = BF41580B24B0BED700B08EAC;
 			remoteInfo = Bili;
 		};
+		BF7177C324C5D42400343835 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BF4157E524B0BEC700B08EAC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BF7177BD24C5D42400343835;
+			remoteInfo = Interceptor;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -92,6 +107,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				BF7177C624C5D42400343835 /* Interceptor.framework in Embed Frameworks */,
 				BF41581424B0BED700B08EAC /* BiliKit.framework in Embed Frameworks */,
 				BF23A98D24BDD4F700CCBEBE /* Tetra.framework in Embed Frameworks */,
 			);
@@ -106,7 +122,6 @@
 		60CC19351E4F43DCD48A312D /* Pods-BiliKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BiliKit.release.xcconfig"; path = "Target Support Files/Pods-BiliKit/Pods-BiliKit.release.xcconfig"; sourceTree = "<group>"; };
 		79FD5ABEA8F9C49F101BED16 /* Pods-Biu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biu.debug.xcconfig"; path = "Target Support Files/Pods-Biu/Pods-Biu.debug.xcconfig"; sourceTree = "<group>"; };
 		B0292B466E730C5716B9EA52 /* Pods_Biu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Biu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BF0B33CB24BB606C006459CA /* WebImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImage.swift; sourceTree = "<group>"; };
 		BF1141A124BE846A00BBFA0D /* DownloadsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsView.swift; sourceTree = "<group>"; };
 		BF1141A324BE863500BBFA0D /* DownloadsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsModel.swift; sourceTree = "<group>"; };
 		BF1141A524BEB2A400BBFA0D /* DownloadsItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsItemCell.swift; sourceTree = "<group>"; };
@@ -144,6 +159,16 @@
 		BF41582D24B0CC5000B08EAC /* BKEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKEndpoint.swift; sourceTree = "<group>"; };
 		BF41F6F524C08AE8007812F5 /* Int+DurationFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+DurationFormat.swift"; sourceTree = "<group>"; };
 		BF57B54024B8ABFA00A2B8CF /* FavouriteItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteItemCell.swift; sourceTree = "<group>"; };
+		BF6967DE24C4079400676EA3 /* String+QRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+QRCode.swift"; sourceTree = "<group>"; };
+		BF7177BE24C5D42400343835 /* Interceptor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Interceptor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF7177C024C5D42400343835 /* Interceptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Interceptor.h; sourceTree = "<group>"; };
+		BF7177C124C5D42400343835 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF7177CA24C5D49000343835 /* NSURLProtocol+WKWebViewSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLProtocol+WKWebViewSupport.m"; sourceTree = "<group>"; };
+		BF7177CB24C5D49000343835 /* NSURLProtocol+WKWebViewSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLProtocol+WKWebViewSupport.h"; sourceTree = "<group>"; };
+		BF7177CE24C5D4C300343835 /* Interceptor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Interceptor.m; sourceTree = "<group>"; };
+		BF7177D024C5D53200343835 /* URLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLProtocol.m; sourceTree = "<group>"; };
+		BF7177D124C5D53200343835 /* URLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLProtocol.h; sourceTree = "<group>"; };
+		BF7177D724C5D7B000343835 /* CaptchaWebview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptchaWebview.swift; sourceTree = "<group>"; };
 		BF789D5124BF371800DFBAE8 /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		BF789D5324BF375900DFBAE8 /* QRLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRLoginView.swift; sourceTree = "<group>"; };
 		BF789D5424BF375900DFBAE8 /* CredentialsLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialsLoginView.swift; sourceTree = "<group>"; };
@@ -182,6 +207,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF7177C524C5D42400343835 /* Interceptor.framework in Frameworks */,
 				BF41581324B0BED700B08EAC /* BiliKit.framework in Frameworks */,
 				BF23A98C24BDD4F700CCBEBE /* Tetra.framework in Frameworks */,
 				D4084FF449AC60447D0438E6 /* Pods_Biu.framework in Frameworks */,
@@ -192,7 +218,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6D3C18D57708E03C53B025E /* Pods_BiliKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BF7177BB24C5D42400343835 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +311,7 @@
 				BF4157EF24B0BEC700B08EAC /* Biu */,
 				BF41580D24B0BED700B08EAC /* BiliKit */,
 				BF23A98624BDD4F700CCBEBE /* Tetra */,
+				BF7177BF24C5D42400343835 /* Interceptor */,
 				BF4157EE24B0BEC700B08EAC /* Products */,
 				9F8691389370E52D775969FA /* Pods */,
 				55B324453D255F12735A8D1E /* Frameworks */,
@@ -291,6 +324,7 @@
 				BF4157ED24B0BEC700B08EAC /* Biu.app */,
 				BF41580C24B0BED700B08EAC /* BiliKit.framework */,
 				BF23A98524BDD4F700CCBEBE /* Tetra.framework */,
+				BF7177BE24C5D42400343835 /* Interceptor.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -329,6 +363,7 @@
 				BF41580F24B0BED700B08EAC /* Info.plist */,
 				BFCC9B6024B402E500F97E55 /* BKUserInfo.swift */,
 				BFCC9B5C24B3716D00F97E55 /* BKClient.swift */,
+				BF6967DE24C4079400676EA3 /* String+QRCode.swift */,
 				BF789D5C24BF41A100DFBAE8 /* BKSession+QRCodeLoginHelper.swift */,
 				BFCC9B5E24B378F200F97E55 /* BKError.swift */,
 				BF41582F24B0CC9B00B08EAC /* API */,
@@ -378,6 +413,31 @@
 			path = Player;
 			sourceTree = "<group>";
 		};
+		BF7177BF24C5D42400343835 /* Interceptor */ = {
+			isa = PBXGroup;
+			children = (
+				BF7177C024C5D42400343835 /* Interceptor.h */,
+				BF7177CE24C5D4C300343835 /* Interceptor.m */,
+				BF7177D124C5D53200343835 /* URLProtocol.h */,
+				BF7177D024C5D53200343835 /* URLProtocol.m */,
+				BF7177CB24C5D49000343835 /* NSURLProtocol+WKWebViewSupport.h */,
+				BF7177CA24C5D49000343835 /* NSURLProtocol+WKWebViewSupport.m */,
+				BF7177C124C5D42400343835 /* Info.plist */,
+			);
+			path = Interceptor;
+			sourceTree = "<group>";
+		};
+		BF7177D424C5D72E00343835 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				BFBBD2C524BADD8B00D19E84 /* ProgressBar.swift */,
+				BF1141A724BED48600BBFA0D /* FetchImage.swift */,
+				BF789D5A24BF377100DFBAE8 /* Blur.swift */,
+				BF7177D724C5D7B000343835 /* CaptchaWebview.swift */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
 		BF789D5924BF376700DFBAE8 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -392,10 +452,7 @@
 			isa = PBXGroup;
 			children = (
 				BF4157F724B0BEC700B08EAC /* ContentView.swift */,
-				BF0B33CB24BB606C006459CA /* WebImage.swift */,
-				BFBBD2C524BADD8B00D19E84 /* ProgressBar.swift */,
-				BF1141A724BED48600BBFA0D /* FetchImage.swift */,
-				BF789D5A24BF377100DFBAE8 /* Blur.swift */,
+				BF7177D424C5D72E00343835 /* Misc */,
 				BF789D5924BF376700DFBAE8 /* Login */,
 				BF1A744324B8225400C888DA /* Favourite */,
 				BF1141A024BE843800BBFA0D /* Downloads */,
@@ -432,6 +489,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF41581024B0BED700B08EAC /* BiliKit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BF7177B924C5D42400343835 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF7177CD24C5D49000343835 /* NSURLProtocol+WKWebViewSupport.h in Headers */,
+				BF7177D324C5D53200343835 /* URLProtocol.h in Headers */,
+				BF7177C224C5D42400343835 /* Interceptor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,6 +539,7 @@
 			dependencies = (
 				BF41581224B0BED700B08EAC /* PBXTargetDependency */,
 				BF23A98B24BDD4F700CCBEBE /* PBXTargetDependency */,
+				BF7177C424C5D42400343835 /* PBXTargetDependency */,
 			);
 			name = Biu;
 			packageProductDependencies = (
@@ -499,6 +567,24 @@
 			productReference = BF41580C24B0BED700B08EAC /* BiliKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		BF7177BD24C5D42400343835 /* Interceptor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BF7177C724C5D42400343835 /* Build configuration list for PBXNativeTarget "Interceptor" */;
+			buildPhases = (
+				BF7177B924C5D42400343835 /* Headers */,
+				BF7177BA24C5D42400343835 /* Sources */,
+				BF7177BB24C5D42400343835 /* Frameworks */,
+				BF7177BC24C5D42400343835 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Interceptor;
+			productName = Interceptor;
+			productReference = BF7177BE24C5D42400343835 /* Interceptor.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -518,6 +604,9 @@
 					BF41580B24B0BED700B08EAC = {
 						CreatedOnToolsVersion = 12.0;
 						LastSwiftMigration = 1200;
+					};
+					BF7177BD24C5D42400343835 = {
+						CreatedOnToolsVersion = 12.0;
 					};
 				};
 			};
@@ -539,6 +628,7 @@
 				BF4157EC24B0BEC700B08EAC /* Biu */,
 				BF41580B24B0BED700B08EAC /* BiliKit */,
 				BF23A98424BDD4F700CCBEBE /* Tetra */,
+				BF7177BD24C5D42400343835 /* Interceptor */,
 			);
 		};
 /* End PBXProject section */
@@ -562,6 +652,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		BF41580A24B0BED700B08EAC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BF7177BC24C5D42400343835 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -665,10 +762,10 @@
 				BFD0D48624C15DC000597AF6 /* CGSize+compressed.swift in Sources */,
 				BF1141A424BE863500BBFA0D /* DownloadsModel.swift in Sources */,
 				BF4157F824B0BEC700B08EAC /* ContentView.swift in Sources */,
+				BF7177D824C5D7B000343835 /* CaptchaWebview.swift in Sources */,
 				BF247E5B24B546D300AA695C /* FavouriteCategoryCell.swift in Sources */,
 				BFAB91ED24B5657500EFA921 /* FavouriteFolderCell.swift in Sources */,
 				BF1A744724B823E200C888DA /* FavouriteFolderView.swift in Sources */,
-				BF0B33CC24BB606C006459CA /* WebImage.swift in Sources */,
 				BF41F6F624C08AE8007812F5 /* Int+DurationFormat.swift in Sources */,
 				BFAD631324B9ACD500356452 /* MediaPlayerView.swift in Sources */,
 				BFAD631524B9ACF200356452 /* MediaPlayerModel.swift in Sources */,
@@ -692,6 +789,7 @@
 				BF41582424B0C3BF00B08EAC /* MD5.swift in Sources */,
 				BF41581E24B0C2A900B08EAC /* BKKeys.swift in Sources */,
 				BFCC9B5B24B369A600F97E55 /* BKPassportModels.swift in Sources */,
+				BF6967DF24C4079400676EA3 /* String+QRCode.swift in Sources */,
 				BFAD631924B9CC7B00356452 /* BKAppEndpointModels.swift in Sources */,
 				BFAD631724B9CC3E00356452 /* BKAppEndpoint.swift in Sources */,
 				BF41582324B0C3BF00B08EAC /* BKSec.swift in Sources */,
@@ -701,6 +799,16 @@
 				BF2AFD9624B1E80600A5B65D /* BKRequest.swift in Sources */,
 				BF41582C24B0CBA700B08EAC /* BKResponse.swift in Sources */,
 				BFCC9B5D24B3716D00F97E55 /* BKClient.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BF7177BA24C5D42400343835 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF7177CC24C5D49000343835 /* NSURLProtocol+WKWebViewSupport.m in Sources */,
+				BF7177D224C5D53200343835 /* URLProtocol.m in Sources */,
+				BF7177CF24C5D4C300343835 /* Interceptor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -716,6 +824,11 @@
 			isa = PBXTargetDependency;
 			target = BF41580B24B0BED700B08EAC /* BiliKit */;
 			targetProxy = BF41581124B0BED700B08EAC /* PBXContainerItemProxy */;
+		};
+		BF7177C424C5D42400343835 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BF7177BD24C5D42400343835 /* Interceptor */;
+			targetProxy = BF7177C324C5D42400343835 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1019,6 +1132,62 @@
 			};
 			name = Release;
 		};
+		BF7177C824C5D42400343835 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 789MW96BQB;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Interceptor/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.Zerui.Interceptor;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		BF7177C924C5D42400343835 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 789MW96BQB;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Interceptor/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.Zerui.Interceptor;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1054,6 +1223,15 @@
 			buildConfigurations = (
 				BF41581624B0BED700B08EAC /* Debug */,
 				BF41581724B0BED700B08EAC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BF7177C724C5D42400343835 /* Build configuration list for PBXNativeTarget "Interceptor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BF7177C824C5D42400343835 /* Debug */,
+				BF7177C924C5D42400343835 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -22,7 +22,7 @@ class LoginModel: ObservableObject {
     // MARK: Enum
     
     enum LoginState {
-        case none, loading, error(String)
+        case none, loading, error(String), captchaNeeded(URL)
         
         var isLoading: Bool {
             switch self {
@@ -44,24 +44,34 @@ class LoginModel: ObservableObject {
     
     @Published var loginState: LoginState = .none
     @Published var loginMode: LoginMode = .password
-    
-    @Published var captchaURL: URL? = nil
-    
+        
     /// QRCode to be displayed.
     @Published var qrCodeImage: Image? = nil
     /// Username entered.
-    @Published var username = ""
+    @Published var username = "84685638"
     /// Password entered.
-    @Published var password = ""
+    @Published var password = "A2Bzx578436"
     
     private var loginCancellable: AnyCancellable?
+    private var qrCodeCancellable: AnyCancellable?
+    
+    @Published var captchaValidate: String?
+    private var lastCaptchaChallenge: String?
     
     // MARK: Methods
     /// Begins the login process.
     func beginLogin() {
         loginState = .loading
+        let captchaParams = lastCaptchaChallenge.flatMap { c in
+            captchaValidate.flatMap { v in ["challenge": c, "seccode": "\(v)|jordan", "validate": v, "ts": String(Int(Date().timeIntervalSince1970))]
+            }
+        }
+        // Clear captcha states.
+        captchaValidate = nil
+        lastCaptchaChallenge = nil
+        // Start pipeline.
         loginCancellable = BKClient.shared
-            .login(username: username, password: password)
+            .login(username: username, password: password, captcha: captchaParams)
             .receive(on: RunLoop.main)
             .sink { (completion) in
                 if case .failure(let error) = completion {
@@ -72,11 +82,16 @@ class LoginModel: ObservableObject {
                 case .successful:
                     self.loggedIn = true
                 case .captchaNeeded(let url):
-                    self.captchaURL = url
+                    self.lastCaptchaChallenge =
+                        URLComponents(url: url, resolvingAgainstBaseURL: false)!.queryItems!
+                            .first { $0.name == "challenge" }!.value!
+                    self.loginState = .captchaNeeded(url)
                 case .unknownError(let desc):
                     self.loginState = .error(desc)
                 case .credentialsError:
                     self.loginState = .error("用户名或密码错误")
+                case .waiting:
+                    fatalError("Not applicable to credentials login.")
                 }
             }
     }
@@ -95,24 +110,36 @@ class LoginModel: ObservableObject {
     /// Begin generating qrCode.
     func beginQRCodeGeneration() {
         loginState = .loading
-//        BKSession.shared.login { [self] (loginURL) in
-//            DispatchQueue.main.async {
-//                qrCodeImage = loginURL.qrCode()
-//                loginState = .none
-//            }
-//        } handleLoginState: { [self] (loginState) in
-//            DispatchQueue.main.async {
-//                switch loginState {
-//                case .succeeded(_):
-//                    loggedIn = true
-//                case .started:
-//                    // Normal login loop callbacks
-//                    break
-//                default:
-//                    print("QRCode login error: ", loginState)
-//                }
-//            }
-//        }
-
+        
+        let (qrCode, loginState) = BKClient.shared.qrLogin()
+        
+        qrCodeCancellable = qrCode
+            .receive(on: RunLoop.main)
+            .sink { (_) in
+            } receiveValue: { (image) in
+                self.loginState = .none
+                self.qrCodeImage = .init(uiImage: image)
+            }
+        
+        loginCancellable = loginState
+            .receive(on: RunLoop.main)
+            .sink { (completion) in
+                if case .failure(let err) = completion {
+                    self.loginState = .error(err.localizedDescription)
+                }
+            } receiveValue: { (result) in
+                switch result {
+                case .successful:
+                    self.loggedIn = true
+                case .captchaNeeded(_):
+                    fatalError("Not applicable to qrcode login.")
+                case .unknownError(let desc):
+                    self.loginState = .error(desc)
+                case .credentialsError:
+                    fatalError("Not applicable to qrcode login.")
+                case .waiting:
+                    break
+                }
+            }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 /// The authentication endpoint.
 public enum BKPassportEndpoint: String, BKEndpoint {
@@ -13,6 +14,8 @@ public enum BKPassportEndpoint: String, BKEndpoint {
     // MARK: Endpoints
     case getKey = "/api/oauth2/getKey"
     case login = "/api/v3/oauth2/login"
+    case getQRCode = "/qrcode/getLoginUrl"
+    case getQRLoginInfo = "/qrcode/getLoginInfo"
     
     public var baseURL: URL {
         URL(string: "https://passport.bilibili.com")!
@@ -30,5 +33,17 @@ public enum BKPassportEndpoint: String, BKEndpoint {
         params["username"] = username
         params["password"] = password
         return BKPassportEndpoint.login.createRequest(using: .post, withQuery: params)
+    }
+    
+    /// Creates a QRCode url request.
+    public static func createGetQRCodeRequest() -> BKRequest<GetQRCodeResponse> {
+        BKPassportEndpoint.getQRCode.createRequest(using: .get)
+    }
+    
+    /// Creates a request to retrieve the current QRCode result given the oauth key.
+    public static func createGetQRLoginResultRequest(oauthKey: String) -> URLRequest {
+        let query = ["oauthKey" : oauthKey]
+        let request: BKRequest<String> = BKPassportEndpoint.getQRLoginInfo.createRequest(using: .get, withQuery: query)
+        return request.createURLRequest()
     }
 }
