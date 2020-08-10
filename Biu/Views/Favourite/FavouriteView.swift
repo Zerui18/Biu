@@ -64,6 +64,6 @@ struct FavouriteView: View {
 
 struct FavouritesView_Previews: PreviewProvider {
     static var previews: some View {
-        FavouriteView()
+        FavouriteView(model: PlaceHolders.favouritePage)
     }
 }

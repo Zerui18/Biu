@@ -15,7 +15,9 @@ struct PlaceHolders {
     
     static let favouriteCategory = FavouriteCategoryModel(id: 23948723, name: "我的创建", folders: [favouriteFolder, FavouriteFolderModel(id: 1234, title: "收藏夹2", mediaCount: 99, thumbnailURL: URL(string: "https://i0.hdslb.com/bfs/archive/e523109320dde93e7919cbfed4a780bc1a4a81e6.jpg")!)])
     
-    static let favouritePage = FavouriteModel(favouritePage: [favouriteCategory], openedItems: [resourceInfo, resourceInfo, resourceInfo, resourceInfo])
+    static let favouritePage = FavouriteModel(favouritePage: [favouriteCategory])
+    
+    static let favouriteOpenedFolder = FavouriteOpenFolderModel(items: [resourceInfo, resourceInfo, resourceInfo, resourceInfo])
     
     static let resourceInfo = ResourceInfoModel(bvid: "BV1Wt4y1Q797",
                                                 title: "【动画PV】冰糖-ファンサ《Fans》★【超电VUP】",

@@ -2,77 +2,50 @@
 //  DownloadsView.swift
 //  Biu
 //
-//  Created by Zerui Chen on 15/7/20.
+//  Created by Zerui Chen on 5/8/20.
 //
 
 import SwiftUI
+import Grid
 
 struct DownloadsView: View {
-    
-    @ObservedObject var model: DownloadsModel = .shared
-    
-    @FetchRequest(sortDescriptors:
-                    [NSSortDescriptor(keyPath: \SavedMedia.timestamp, ascending: false)],
-                  predicate: NSPredicate(format: "isDownloaded == false"),
-                  animation: .easeIn)
-    var notDownloadedSavedMedias: FetchedResults<SavedMedia>
     
     @FetchRequest(sortDescriptors:
                     [NSSortDescriptor(keyPath: \SavedMedia.timestamp, ascending: false)],
                   predicate: NSPredicate(format: "isDownloaded == true"),
                   animation: .easeIn)
-    var downloadedSavedMedias: FetchedResults<SavedMedia>
+    private var downloadedSavedMedias: FetchedResults<SavedMedia>
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                Group {
-                    
-                    // 正在下载
-                    if !notDownloadedSavedMedias.isEmpty {
-                        Section(header:
-                            Text("正在下载")
-                                .bold()
-                                // Align leading.
-                                .fixedSize()
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.bottom)
-                        ) {
-                            ForEach(notDownloadedSavedMedias) { (savedMedia: SavedMedia) in
-                                DownloadsItemCell(media: savedMedia)
-                            }
-                            .padding(.bottom, 10)
-                        }
-                        
-                        Spacer()
-                            .frame(height: 30)
-                    }
-                    
-                    // 已经下载
-                    if !downloadedSavedMedias.isEmpty {
-                        Section(header:
-                            Text("已经下载")
-                                .bold()
-                                // Align leading.
-                                .fixedSize()
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.bottom)
-                        ) {
-                            ForEach(downloadedSavedMedias) { (savedMedia: SavedMedia) in
-                                DownloadsItemCell(media: savedMedia)
-                                    .onTapGesture {
-                                        MediaPlayerModel.shared.play(savedMedia)
-                                    }
-                            }
-                            .padding(.bottom, 10)
-                        }
-                        
-                        Spacer()
-                            .frame(height: 80)
-                    }
+            List {
+                NavigationLink(
+                    destination: DownloadingView()) {
+                    Image(systemName: "square.and.arrow.down.on.square")
+                    Text("正在下载")
                 }
-                .padding()
+
+                NavigationLink(
+                    destination: DownloadingView()) {
+                    Image(systemName: "person.circle")
+                    Text("Up主")
+                }
+
+                Grid(downloadedSavedMedias) { media in
+                    DownloadedCell(media: media)
+                        .frame(width: 160)
+                        .onTapGesture {
+                            MediaPlayerModel.shared.play(media)
+                        }
+                }
+                .gridStyle(
+                    ModularGridStyle(columns: .fixed(160), rows: .fixed(170), spacing: 20)
+                )
+                .padding([.top], 10)
+                .padding([.bottom], 100)
+                .background(Color(.systemBackground))
             }
+            .padding([.top, .bottom], 10)
             .navigationBarTitle(Text("下载"))
         }
     }
@@ -80,7 +53,17 @@ struct DownloadsView: View {
 
 struct DownloadsView_Previews: PreviewProvider {
     static var previews: some View {
-        DownloadsView()
-            .environmentObject(DownloadsModel())
+        let context = AppDelegate.shared.persistentContainer.viewContext
+        for _ in 1...5 {
+            let newMedia = SavedMedia(context: context)
+            newMedia.title = "Media 1"
+            newMedia.owner = SavedUpper(context: context)
+            newMedia.owner!.name = "hanser"
+            newMedia.owner!.thumbnailURL = URL(string: "http://i2.hdslb.com/bfs/archive/07502ee8927e843b4f5b85b36a66cedde8079eeb.jpg")
+            newMedia.isDownloaded = true
+        }
+        return DownloadsView()
+            .colorScheme(.dark)
+            .environment(\.managedObjectContext, context)
     }
 }

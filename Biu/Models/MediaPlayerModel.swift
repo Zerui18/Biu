@@ -85,7 +85,15 @@ final class MediaPlayerModel: ObservableObject {
     }
     
     func play(_ item: ResourceInfoModel) {
-        startLoading(item: item)
+        // Check if the item is already downloaded.
+        if item.downloadTask.simpleState.value == .downloaded,
+           let media = DownloadsModel.shared.savedMedia(forId: item.bvid) {
+            play(media)
+        }
+        // Otherwise proceed to loading.
+        else {
+            startLoading(item: item)
+        }
     }
     
     func play(_ media: SavedMedia) {
@@ -185,6 +193,25 @@ struct MediaInfoModel {
     let mediaURL: URL
     let thumbnailURL: URL
     
+    /// This property is nil when the instance is created from a `SavedMedia` object.
+    let staff: [Upper]?
+    /// This property is nil when the instance is created from a `SavedMedia` object.
+    let owner: Upper?
+    
+    struct Upper {
+        let name: String
+        let mid: Int
+        let thumbnailURL: URL
+        let title: String?
+        
+        init(with upper: BKMainEndpoint.VideoInfoResponse.Upper) {
+            self.name = upper.name
+            self.mid = upper.mid
+            self.thumbnailURL = upper.face
+            self.title = upper.title
+        }
+    }
+    
     /// Flag indicating whether this object is created from a SavedMedia object, in which case mediaURL would contain a local URL.
     let isSavedMedia: Bool
     
@@ -201,6 +228,8 @@ struct MediaInfoModel {
         self.thumbnailURL = videoInfo.thumbnailURL
         self.isSavedMedia = false
         self.player = AVPlayer(url: mediaURL)
+        self.staff = videoInfo.staff?.map(Upper.init)
+        self.owner = .init(with: videoInfo.owner)
     }
     
     init(with savedMedia: SavedMedia) {
@@ -213,6 +242,8 @@ struct MediaInfoModel {
         self.mediaURL = savedMedia.localURL
         self.thumbnailURL = savedMedia.thumbnailURL!
         self.isSavedMedia = true
-        self.player = AVPlayer(url: mediaURL)
+        self.player = AVPlayer(url: savedMedia.localURL)
+        self.staff = nil
+        self.owner = nil
     }
 }

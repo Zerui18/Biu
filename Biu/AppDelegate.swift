@@ -10,11 +10,29 @@ import BiliKit
 import CoreData
 import Nuke
 
+let mocGlobal = AppDelegate.shared.persistentContainer.viewContext
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    static let shared: AppDelegate = {
+        var delegate: AppDelegate!
+        if Thread.isMainThread {
+            delegate = (UIApplication.shared.delegate as! AppDelegate)
+        }
+        else {
+            DispatchQueue.main.sync {
+                delegate = (UIApplication.shared.delegate as! AppDelegate)
+            }
+        }
+        return delegate
+    }()
+    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        .portrait
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//        BKClient.shared.logout()
         return true
     }
 

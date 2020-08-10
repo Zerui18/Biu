@@ -6,18 +6,21 @@
 //
 
 import SwiftUI
-import Nuke
 import BiliKit
+import Tetra
 
 struct FavouriteItemCell: View {
     
     init(item: ResourceInfoModel) {
         self.item = item
-        self.thumbnailImage = FetchImage(placeholder: UIImage(named: "bg_placeholder")!,
-                                         url: item.thumbnailURL)
+        self.thumbnailImage = FetchImage(url: item.thumbnailURL)
+        self.downloadState = item.downloadTask.simpleState
     }
         
+    @ObservedObject var downloadState: TTask.SimpleState
     @ObservedObject var thumbnailImage: FetchImage
+    
+    @State var isAnimatingRotation = false
     
     /// The resource displayed by this cell.
     var item: ResourceInfoModel
@@ -51,23 +54,41 @@ struct FavouriteItemCell: View {
                     Spacer()
                     
                     // Downloaded check.
-                    if DownloadsModel.shared.isDownloaded(resource: item) {
-                        Image(systemName: "checkmark")
-                            .font(.body)
-                            .foregroundColor(.accentColor)
+                    Group {
+                        switch downloadState.value {
+                        case .none:
+                            // Download button.
+                            Button {
+                                DownloadsModel.shared.initiateDownload(forResource: item)
+                            } label:  {
+                                Image(systemName: "square.and.arrow.down")
+                            }
                             .padding([.bottom, .trailing], 3)
-                    }
-                    // Or download button.
-                    else {
-                        Button {
-                            DownloadsModel.shared.initiateDownload(forResource: item)
-                        } label:  {
-                            Image(systemName: "square.and.arrow.down.on.square")
-                                .font(.body)
-                                .foregroundColor(.accentColor)
+                        case .downloading:
+                            // Rotating icon.
+                            Image(systemName: "arrow.2.circlepath.circle")
+                                .rotationEffect(Angle(radians: isAnimatingRotation ? .pi*2:0), anchor: .center)
+                                .animation(
+                                    Animation.linear
+                                        .repeatForever(autoreverses: false)
+                                        .speed(0.1)
+                                )
+                                .onAppear {
+                                    isAnimatingRotation = true
+                                }
+                                .onDisappear {
+                                    isAnimatingRotation = false
+                                }
+                        case .downloaded:
+                            // Gray tick.
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.gray)
                         }
-                        .padding([.bottom, .trailing], 3)
                     }
+                    .frame(width: 25, height: 20)
+                    .font(.body)
+                    .foregroundColor(.accentColor)
+                    .padding([.bottom, .trailing], 3)
                 }
             }
         }

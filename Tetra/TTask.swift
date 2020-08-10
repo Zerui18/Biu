@@ -12,9 +12,11 @@ public class TTask: ObservableObject {
     
     // MARK: Private Properties
     
-    private let remoteURL: URL
+    private var remoteURL: URL!
     
-    private let targetURL: URL
+    private var dstURL: URL
+    
+    private var onSuccess: (()-> Void)!
     
     /// The underlying download task object.
     private var downloadTask: URLSessionDownloadTask!
@@ -27,15 +29,25 @@ public class TTask: ObservableObject {
     
     private var progressObservation: NSKeyValueObservation?
     
-    private var onSuccess: ()-> Void
-    
     // MARK: Init
-    init(id: String, remoteURL: URL, targetURL: URL, onSuccess handler: @escaping ()-> Void) {
+//    /// Init a TTask fully and begin download.
+//    init(id: String, remoteURL: URL, targetURL: URL, onSuccess handler: @escaping ()-> Void) {
+//        self.id = id
+//        self.remoteURL = remoteURL
+//        self.dstURL = targetURL
+//        self.onSuccess = handler
+//        createTask()
+//    }
+    
+    /// Init a partial TTask, more information needs to be provided by calling .download before download starts.
+    init(id: String, dstURL: URL) {
         self.id = id
-        self.remoteURL = remoteURL
-        self.targetURL = targetURL
-        self.onSuccess = handler
-        createTask()
+        self.dstURL = dstURL
+        
+        // Check if already downloaded.
+        if FileManager.default.fileExists(atPath: dstURL.path) {
+            self.state = .success
+        }
     }
     
     // MARK: Private API
@@ -54,10 +66,10 @@ public class TTask: ObservableObject {
                 // Downloaded, try moving to destination.
                 do {
                     // Remove existing item.
-                    if FileManager.default.fileExists(atPath: self.targetURL.path) {
-                        try FileManager.default.removeItem(at: self.targetURL)
+                    if FileManager.default.fileExists(atPath: self.dstURL.path) {
+                        try FileManager.default.removeItem(at: self.dstURL)
                     }
-                    try FileManager.default.moveItem(at: url!, to: self.targetURL)
+                    try FileManager.default.moveItem(at: url!, to: self.dstURL)
                     // Update state and call success callback.
                     self.state = .success
                     self.onSuccess()
@@ -89,16 +101,55 @@ public class TTask: ObservableObject {
     
     // MARK: Public API
     
+    /// Provide complete download information and begin a new download task.
+    public func download(_ url: URL, onSuccess handler: @escaping ()-> Void) {
+        self.remoteURL = url
+        self.onSuccess = handler
+        createTask()
+    }
+    
     public enum State {
         case downloading(Double), success, failure(Error), paused
     }
     
     /// Publisher for the download state.
-    @Published public var state: State = .paused
+    @Published public var state: State = .paused {
+        didSet {
+            // Here we update simpleState accordingly.
+            let newSState: SimpleState.State
+            switch state {
+            case .downloading(_):
+                newSState = .downloading
+            case .failure(_):
+                newSState = .downloading
+            case .paused:
+                newSState = .downloading
+            case .success:
+                newSState = .downloaded
+            }
+            // Write only if the value changed.
+            if newSState != simpleState.value {
+                simpleState.value = newSState
+            }
+        }
+    }
     
     /// A unique id attached to each task.
     public let id: String
     
+    // Simplified State to minimize update cost.
+    public class SimpleState: ObservableObject {
+        
+        public enum State: Int {
+            case none, downloading, downloaded
+        }
+        
+        @Published public var value: State = .none
+        
+    }
+    
+    /// A simplified, observable state object that is updated by the main state.
+    public let simpleState = SimpleState()
     
     /// Pause the task.
     public func pause() {
@@ -128,7 +179,7 @@ public class TTask: ObservableObject {
 // MARK: Equatable
 extension TTask: Equatable {
     public static func ==(_ lhs: TTask, _ rhs: TTask) -> Bool {
-        lhs.targetURL == rhs.targetURL &&
+        lhs.dstURL == rhs.dstURL &&
             lhs.remoteURL == rhs.remoteURL
     }
 }

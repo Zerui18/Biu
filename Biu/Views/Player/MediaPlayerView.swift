@@ -57,6 +57,7 @@ struct MediaPlayerView: View {
             
             // Title
             Text(model.title)
+                .animation(nil)
                 .font(isExpanded ? .headline:.subheadline)
                 .lineLimit(2)
                 .frame(maxWidth: isExpanded ?
@@ -87,6 +88,7 @@ struct MediaPlayerView: View {
                     ) {
                         Text("hello")
                     }
+                    .disabled(playState == .loading)
 
                     // Time labels.
                     HStack {
@@ -157,7 +159,7 @@ struct AudioPlayerView_Previews: PreviewProvider {
         MediaPlayerView(isExpanded: .constant(false), shouldDisableDrag: .constant(true))
             .previewLayout(.fixed(width: 375, height: 80))
         
-        MediaPlayerView(isExpanded: .constant(true), shouldDisableDrag: .constant(true))
+//        MediaPlayerView(isExpanded: .constant(true), shouldDisableDrag: .constant(true))
     }
 }
 

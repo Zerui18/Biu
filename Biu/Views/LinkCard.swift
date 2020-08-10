@@ -1,5 +1,5 @@
 //
-//  FavouriteFolderCell.swift
+//  LinkCard.swift
 //  Biu
 //
 //  Created by Zerui Chen on 8/7/20.
@@ -8,16 +8,12 @@
 import SwiftUI
 
 /// Cell that displays a single folder.
-struct FavouriteFolderCell: View {
-    
-    init(folder: FavouriteFolderModel) {
-        self.folder = folder
-        self.thumbnailImage = FetchImage(placeholder: UIImage(named: "bg_placeholder")!, url: folder.thumbnailURL)
-    }
+struct LinkCard: View {
     
     @ObservedObject var thumbnailImage: FetchImage
     
-    var folder: FavouriteFolderModel
+    let title: String
+    let subtitle: String
     
     var body: some View {
         HStack {
@@ -33,7 +29,7 @@ struct FavouriteFolderCell: View {
 
             // Title & count.
             VStack(alignment: .leading) {
-                Text(folder.title)
+                Text(title)
                     .font(.subheadline)
                     .bold()
                     // For preview to render correctly
@@ -41,7 +37,7 @@ struct FavouriteFolderCell: View {
 
                 Spacer()
 
-                Text("\(folder.mediaCount)个内容")
+                Text(subtitle)
                     .font(.caption)
                     .bold()
                     .foregroundColor(.secondary)
@@ -64,9 +60,23 @@ struct FavouriteFolderCell: View {
     }
 }
 
+// MARK: Convenience Inits
+extension LinkCard {
+    
+    init(folder: FavouriteFolderModel) {
+        self.init(
+            thumbnailImage:
+                FetchImage(url: folder.thumbnailURL),
+            title: folder.title,
+            subtitle: "\(folder.mediaCount)个内容"
+        )
+    }
+}
+
+// MARK: Preview
 struct FavouriteFolderCell_Previews: PreviewProvider {
     static var previews: some View {
-        FavouriteFolderCell(folder: PlaceHolders.favouriteFolder)
+        LinkCard(folder: PlaceHolders.favouriteFolder)
             .padding()
             .frame(width: 375, height: 60)
     }

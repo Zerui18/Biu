@@ -9,13 +9,11 @@ import SwiftUI
 import Combine
 import Tetra
 
-struct DownloadsItemCell: View {
+struct DownloadingItemCell: View {
     
     init(media: SavedMedia) {
         self.media = media
-        self.thumbnailImage = FetchImage(placeholder:
-                                            UIImage(named: "bg_placeholder")!,
-                                         url: media.thumbnailURL!)
+        self.thumbnailImage = FetchImage(url: media.thumbnailURL!)
     }
     
     @ObservedObject var media: SavedMedia
@@ -50,6 +48,7 @@ struct DownloadsItemCell: View {
                     }
                     else if case let .failure(error) = media.downloadState {
                         Text(error.localizedDescription)
+                            .font(.caption)
                     }
                 }
                 else {

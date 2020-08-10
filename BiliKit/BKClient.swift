@@ -80,11 +80,17 @@ public class BKClient {
         userPassport?.mid
     }
     
+    /// Returns a publisher that performs the transform and throws .authenticationNeeded if no passport present.
     public func fromUserInfo<ResponseType: Codable>(transform: @escaping (BKUserPassport) -> AnyPublisher<BKResponse<ResponseType>, BKError>) -> AnyPublisher<BKResponse<ResponseType>, BKError> {
-        if let passport = userPassport {
-            return transform(passport)
-        }
-        return Fail(error: BKError.authenticationNeeded)
+        Just(0)
+            .setFailureType(to: BKError.self)
+            .flatMap { _ -> AnyPublisher<BKResponse<ResponseType>, BKError> in
+                if let passport = self.userPassport {
+                    return transform(passport)
+                }
+                return Fail(error: BKError.authenticationNeeded)
+                    .eraseToAnyPublisher()
+            }
             .eraseToAnyPublisher()
     }
     
@@ -150,13 +156,14 @@ public class BKClient {
             }
             .eraseToAnyPublisher()
         let loginResult = qrcodeInfo
-            .flatMap { qrcodeInfo in
-                Timer.publish(every: 1, tolerance: 0.2, on: .main, in: .default, options: nil)
+            .flatMap(maxPublishers: .max(1)) { qrcodeInfo in
+                Timer.publish(every: 1, tolerance: 0.2, on: .main, in: .default)
                     .autoconnect()
                     .setFailureType(to: BKError.self)
-                    .flatMap(maxPublishers: .unlimited) {_ -> AnyPublisher<(BKPassportEndpoint.LoginInfoResponse, URLResponse), BKError> in
+                    .flatMap(maxPublishers: .max(1)) {_ -> AnyPublisher<(BKPassportEndpoint.LoginInfoResponse, URLResponse), BKError> in
                         URLSession.shared.fetchWithResponse(BKPassportEndpoint.createGetQRLoginResultRequest(oauthKey: qrcodeInfo.data.oauthKey))
                     }
+                    .print()
                     .map { info, response -> LoginResult in
                         if info.status {
                             // Save cookies.

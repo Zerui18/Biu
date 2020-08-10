@@ -69,8 +69,15 @@ extension BKMainEndpoint {
         public let title: String
         public let type: Int
         
+        public let upper: Upper
+        
         public enum CodingKeys: String, CodingKey {
-            case bvid, thumbnailURL = "cover", duration, id, intro, pageCount = "page", title, type
+            case bvid, thumbnailURL = "cover", duration, id, intro, pageCount = "page", title, type, upper
+        }
+        
+        public struct Upper: Codable {
+            public let mid: Int
+            public let name: String
         }
     }
     
@@ -83,9 +90,20 @@ extension BKMainEndpoint {
         public let duration: Int
         public let thumbnailURL: URL
         public let pages: [Page]
+        
+        public let owner: Upper
+        public let staff: [Upper]?
+        
+        public struct Upper: Codable {
+            public let mid: Int
+            public let name: String
+            public let face: URL
+            /// This attribute is nil for instances of `.owner`.
+            public let title: String?
+        }
 
         public enum CodingKeys: String, CodingKey {
-            case aid, bvid, title, desc, duration, thumbnailURL = "pic", pages
+            case aid, bvid, title, desc, duration, thumbnailURL = "pic", pages, owner, staff
         }
         
         public struct Page: Codable {

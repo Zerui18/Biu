@@ -28,14 +28,14 @@ struct MediaPlayerContainerView: View {
             MediaPlayerView(isExpanded: $isPlayerExpanded, shouldDisableDrag: $shouldDisableDrag)
                 // Don't fill the width.
                 .padding([.leading, .trailing], isPlayerExpanded ? 0:10)
-                // Ignore bottom safe area when expanded.
-                .edgesIgnoringSafeArea(.bottom)
-                // Pad top when expended. to be moved...
+                // Pad top when expended.
                 .padding(.top, isPlayerExpanded ? 60:0)
-                // Offset from bottom when collapsed.
-                .offset(y: isPlayerExpanded ? 0:-60)
                 // Set height.
                 .frame(maxHeight: isPlayerExpanded ? .infinity:80)
+                // Ignore bottom safe area when expanded.
+                .edgesIgnoringSafeArea(.bottom)
+                // Offset from bottom when collapsed.
+                .offset(y: isPlayerExpanded ? 0:-65)
                 // Open/close.
                 .onTapGesture {
                     isPlayerExpanded.toggle()

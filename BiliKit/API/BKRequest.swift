@@ -62,7 +62,9 @@ public struct BKRequest<ResponseData: Codable> {
     
     /// The dictionary of all query parameters (except sign).
     private var fullQuery: [String:String] {
-        query.merging(commonParams, uniquingKeysWith: { $1 })
+        var fullQuery = query.merging(commonParams, uniquingKeysWith: { $1 })
+        fullQuery[RequestParam.timestamp.rawValue] = String(Int(Date().timeIntervalSince1970))
+        return fullQuery
     }
     
     /// Sorted and concatenated query string, excluding sign which will be calculated based on this.

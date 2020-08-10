@@ -14,7 +14,8 @@ final class FetchImage: ObservableObject {
     
     private var loadImageTask: Any?
     
-    init(placeholder: UIImage, url: URL) {
+    /// Init with a placeholder UIImage and url for network image.
+    init(url: URL, placeholder: UIImage = UIImage(named: "bg_placeholder")!) {
         image = .init(uiImage: placeholder)
         
         loadImageTask = ImagePipeline.shared.loadImage(with: url) { (response) in
@@ -22,6 +23,12 @@ final class FetchImage: ObservableObject {
                 self.image = .init(uiImage: image)
             }
         }
+    }
+    
+    
+    /// Init with an Image.
+    init(image: SwiftUI.Image) {
+        self.image = image
     }
     
 }

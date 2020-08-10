@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FavouriteFolderView: View {
     
-    @ObservedObject var model: FavouriteModel = .shared
+    @ObservedObject var model: FavouriteOpenFolderModel = .shared
     
     let folder: FavouriteFolderModel
     @State var hasLoadedFolder = false
@@ -18,7 +18,7 @@ struct FavouriteFolderView: View {
         GeometryReader { geometry in
             ScrollView {
                 // Loaded items.
-                if let items = model.openedFavouriteFolderItems {
+                if let items = model.items {
                     VStack {
                         ForEach(items) { item in
                             FavouriteItemCell(item: item)

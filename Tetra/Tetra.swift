@@ -15,20 +15,29 @@ public class Tetra: ObservableObject {
     /// Array of all ongoing tasks.
     @Published public var allTasks = [TTask]()
     
-    /// Create and start a new download task.
-    @discardableResult
-    public func download(_ url: URL, to dstURL: URL, withId id: String, onSuccess handler: @escaping ()-> Void) -> TTask {
-        let newTask = TTask(id: id, remoteURL: url, targetURL: dstURL, onSuccess: handler)
+    @Published public var tasksMap = [String:TTask]()
+    
+    /// Returns the download task associated with this id, creating one if necessary.
+    public func downloadTask(forId id: String, dstURL: URL) -> TTask {
+        if let task = tasksMap[id] {
+            return task
+        }
+        // Create new task.
+        let newTask = TTask(id: id, dstURL: dstURL)
+        tasksMap[id] = newTask
         allTasks.append(newTask)
         return newTask
     }
     
     /// Removes a download task.
     public func remove(task: TTask) {
+        // Remove from array.
         if let idx = allTasks.firstIndex(of: task) {
             let task = allTasks.remove(at: idx)
             task.cancel()
         }
+        // Remove from map.
+        tasksMap[task.id] = nil
     }
     
 }

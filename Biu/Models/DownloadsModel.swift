@@ -12,9 +12,6 @@ import CoreData
 import Tetra
 import BiliKit
 
-/// Lazy, private reference to moc.
-fileprivate let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-
 /// Logical container for models, reflects updates from Tetra when download state changes.
 final class DownloadsModel: ObservableObject {
     
@@ -22,9 +19,13 @@ final class DownloadsModel: ObservableObject {
     
     /// Initialize the model with a binding to the fetched results.
     init() {
+        // Fetch all SavedMedias.
         let request: NSFetchRequest<SavedMedia> = SavedMedia.fetchRequest()
         request.sortDescriptors = [.init(keyPath: \SavedMedia.timestamp, ascending: true)]
-        savedMedias = try! moc.fetch(request)
+        savedMedias = try! mocGlobal.fetch(request)
+        
+        // Fetch all SavedUppers.
+        savedUppers = try! mocGlobal.fetch(SavedUpper.fetchRequest())
         
         // Create storage folder if necessary.
         if !FileManager.default.fileExists(atPath: downloadsFolder.path) {
@@ -37,19 +38,19 @@ final class DownloadsModel: ObservableObject {
         }
     }
     
-    @Published var tetra = Tetra.shared
+    let tetra = Tetra.shared
     
     @Published var resourceError: BKError?
     
     // MARK: Private API
     
-    fileprivate let downloadsFolder = FileManager.default
+    let downloadsFolder = FileManager.default
         .urls(for: .documentDirectory, in: .userDomainMask)[0]
         .appendingPathComponent("SavedMedias")
     
-    /// All currently downloading tasks.
-    private var allDownloads: [TTask] {
-        tetra.allTasks
+    /// All tasks from tetra.
+    private var allDownloads: [String:TTask] {
+        tetra.tasksMap
     }
     
     /// Bag of cancellables from loading video info.
@@ -58,11 +59,34 @@ final class DownloadsModel: ObservableObject {
     /// The timestamp ordered SavedMedia objects.
     private var savedMedias: [SavedMedia]
     
-    /// Create a new SavedMedia and Tetra download for the given MediaInfoModel.
-    private func newDownload(forMedia media: MediaInfoModel) {
-        // Create the SavedMedia object and keep track of it.
-        let savedMedia = SavedMedia(context: moc)
+    /// Unordered SavedUpper objects.
+    private var savedUppers: [SavedUpper]
+    
+    func savedUppers(from uppers: [MediaInfoModel.Upper]) -> [SavedUpper] {
+        var savedUppers = [SavedUpper]()
+        for upper in uppers {
+            // Try to find existing SavedUpper.
+            if let savedUpper = self.savedUppers.first(where: { $0.mid == upper.mid }) {
+                savedUppers.append(savedUpper)
+                continue
+            }
+            // Not found, create new SavedUpper.
+            let savedUpper = SavedUpper(context: mocGlobal)
+            savedUpper.name = upper.name
+            savedUpper.mid = Int64(upper.mid)
+            savedUpper.thumbnailURL = upper.thumbnailURL
+            savedUppers.append(savedUpper)
+            // Append to self.savedUppers.
+            self.savedUppers.append(savedUpper)
+        }
+        return savedUppers
+    }
+    
+    /// Creates a SavedMedia object and link its SavedUpper object.
+    func createSavedMedia(forMedia media: MediaInfoModel) -> SavedMedia {
+        let savedMedia = SavedMedia(context: mocGlobal)
         savedMedia.timestamp = Date()
+        // Save properties.
         savedMedia.aid = Int64(media.aid)
         savedMedia.bvid = media.bvid
         savedMedia.cid = Int64(media.cid)
@@ -70,15 +94,28 @@ final class DownloadsModel: ObservableObject {
         savedMedia.desc = media.desc
         savedMedia.duration = Int64(media.duration)
         savedMedia.thumbnailURL = media.thumbnailURL
+        // Add owner.
+        savedMedia.owner = savedUppers(from: [media.owner!])[0]
+        // Add staff.
+        savedUppers(from: media.staff ?? [])
+            .forEach {
+                $0.addToSavedMedias(savedMedia)
+            }
+        return savedMedia
+    }
+    
+    /// Create a new SavedMedia and Tetra download for the given MediaInfoModel.
+    private func newDownload(forMedia media: MediaInfoModel) {
+        // Create the SavedMedia object and keep track of it.
+        let savedMedia = createSavedMedia(forMedia: media)
         // Initialize the download task.
         createTetraTask(forSavedMedia: savedMedia, mediaURL: media.mediaURL)
         savedMedias.append(savedMedia)
     }
     
     private func createTetraTask(forSavedMedia media: SavedMedia, mediaURL: URL) {
-        let ttask = tetra.download(mediaURL,
-                                   to: media.localURL,
-                                   withId: media.bvid!) {
+        let ttask = tetra.downloadTask(forId: media.bvid!, dstURL: media.localURL)
+        ttask.download(mediaURL) {
             // On success, mark media as downloaded.
             media.isDownloaded = true
         }
@@ -86,19 +123,13 @@ final class DownloadsModel: ObservableObject {
     }
     
     // MARK: Public API
-    
-    /// Returns if there's an ongoing download task for the given resource.
-    func isDownloading(media: SavedMedia) -> Bool {
-        allDownloads.first { $0.id == media.bvid! } != nil
-    }
-    
-    /// Returns if a resource is downloaded, as indicated by its corresponding SavedMedia.
-    func isDownloaded(resource: ResourceInfoModel) -> Bool {
-        savedMedias.first { $0.bvid == resource.bvid }?.isDownloaded ?? false
+    func savedMedia(forId id: String) -> SavedMedia? {
+        return savedMedias.first { $0.bvid! == id }
     }
     
     /// Initiate a download for a given resource item.
     func initiateDownload(forResource resource: ResourceInfoModel) {
+        resource.downloadTask.simpleState.value = .downloading
         // First retrieve the video info for the resource.
         BKMainEndpoint.getVideoInfo(forBV: resource.bvid)
             .flatMap { response in
@@ -115,6 +146,7 @@ final class DownloadsModel: ObservableObject {
             .sink { (completion) in
                 if case .failure(let error) = completion {
                     self.resourceError = error
+                    resource.downloadTask.simpleState.value = .none
                 }
                 else {
                     self.resourceError = nil
@@ -150,40 +182,4 @@ final class DownloadsModel: ObservableObject {
             .store(in: &loadItemCancellables)
     }
         
-}
-
-// MARK: SavedMedia
-@objc(SavedMedia)
-class SavedMedia: NSManagedObject, Identifiable {
-    
-    fileprivate var ttask: TTask? {
-        didSet {
-            if let task = ttask {
-                sinkCancellable = task.$state
-                    .receive(on: RunLoop.main)
-                    .sink { [weak self] (state) in
-                        self?.downloadState = state
-                    }
-            }
-            else {
-                self.downloadState = .success
-            }
-        }
-    }
-    private var sinkCancellable: AnyCancellable?
-    
-    @Published var downloadState: TTask.State = .paused {
-        willSet {
-            objectWillChange.send()
-        }
-    }
-        
-    public var id: String {
-        bvid!
-    }
-    
-    var localURL: URL {
-        DownloadsModel.shared.downloadsFolder.appendingPathComponent("\(id).mp4")
-    }
-    
 }

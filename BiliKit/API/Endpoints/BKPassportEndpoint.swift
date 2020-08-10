@@ -42,8 +42,10 @@ public enum BKPassportEndpoint: String, BKEndpoint {
     
     /// Creates a request to retrieve the current QRCode result given the oauth key.
     public static func createGetQRLoginResultRequest(oauthKey: String) -> URLRequest {
-        let query = ["oauthKey" : oauthKey]
-        let request: BKRequest<String> = BKPassportEndpoint.getQRLoginInfo.createRequest(using: .get, withQuery: query)
-        return request.createURLRequest()
+        var request = URLRequest(url: self.getQRLoginInfo.url)
+        request.httpMethod = "post"
+        request.httpBody = "oauthKey=\(oauthKey)".data(using: .utf8)!
+        request.allHTTPHeaderFields = [RequestHeader.userAgent.rawValue : BKKeys.defaultUserAgent.rawValue]
+        return request
     }
 }

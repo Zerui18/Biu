@@ -63,7 +63,7 @@ class LoginModel: ObservableObject {
     func beginLogin() {
         loginState = .loading
         let captchaParams = lastCaptchaChallenge.flatMap { c in
-            captchaValidate.flatMap { v in ["challenge": c, "seccode": "\(v)|jordan", "validate": v, "ts": String(Int(Date().timeIntervalSince1970))]
+            captchaValidate.flatMap { v in ["challenge": c, "seccode": "\(v)|jordan", "validate": v]
             }
         }
         // Clear captcha states.

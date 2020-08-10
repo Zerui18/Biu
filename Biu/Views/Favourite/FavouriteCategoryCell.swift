@@ -35,7 +35,8 @@ struct FavouriteCategoryCell: View {
             ForEach(category.folders) { folder in
                 NavigationLink(destination: FavouriteFolderView(folder: folder)) {
                     VStack {
-                        FavouriteFolderCell(folder: folder)
+                        LinkCard(folder: folder)
+                            .frame(height: 80)
                             .transition(.slide)
                         
                         Spacer()
@@ -54,6 +55,5 @@ struct FavouriteCategoryView_Previews: PreviewProvider {
     static var previews: some View {
         FavouriteCategoryCell(category: PlaceHolders.favouriteCategory)
             .padding()
-            .frame(maxWidth: 375, maxHeight: .infinity)
     }
 }
