@@ -67,6 +67,7 @@
 		BF41582E24B0CC5000B08EAC /* BKEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41582D24B0CC5000B08EAC /* BKEndpoint.swift */; };
 		BF41F6F624C08AE8007812F5 /* Int+DurationFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF41F6F524C08AE8007812F5 /* Int+DurationFormat.swift */; };
 		BF57B54124B8ABFA00A2B8CF /* FavouriteItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF57B54024B8ABFA00A2B8CF /* FavouriteItemCell.swift */; };
+		BF5D3FCA24E2312C00D343DF /* UIKitTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5D3FC924E2312C00D343DF /* UIKitTabView.swift */; };
 		BF6967DF24C4079400676EA3 /* String+QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6967DE24C4079400676EA3 /* String+QRCode.swift */; };
 		BF7177C224C5D42400343835 /* Interceptor.h in Headers */ = {isa = PBXBuildFile; fileRef = BF7177C024C5D42400343835 /* Interceptor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BF7177C524C5D42400343835 /* Interceptor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF7177BE24C5D42400343835 /* Interceptor.framework */; };
@@ -219,6 +220,7 @@
 		BF41582D24B0CC5000B08EAC /* BKEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKEndpoint.swift; sourceTree = "<group>"; };
 		BF41F6F524C08AE8007812F5 /* Int+DurationFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+DurationFormat.swift"; sourceTree = "<group>"; };
 		BF57B54024B8ABFA00A2B8CF /* FavouriteItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteItemCell.swift; sourceTree = "<group>"; };
+		BF5D3FC924E2312C00D343DF /* UIKitTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitTabView.swift; sourceTree = "<group>"; };
 		BF6967DE24C4079400676EA3 /* String+QRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+QRCode.swift"; sourceTree = "<group>"; };
 		BF7177BE24C5D42400343835 /* Interceptor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Interceptor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF7177C024C5D42400343835 /* Interceptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Interceptor.h; sourceTree = "<group>"; };
@@ -455,6 +457,7 @@
 				BF2FD7DC24D65408001BFF3E /* Biu.entitlements */,
 				BF4157F024B0BEC700B08EAC /* AppDelegate.swift */,
 				BF4157F224B0BEC700B08EAC /* SceneDelegate.swift */,
+				BF5D3FC924E2312C00D343DF /* UIKitTabView.swift */,
 				BFFFEB2424B4BDAC0090B444 /* Views */,
 				BFFFEB2524B4BDBA0090B444 /* Models */,
 				BF4157F924B0BEC800B08EAC /* Assets.xcassets */,
@@ -941,6 +944,7 @@
 				BF08F47724E055A10036D334 /* DownloadedCell.swift in Sources */,
 				BF57B54124B8ABFA00A2B8CF /* FavouriteItemCell.swift in Sources */,
 				BF23000124DAD5F000F09DDE /* SavedUpper.swift in Sources */,
+				BF5D3FCA24E2312C00D343DF /* UIKitTabView.swift in Sources */,
 				BFD0D48824C16E2100597AF6 /* MediaPlayerContainerView.swift in Sources */,
 				BF4157F624B0BEC700B08EAC /* Biu.xcdatamodeld in Sources */,
 				BFFFEB2724B4BE020090B444 /* FavouriteModel.swift in Sources */,

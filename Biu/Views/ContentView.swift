@@ -7,34 +7,31 @@
 
 import SwiftUI
 
-fileprivate let selectionBinding = RootModel.shared.selectionBinding
-
 struct ContentView: View {
         
     @State private var presentingLogin = false
     
     var body: some View {
         ZStack {
-            TabView {
-                if !presentingLogin {
-                    FavouriteView()
-                        .tabItem {
-                            Image(systemName: "cube.box")
-                            Text("收藏")
-                        }.tag(1)
-
-                    DownloadsView()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .tabItem {
-                            Image(systemName: "tray")
-                            Text("下载")
-                        }.tag(2)
-                }
-                else {
-                    Spacer()
-                }
+            if !presentingLogin {
+                UIKitTabView([
+                    .init(view:
+                            FavouriteView(),
+                          barItem:
+                            .init(title: "收藏",
+                                  image: UIImage(systemName: "cube.box"),
+                                  selectedImage: UIImage(systemName: "cube.box.fill"))
+                    ),
+                    .init(view: DownloadsView(),
+                          barItem:
+                            .init(title: "下载",
+                                  image: UIImage(systemName: "tray"),
+                                  selectedImage: UIImage(systemName: "tray.fill")))
+                ])
             }
-            .zIndex(0)
+            else {
+                Spacer()
+            }
             
             MediaPlayerContainerView()
                 .zIndex(1)
