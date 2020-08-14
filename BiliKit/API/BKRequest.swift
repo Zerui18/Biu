@@ -44,7 +44,7 @@ private func encode(_ string: String) -> String {
 
 // MARK: BKRequest
 /// A request object encapsulating the endpoint and query to a bilibili api.
-public struct BKRequest<ResponseData: Codable> {
+public struct BKRequest {
     
     /// The request method.
     public enum Method: String {
@@ -96,20 +96,20 @@ public struct BKRequest<ResponseData: Codable> {
     }
     
     /// Returns a Publisher that fetches this request without authentication.
-    public func fetch() -> AnyPublisher<BKResponse<ResponseData>, BKError> {
+    public func fetch<ResponseData: Codable>() -> AnyPublisher<BKResponse<ResponseData>, BKError> {
         return URLSession.shared.fetch(createURLRequest())
     }
     
-    /// Returns a Publisher that fetches this request with authentication.
-    public func fetchAuthenticated() -> AnyPublisher<BKResponse<ResponseData>, BKError> {
-        let request = createURLRequest()
-        // Try requesting a authenticated request.
-        if let authenticatedRequest = BKClient.shared.authenticateRequest(request) {
-            return URLSession.shared.fetch(authenticatedRequest)
-        }
-        // Return a BKError indicating no auth.
-        return Fail(error: BKError.authenticationNeeded)
-            .eraseToAnyPublisher()
-    }
+//    /// Returns a Publisher that fetches this request with authentication.
+//    public func fetchAuthenticated() -> AnyPublisher<BKResponse<ResponseData>, BKError> {
+//        let request = createURLRequest()
+//        // Try requesting a authenticated request.
+//        if let authenticatedRequest = BKClient.shared.authenticateRequest(request) {
+//            return URLSession.shared.fetch(authenticatedRequest)
+//        }
+//        // Return a BKError indicating no auth.
+//        return Fail(error: BKError.authenticationNeeded)
+//            .eraseToAnyPublisher()
+//    }
     
 }

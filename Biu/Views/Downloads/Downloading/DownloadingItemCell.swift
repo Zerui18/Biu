@@ -26,7 +26,6 @@ struct DownloadingItemCell: View {
             
             // Thumbnail.
             thumbnailImage.image
-                .resizable()
                 .frame(width: 70 * 1.6, height: 70)
                 .cornerRadius(7)
 

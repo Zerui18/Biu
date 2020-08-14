@@ -1,16 +1,20 @@
 PODS:
+  - Introspect (0.1.0)
   - Nuke (9.1.1)
 
 DEPENDENCIES:
+  - Introspect
   - Nuke (~> 9.0)
 
 SPEC REPOS:
   trunk:
+    - Introspect
     - Nuke
 
 SPEC CHECKSUMS:
+  Introspect: ad32f2b7b9e7ac2c008b9dfec3d5325fbd3660fa
   Nuke: af4301b154d3afd8a3b045a5194a9a773a00b7a8
 
-PODFILE CHECKSUM: 5ddae48b98fa8d86b078ed603f91a25fb6fd52c4
+PODFILE CHECKSUM: d41ad5a3299bcd4c8d129308e7273dd75fd99a68
 
 COCOAPODS: 1.9.3

@@ -14,44 +14,26 @@ struct FavouriteView: View {
     
     var body: some View {
         NavigationView {
-            GeometryReader { geometry in
-                ScrollView {
-                    // Loaded favourite page.
-                    if let categories = model.favouriteCategories {
-                        VStack {
-                            ForEach(categories) { category in
-                                FavouriteCategoryCell(category: category)
-                            }
-                            .padding(.bottom, 10)
-                            
-                            Spacer()
-                                .frame(height: 80)
+            Group {
+                // Loaded favourite page.
+                if let categories = model.favouriteCategories {
+                    ScrollView {
+                        ForEach(categories) { category in
+                            FavouriteCategoryCell(category: category)
                         }
-                        .padding()
+                        .padding(.bottom, 10)
+                        
+                        Spacer()
+                            .frame(height: 80)
                     }
-                    // Loading / error.
-                    else {
-                        VStack(spacing: 10) {
-                            // Error.
-                            if let error = model.fetchCategoriesError {
-                                Text(error.title)
-                                    .font(.headline)
-                                if let message = error.message {
-                                    Text(message)
-                                        .font(.subheadline)
-                                }
-                            }
-                            // Loading.
-                            else {
-                                Text("Loading")
-                            }
-                        }
-                        .frame(minWidth: geometry.size.width,
-                               minHeight: geometry.size.height)
-                    }
+                    .padding()
                 }
-                .frame(height: geometry.size.height)
+                // Loading / error.
+                else {
+                    LoadingOrErrorView(error: $model.fetchCategoriesError)
+                }
             }
+            .frame(maxHeight: .infinity)
             .navigationBarTitle(Text("收藏"))
         }
         .onAppear {

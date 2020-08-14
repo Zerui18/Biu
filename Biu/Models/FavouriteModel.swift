@@ -18,12 +18,12 @@ final class FavouriteModel: ObservableObject {
     init() {}
     
     /// Init with pre-existing data, used for debugging.
-    init(favouritePage: [FavouriteCategoryModel]) {
+    init(favouritePage: [FavouriteCategoryDataModel]) {
         self.favouriteCategories = favouritePage
     }
     
     // MARK: Published
-    @Published var favouriteCategories: [FavouriteCategoryModel]!
+    @Published var favouriteCategories: [FavouriteCategoryDataModel]!
     
     @Published var fetchCategoriesError: BKError?
     
@@ -32,7 +32,7 @@ final class FavouriteModel: ObservableObject {
         BKMainEndpoint.getFavourite()
         // Map into models.
         .map {
-            $0.data.map(FavouriteCategoryModel.create)
+            $0.data.map(FavouriteCategoryDataModel.create)
         }
         .receive(on: RunLoop.main)
     private var favouritesCancellable: AnyCancellable?
@@ -51,22 +51,6 @@ final class FavouriteModel: ObservableObject {
             } receiveValue: { (categoryModels) in
                 self.favouriteCategories = categoryModels
             }
-    }
-    
-}
-
-typealias BKFavouriteCategory = BKMainEndpoint.FavouriteCategory
-
-struct FavouriteCategoryModel: Identifiable {
-
-    let id: Int
-    let name: String
-    let folders: [FavouriteFolderModel]
-    
-    static func create(with favCategory: BKFavouriteCategory) -> FavouriteCategoryModel {
-        FavouriteCategoryModel(id: favCategory.id,
-                               name: favCategory.name,
-                               folders: favCategory.folders.map(FavouriteFolderModel.create))
     }
     
 }

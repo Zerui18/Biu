@@ -28,4 +28,26 @@ extension BKAppEndpoint {
             }
         }
     }
+    // MARK: User Space
+    public struct BKUserSpaceResponse: Codable {
+        public let card: Card
+        public let images: Images
+        
+        public struct Card: Codable {
+            public let mid: Int
+            public let name: String
+            public let sex: String
+            public let face: URL
+            public let sign: String
+        }
+        
+        public struct Images: Codable {
+            public let banner: URL
+            public let bannerNight: URL?
+            
+            public enum CodingKeys: String, CodingKey {
+                case banner = "imgUrl", bannerNight = "night_imgurl"
+            }
+        }
+    }
 }

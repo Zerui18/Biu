@@ -48,7 +48,7 @@ public class BKClient {
     private func _login(username: String, password: String, captcha: [String:String]?) -> LoginPublisher {
         BKPassportEndpoint.createGetKeyRequest()
             .fetch()
-            .flatMap { keyResponse -> LoginPublisher in
+            .flatMap { (keyResponse: BKResponse<BKPassportEndpoint.GetKeyResponse>) -> LoginPublisher in
                 let hash = keyResponse.data.hash
                 let key = keyResponse.data.key
                 
@@ -146,7 +146,7 @@ public class BKClient {
                 Timer.publish(every: 170, tolerance: 1, on: .main, in: .default, options: nil)
                 .autoconnect())
             .setFailureType(to: BKError.self)
-            .flatMap {_ in
+            .flatMap {_ -> AnyPublisher<BKResponse<BKPassportEndpoint.GetQRCodeResponse>, BKError> in
                 BKPassportEndpoint.createGetQRCodeRequest()
                     .fetch()
             }

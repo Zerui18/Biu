@@ -10,17 +10,21 @@
         <attribute name="thumbnailURL" attributeType="URI"/>
         <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="title" attributeType="String"/>
-        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SavedUpper"/>
-        <relationship name="staff" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="SavedUpper" inverseName="savedMedias" inverseEntity="SavedUpper"/>
+        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SavedUpper" inverseName="ownedWorks" inverseEntity="SavedUpper"/>
+        <relationship name="staff" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="SavedUpper" inverseName="participatedWorks" inverseEntity="SavedUpper"/>
     </entity>
-    <entity name="SavedUpper" representedClassName="SavedUpper" syncable="YES" codeGenerationType="class">
+    <entity name="SavedUpper" representedClassName="SavedUpper" syncable="YES" codeGenerationType="category">
+        <attribute name="banner" optional="YES" attributeType="URI"/>
+        <attribute name="bannerNight" optional="YES" attributeType="URI"/>
+        <attribute name="face" optional="YES" attributeType="URI"/>
         <attribute name="mid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="thumbnailURL" optional="YES" attributeType="URI"/>
-        <relationship name="savedMedias" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="SavedMedia" inverseName="staff" inverseEntity="SavedMedia"/>
+        <attribute name="sign" optional="YES" attributeType="String"/>
+        <relationship name="ownedWorks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SavedMedia" inverseName="owner" inverseEntity="SavedMedia"/>
+        <relationship name="participatedWorks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SavedMedia" inverseName="staff" inverseEntity="SavedMedia"/>
     </entity>
     <elements>
-        <element name="SavedMedia" positionX="-63" positionY="-18" width="128" height="194"/>
-        <element name="SavedUpper" positionX="-63" positionY="54" width="128" height="89"/>
+        <element name="SavedMedia" positionX="-63" positionY="-18" width="128" height="208"/>
+        <element name="SavedUpper" positionX="-477.2852783203125" positionY="-40.72332763671875" width="128" height="149"/>
     </elements>
 </model>

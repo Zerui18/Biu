@@ -24,17 +24,21 @@ final class DownloadsModel: ObservableObject {
         request.sortDescriptors = [.init(keyPath: \SavedMedia.timestamp, ascending: true)]
         savedMedias = try! mocGlobal.fetch(request)
         
-        // Fetch all SavedUppers.
-        savedUppers = try! mocGlobal.fetch(SavedUpper.fetchRequest())
-        
         // Create storage folder if necessary.
-        if !FileManager.default.fileExists(atPath: downloadsFolder.path) {
-            try! FileManager.default.createDirectory(at: downloadsFolder, withIntermediateDirectories: false, attributes: nil)
+        if !FileManager.default.fileExists(atPath: DownloadsModel.downloadsFolder.path) {
+            try! FileManager.default.createDirectory(at: DownloadsModel.downloadsFolder, withIntermediateDirectories: false, attributes: nil)
         }
         
         // Re-create Tetra tasks for all tasks which have yet to download.
         for media in savedMedias where !media.isDownloaded {
-            reinitiateDownload(forMedia: media)
+            // First check if media is actually downloaded.
+            if FileManager.default.fileExists(atPath: media.localURL.path) {
+                media.isDownloaded = true
+            }
+            else {
+                // Otherwise initialize new download task for it.
+                reinitiateDownload(forMedia: media)
+            }
         }
     }
     
@@ -42,11 +46,11 @@ final class DownloadsModel: ObservableObject {
     
     @Published var resourceError: BKError?
     
-    // MARK: Private API
-    
-    let downloadsFolder = FileManager.default
+    static let downloadsFolder = FileManager.default
         .urls(for: .documentDirectory, in: .userDomainMask)[0]
         .appendingPathComponent("SavedMedias")
+    
+    // MARK: Private API
     
     /// All tasks from tetra.
     private var allDownloads: [String:TTask] {
@@ -59,31 +63,8 @@ final class DownloadsModel: ObservableObject {
     /// The timestamp ordered SavedMedia objects.
     private var savedMedias: [SavedMedia]
     
-    /// Unordered SavedUpper objects.
-    private var savedUppers: [SavedUpper]
-    
-    func savedUppers(from uppers: [MediaInfoModel.Upper]) -> [SavedUpper] {
-        var savedUppers = [SavedUpper]()
-        for upper in uppers {
-            // Try to find existing SavedUpper.
-            if let savedUpper = self.savedUppers.first(where: { $0.mid == upper.mid }) {
-                savedUppers.append(savedUpper)
-                continue
-            }
-            // Not found, create new SavedUpper.
-            let savedUpper = SavedUpper(context: mocGlobal)
-            savedUpper.name = upper.name
-            savedUpper.mid = Int64(upper.mid)
-            savedUpper.thumbnailURL = upper.thumbnailURL
-            savedUppers.append(savedUpper)
-            // Append to self.savedUppers.
-            self.savedUppers.append(savedUpper)
-        }
-        return savedUppers
-    }
-    
     /// Creates a SavedMedia object and link its SavedUpper object.
-    func createSavedMedia(forMedia media: MediaInfoModel) -> SavedMedia {
+    func createSavedMedia(forMedia media: MediaInfoDataModel) -> SavedMedia {
         let savedMedia = SavedMedia(context: mocGlobal)
         savedMedia.timestamp = Date()
         // Save properties.
@@ -94,18 +75,19 @@ final class DownloadsModel: ObservableObject {
         savedMedia.desc = media.desc
         savedMedia.duration = Int64(media.duration)
         savedMedia.thumbnailURL = media.thumbnailURL
-        // Add owner.
-        savedMedia.owner = savedUppers(from: [media.owner!])[0]
-        // Add staff.
-        savedUppers(from: media.staff ?? [])
+        // Set owner.
+        UppersModel.shared.savedUppers(from: [media.owner!])[0]
+            .addToOwnedWorks(savedMedia)
+        // Set staff.
+        UppersModel.shared.savedUppers(from: media.staff ?? [])
             .forEach {
-                $0.addToSavedMedias(savedMedia)
+                $0.addToParticipatedWorks(savedMedia)
             }
         return savedMedia
     }
     
     /// Create a new SavedMedia and Tetra download for the given MediaInfoModel.
-    private func newDownload(forMedia media: MediaInfoModel) {
+    private func newDownload(forMedia media: MediaInfoDataModel) {
         // Create the SavedMedia object and keep track of it.
         let savedMedia = createSavedMedia(forMedia: media)
         // Initialize the download task.
@@ -152,7 +134,7 @@ final class DownloadsModel: ObservableObject {
                     self.resourceError = nil
                 }
             } receiveValue: { output in
-                let item = MediaInfoModel(with: output.1, mediaURL: output.0.url)
+                let item = MediaInfoDataModel(with: output.1, mediaURL: output.0.url)
                 // Create download for the media item.
                 self.newDownload(forMedia: item)
             }

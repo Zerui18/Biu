@@ -26,7 +26,7 @@ struct DownloadsView: View {
                 }
 
                 NavigationLink(
-                    destination: DownloadingView()) {
+                    destination: UppersListView()) {
                     Image(systemName: "person.circle")
                     Text("Up主")
                 }
@@ -43,7 +43,6 @@ struct DownloadsView: View {
                 )
                 .padding([.top], 10)
                 .padding([.bottom], 100)
-                .background(Color(.systemBackground))
             }
             .padding([.top, .bottom], 10)
             .navigationBarTitle(Text("下载"))
@@ -59,7 +58,7 @@ struct DownloadsView_Previews: PreviewProvider {
             newMedia.title = "Media 1"
             newMedia.owner = SavedUpper(context: context)
             newMedia.owner!.name = "hanser"
-            newMedia.owner!.thumbnailURL = URL(string: "http://i2.hdslb.com/bfs/archive/07502ee8927e843b4f5b85b36a66cedde8079eeb.jpg")
+            newMedia.owner!.face = URL(string: "http://i2.hdslb.com/bfs/archive/07502ee8927e843b4f5b85b36a66cedde8079eeb.jpg")
             newMedia.isDownloaded = true
         }
         return DownloadsView()

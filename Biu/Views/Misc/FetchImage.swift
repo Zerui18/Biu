@@ -16,11 +16,11 @@ final class FetchImage: ObservableObject {
     
     /// Init with a placeholder UIImage and url for network image.
     init(url: URL, placeholder: UIImage = UIImage(named: "bg_placeholder")!) {
-        image = .init(uiImage: placeholder)
+        image = SwiftUI.Image(uiImage: placeholder).resizable()
         
         loadImageTask = ImagePipeline.shared.loadImage(with: url) { (response) in
             if let image = try? response.get().image {
-                self.image = .init(uiImage: image)
+                self.image = SwiftUI.Image(uiImage: image).renderingMode(.original).resizable()
             }
         }
     }

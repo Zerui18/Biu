@@ -24,8 +24,8 @@ public protocol BKEndpoint {
      
      The default implementation is provided by the protocol and should not be overriden.
      */
-    func createRequest<DataType: Codable>(using method: BKRequest<DataType>.Method,
-                                                 withQuery query: [String : String]?) -> BKRequest<DataType>
+    func createRequest(using method: BKRequest.Method,
+                                                 withQuery query: [String : String]?) -> BKRequest
 }
 
 // MARK: Default Impl
@@ -34,8 +34,8 @@ extension BKEndpoint {
         baseURL.appendingPathComponent(rawValue)
     }
     
-    public func createRequest<DataType: Codable>(using method: BKRequest<DataType>.Method,
-                                                 withQuery query: [String : String]? = nil) -> BKRequest<DataType> {
+    public func createRequest(using method: BKRequest.Method,
+                                                 withQuery query: [String : String]? = nil) -> BKRequest {
         BKRequest(method: method, endpoint: self, query: query ?? [:])
     }
 }

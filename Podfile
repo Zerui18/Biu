@@ -4,7 +4,6 @@
 target 'BiliKit' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-  pod 'Nuke', '~> 9.0'
   # Pods for BiliKit
 
 end
@@ -12,7 +11,8 @@ end
 target 'Biu' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-
+  pod 'Nuke', '~> 9.0'
+  pod "Introspect"
   # Pods for Biu
 
 end

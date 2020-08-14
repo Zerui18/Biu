@@ -22,7 +22,6 @@ struct DownloadedCell: View {
         GeometryReader { geometry in
             VStack {
                 thumbnailImage.image
-                    .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: geometry.size.width, height: geometry.size.width / 1.6)
                     .cornerRadius(12)

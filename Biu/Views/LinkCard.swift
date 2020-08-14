@@ -22,6 +22,7 @@ struct LinkCard: View {
             thumbnailImage.image
                 .resizable()
                 .frame(width: 1.6 * 60, height: 60)
+                .background(Color.blue)
                 .cornerRadius(5)
 
             Spacer()
@@ -63,7 +64,7 @@ struct LinkCard: View {
 // MARK: Convenience Inits
 extension LinkCard {
     
-    init(folder: FavouriteFolderModel) {
+    init(folder: FavouriteFolderDataModel) {
         self.init(
             thumbnailImage:
                 FetchImage(url: folder.thumbnailURL),

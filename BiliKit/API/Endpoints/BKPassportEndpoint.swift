@@ -22,13 +22,13 @@ public enum BKPassportEndpoint: String, BKEndpoint {
     }
     
     // MARK: Request Creation
-    public static func createGetKeyRequest() -> BKRequest<GetKeyResponse> {
+    public static func createGetKeyRequest() -> BKRequest {
         BKPassportEndpoint.getKey.createRequest(using: .post)
     }
     
     /// Creates a login request. This is the only request not meant to be directly called with .fetch(), use instead BKClient's login methods.
     public static func createLoginRequest(username: String, password: String,
-                                          otherParams: [String:String]? = nil) -> BKRequest<LoginResponse> {
+                                          otherParams: [String:String]? = nil) -> BKRequest {
         var params = otherParams ?? [:]
         params["username"] = username
         params["password"] = password
@@ -36,7 +36,7 @@ public enum BKPassportEndpoint: String, BKEndpoint {
     }
     
     /// Creates a QRCode url request.
-    public static func createGetQRCodeRequest() -> BKRequest<GetQRCodeResponse> {
+    public static func createGetQRCodeRequest() -> BKRequest {
         BKPassportEndpoint.getQRCode.createRequest(using: .get)
     }
     

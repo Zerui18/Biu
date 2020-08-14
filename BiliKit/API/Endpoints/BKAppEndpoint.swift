@@ -10,6 +10,7 @@ import Combine
 public enum BKAppEndpoint: String, BKEndpoint {
     
     case getDashMaps = "/x/playurl"
+    case getUserSpace = "/x/v2/space"
     
     public var baseURL: URL {
         URL(string: "https://app.bilibili.com")!
@@ -27,6 +28,17 @@ public enum BKAppEndpoint: String, BKEndpoint {
             "aid" : String(aid),
         ]
         return BKAppEndpoint.getDashMaps
+            .createRequest(using: .get, withQuery: query)
+            .fetch()
+    }
+    
+    public static func getUserSpace(forMid mid: Int) -> AnyPublisher<BKResponse<BKUserSpaceResponse>, BKError> {
+        let query = [
+            "from" : "0",
+            "ps" : "10",
+            "vmid" : String(mid),
+        ]
+        return BKAppEndpoint.getUserSpace
             .createRequest(using: .get, withQuery: query)
             .fetch()
     }

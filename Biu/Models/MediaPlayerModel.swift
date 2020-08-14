@@ -19,12 +19,12 @@ final class MediaPlayerModel: ObservableObject {
     // MARK: Init
     init() {}
     
-    init(item: MediaInfoModel) {
+    init(item: MediaInfoDataModel) {
         self.currentItem = item
     }
     
     // MARK: Published
-    @Published var currentItem: MediaInfoModel? {
+    @Published var currentItem: MediaInfoDataModel? {
         willSet {
             // Clean up observations and tasks.
             loadItemCancellable = nil
@@ -97,7 +97,7 @@ final class MediaPlayerModel: ObservableObject {
     }
     
     func play(_ media: SavedMedia) {
-        currentItem = MediaInfoModel(with: media)
+        currentItem = MediaInfoDataModel(with: media)
     }
     
     func seek(to seconds: TimeInterval, play: Bool) {
@@ -157,7 +157,7 @@ final class MediaPlayerModel: ObservableObject {
                     self.resourceError = nil
                 }
             } receiveValue: { output in
-                let item = MediaInfoModel(with: output.1, mediaURL: output.0.url)
+                let item = MediaInfoDataModel(with: output.1, mediaURL: output.0.url)
                 self.currentItem = item
             }
     }
@@ -178,72 +178,5 @@ final class MediaPlayerModel: ObservableObject {
                 currentTime.wrappedValue = time.seconds
             }
         }
-    }
-}
-
-// MARK: Media Info Model
-struct MediaInfoModel {
-    
-    let aid: Int
-    let bvid: String
-    let cid: Int
-    let title: String
-    let desc: String
-    let duration: Int
-    let mediaURL: URL
-    let thumbnailURL: URL
-    
-    /// This property is nil when the instance is created from a `SavedMedia` object.
-    let staff: [Upper]?
-    /// This property is nil when the instance is created from a `SavedMedia` object.
-    let owner: Upper?
-    
-    struct Upper {
-        let name: String
-        let mid: Int
-        let thumbnailURL: URL
-        let title: String?
-        
-        init(with upper: BKMainEndpoint.VideoInfoResponse.Upper) {
-            self.name = upper.name
-            self.mid = upper.mid
-            self.thumbnailURL = upper.face
-            self.title = upper.title
-        }
-    }
-    
-    /// Flag indicating whether this object is created from a SavedMedia object, in which case mediaURL would contain a local URL.
-    let isSavedMedia: Bool
-    
-    let player: AVPlayer
-    
-    init(with videoInfo: BKMainEndpoint.VideoInfoResponse, mediaURL: URL) {
-        self.aid = videoInfo.aid
-        self.bvid = videoInfo.bvid
-        self.cid = videoInfo.pages[0].cid
-        self.title = videoInfo.title
-        self.desc = videoInfo.desc
-        self.duration = videoInfo.duration
-        self.mediaURL = mediaURL
-        self.thumbnailURL = videoInfo.thumbnailURL
-        self.isSavedMedia = false
-        self.player = AVPlayer(url: mediaURL)
-        self.staff = videoInfo.staff?.map(Upper.init)
-        self.owner = .init(with: videoInfo.owner)
-    }
-    
-    init(with savedMedia: SavedMedia) {
-        self.aid = Int(savedMedia.aid)
-        self.bvid = savedMedia.bvid!
-        self.cid = Int(savedMedia.cid)
-        self.title = savedMedia.title!
-        self.desc = savedMedia.desc!
-        self.duration = Int(savedMedia.duration)
-        self.mediaURL = savedMedia.localURL
-        self.thumbnailURL = savedMedia.thumbnailURL!
-        self.isSavedMedia = true
-        self.player = AVPlayer(url: savedMedia.localURL)
-        self.staff = nil
-        self.owner = nil
     }
 }

@@ -36,7 +36,7 @@ public class SavedMedia: NSManagedObject {
     }
     
     var localURL: URL {
-        DownloadsModel.shared.downloadsFolder.appendingPathComponent("\(bvid!).mp4")
+        DownloadsModel.downloadsFolder.appendingPathComponent("\(bvid!).mp4")
     }
     
     var upper: SavedUpper? {

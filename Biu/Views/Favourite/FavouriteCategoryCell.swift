@@ -12,7 +12,7 @@ import BiliKit
 struct FavouriteCategoryCell: View {
         
     /// The category this view should display.
-    let category: FavouriteCategoryModel
+    let category: FavouriteCategoryDataModel
     
     var body: some View {
         VStack {
