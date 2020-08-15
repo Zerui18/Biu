@@ -121,7 +121,7 @@ public class TTask: ObservableObject {
             case .downloading(_):
                 newSState = .downloading
             case .failure(_):
-                newSState = .downloading
+                newSState = .none
             case .paused:
                 newSState = .downloading
             case .success:

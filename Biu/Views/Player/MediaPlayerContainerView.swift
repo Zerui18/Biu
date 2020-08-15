@@ -27,7 +27,7 @@ struct MediaPlayerContainerView: View {
                         
             MediaPlayerView(isExpanded: $isPlayerExpanded, shouldDisableDrag: $shouldDisableDrag)
                 // Don't fill the width.
-                .padding([.leading, .trailing], isPlayerExpanded ? 0:10)
+                .padding([.leading, .trailing], isPlayerExpanded ? 0:15)
                 // Pad top when expended.
                 .padding(.top, isPlayerExpanded ? 60:0)
                 // Set height.

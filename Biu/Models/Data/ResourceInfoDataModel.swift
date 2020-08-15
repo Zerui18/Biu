@@ -53,3 +53,21 @@ class ResourceInfoModel: Identifiable, ObservableObject {
     }
     
 }
+
+extension ResourceInfoModel: MediaRepresentable {
+    func getBVId() -> String {
+        bvid
+    }
+    
+    func getTitle() -> String {
+        title
+    }
+    
+    func getThumbnailURL() -> URL {
+        thumbnailURL
+    }
+    
+    func getAuthor() -> UpperRepresentable {
+        fatalError("ResourceInfoModel.getAuthor is not implemented!")
+    }
+}

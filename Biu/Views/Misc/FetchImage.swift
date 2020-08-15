@@ -28,7 +28,7 @@ final class FetchImage: ObservableObject {
     
     /// Init with an Image.
     init(image: SwiftUI.Image) {
-        self.image = image
+        self.image = image.resizable()
     }
     
 }

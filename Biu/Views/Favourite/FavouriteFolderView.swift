@@ -19,21 +19,21 @@ struct FavouriteFolderView: View {
             // Loaded items.
             if let items = model.items {
                 ScrollView {
+                    Color.clear
+                        .frame(height: 10)
+                    
                     ForEach(items) { item in
                         FavouriteItemCell(item: item)
                             .frame(height: 90)
-                            .transition(.opacity)
-                            .animation(.easeIn)
                             .onTapGesture(count: 1) {
                                 MediaPlayerModel.shared.play(item)
                             }
                     }
-                    .padding(.bottom, 10)
+                    .padding([.leading, .trailing, .bottom])
                     
-                    Spacer()
-                        .frame(height: 80)
+                    Color.clear
+                        .frame(height: 90)
                 }
-                .padding()
             }
             // Loading / error.
             else {

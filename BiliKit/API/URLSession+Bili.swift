@@ -17,7 +17,7 @@ public extension URLSession {
                 $0.0
             }
             .tryMap { data in
-                print(String(data: data, encoding: .utf8)!)
+//                print(String(data: data, encoding: .utf8)!)
                 do {
                     return try JSONDecoder().decode(DataType.self, from: data)
                 }

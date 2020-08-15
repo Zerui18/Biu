@@ -1,5 +1,5 @@
 //
-//  DownloadedCell.swift
+//  MediaCell.swift
 //  Biu
 //
 //  Created by Zerui Chen on 10/8/20.
@@ -8,15 +8,17 @@
 import SwiftUI
 
 
-struct DownloadedCell: View {
+struct MediaCell: View {
     
-    init(media: SavedMedia) {
+    init(media: MediaRepresentable, showAuthor: Bool = true) {
         self.media = media
-        self.thumbnailImage = .init(url: media.thumbnailURL!)
+        self.thumbnailImage = .init(url: media.getThumbnailURL())
+        self.compact = showAuthor
     }
     
     @ObservedObject var thumbnailImage: FetchImage
-    let media: SavedMedia
+    let media: MediaRepresentable
+    let compact: Bool
     
     var body: some View {
         GeometryReader { geometry in
@@ -25,22 +27,24 @@ struct DownloadedCell: View {
                     .aspectRatio(contentMode: .fill)
                     .frame(width: geometry.size.width, height: geometry.size.width / 1.6)
                     .cornerRadius(12)
-                
-                Text(media.title!)
+                                
+                Text(media.getTitle())
                     .font(Font.caption.bold())
-                    .lineLimit(2)
+                    .lineLimit(compact ? 3:2)
                     .frame(maxWidth: geometry.size.width, alignment: .leading)
                     .padding([.leading, .trailing], 3)
                     .padding(.bottom, 0.01)
                 
                 Spacer()
                 
-                Text(media.owner!.name!)
-                    .font(.caption)
-                    .foregroundColor(Color(.secondaryLabel))
-                    .lineLimit(1)
-                    .frame(maxWidth: geometry.size.width, alignment: .leading)
-                    .padding([.leading, .trailing, .bottom], 3)                
+                if compact {
+                    Text(media.getAuthor().getName())
+                        .font(.caption)
+                        .foregroundColor(Color(.secondaryLabel))
+                        .lineLimit(1)
+                        .frame(maxWidth: geometry.size.width, alignment: .leading)
+                        .padding([.leading, .trailing, .bottom], 3)
+                }
             }
         }
         .padding(8)
@@ -59,6 +63,6 @@ struct DownloadedCell: View {
 //        newMedia.owner = SavedUpper(context: context)
 //        newMedia.owner!.name = "hanser"
 //        newMedia.isDownloaded = true
-//        return DownloadedCell(media: newMedia)
+//        return MediaCell(media: newMedia)
 //    }
 //}

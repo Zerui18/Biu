@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Grid
+import Introspect
 
 struct DownloadsView: View {
     
@@ -32,8 +33,9 @@ struct DownloadsView: View {
                 }
 
                 Grid(downloadedSavedMedias) { media in
-                    DownloadedCell(media: media)
+                    MediaCell(media: media)
                         .frame(width: 160)
+                        .animation(nil)
                         .onTapGesture {
                             MediaPlayerModel.shared.play(media)
                         }
@@ -44,7 +46,9 @@ struct DownloadsView: View {
                 .padding([.top], 10)
                 .padding([.bottom], 100)
             }
-            .padding([.top, .bottom], 10)
+            .introspectTableView {
+                $0.tableFooterView = UIView()
+            }
             .navigationBarTitle(Text("下载"))
         }
     }
@@ -56,6 +60,7 @@ struct DownloadsView_Previews: PreviewProvider {
         for _ in 1...5 {
             let newMedia = SavedMedia(context: context)
             newMedia.title = "Media 1"
+            newMedia.thumbnailURL = URL(string: "https://i0.hdslb.com/bfs/archive/e523109320dde93e7919cbfed4a780bc1a4a81e6.jpg")
             newMedia.owner = SavedUpper(context: context)
             newMedia.owner!.name = "hanser"
             newMedia.owner!.face = URL(string: "http://i2.hdslb.com/bfs/archive/07502ee8927e843b4f5b85b36a66cedde8079eeb.jpg")

@@ -83,6 +83,8 @@ final class DownloadsModel: ObservableObject {
             .forEach {
                 $0.addToParticipatedWorks(savedMedia)
             }
+        // Immediate CoreData save.
+        try? mocGlobal.save()
         return savedMedia
     }
     

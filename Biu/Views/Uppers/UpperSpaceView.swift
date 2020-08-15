@@ -13,7 +13,7 @@ struct UpperSpaceView: View {
         self.upper = upper
         self.face = .init(url: upper.getFace())
         self.banner = upper.getBanner().flatMap { .init(url: $0) }
-                                                ?? .init(image: Image(""))
+                                                ?? .init(image: Image(uiImage: UIImage()))
     }
     
     @Environment(\.colorScheme) var colorScheme: ColorScheme
@@ -22,42 +22,76 @@ struct UpperSpaceView: View {
     @ObservedObject var face: FetchImage
     @ObservedObject var banner: FetchImage
     
+    @State var hasLoadedUpper = false
+    
     let upper: UpperRepresentable
     
     var body: some View {
-        ScrollView {
+        ScrollView(.vertical) {
             // Top.
-            ZStack(alignment: Alignment(horizontal: .leading, vertical: .bottom)) {
-                banner.image
-                    .frame(maxWidth: .infinity)
-                    .mask(LinearGradient(gradient:
-                                            .init(stops: [
-                                                .init(color: .white, location: 0.6),
-                                                .init(color: Color.white.opacity(0.25), location: 1)
-                                            ]),
-                                           startPoint: .top, endPoint: .bottom))
-                
-                VStack(alignment: .leading, spacing: 10) {
-                    Text(upper.getName())
-                        .font(Font.largeTitle.bold())
-                    
-                    if let sign = upper.getSign() {
-                        Text(sign)
-                            .font(.subheadline)
+            ZStack(alignment: .top) {
+                VStack {
+                    banner.image
+                        .aspectRatio(contentMode: .fill)
+                        .frame(maxWidth: .infinity, maxHeight: 120)
+                        .clipped()
+
+                    VStack(spacing: 10) {
+                        Text(upper.getName())
+                            .font(Font.largeTitle.bold())
+
+                        if let sign = upper.getSign() {
+                            Text(sign)
+                                .font(.subheadline)
+                        }
                     }
+                    .padding(15)
+                    // 50 placess name right below the image.
+                    .padding(.top, 50 + 20)
                 }
-                .padding(10)
+
+                face.image
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 100, height: 100)
+                    .cornerRadius(50)
+                    .overlay(Circle().stroke(Color(.systemBackground), lineWidth: 4))
+                    .padding(.top, 100)
             }
-            .padding(.bottom, 20)
+            .layoutPriority(1)
+            
+            Divider()
             
             // Saved Works.
+            if let upper = model.savedUpper,
+               let medias = upper.ownedWorks?.allObjects as? [SavedMedia] {
+                UpperSpaceSection(title: "已保存", media: medias) {
+                    Color.white
+                }
+                .padding(.bottom, 20)
+                
+                Divider()
+            }
             
             // Loaded Works.
+            if let upper = model.remoteUpper {
+                UpperSpaceSection(title: "最新", media: upper.archive.item) {
+                    Color.white
+                }
+                .padding(.bottom, 20)
+                
+                Divider()
+            }
+            
+            Color.clear
+                .frame(height: 200)
         }
         .background(Color(.systemBackground))
-        .edgesIgnoringSafeArea(.top)
+        .edgesIgnoringSafeArea([.top, .bottom])
         .onAppear {
-            model.loadUpper(forMid: upper.getMid())
+            if !hasLoadedUpper {
+                model.loadUpper(with: upper)
+                hasLoadedUpper = true
+            }
         }
     }
 }
@@ -65,13 +99,13 @@ struct UpperSpaceView: View {
 struct UpperSpaceView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            UpperSpaceView(upper: MockUpperInfo())
+            UpperSpaceView(upper: _MockUpperInfo())
                 .colorScheme(.dark)
         }
     }
 }
 
-struct MockUpperInfo: UpperRepresentable {
+struct _MockUpperInfo: UpperRepresentable {
     func getMid() -> Int {
         282994
     }
@@ -90,4 +124,28 @@ struct MockUpperInfo: UpperRepresentable {
     func getBannerNight() -> URL? {
         nil
     }
+}
+
+struct _MockMediaInfo: Identifiable, MediaRepresentable {
+    func getBVId() -> String {
+        "BV1Wt4y1Q797"
+    }
+    
+    func getTitle() -> String {
+        "【动画PV】冰糖-ファンサ《Fans》★【超电VUP】"
+    }
+    
+    func getThumbnailURL() -> URL {
+        URL(string: "https://i0.hdslb.com/bfs/archive/e523109320dde93e7919cbfed4a780bc1a4a81e6.jpg")!
+    }
+    
+    func getAuthor() -> UpperRepresentable {
+        author
+    }
+    
+    
+    let id = UUID()
+    let author = _MockUpperInfo()
+    
+    static let samples: [_MockMediaInfo] = (1...10).map { _ in _MockMediaInfo() }
 }

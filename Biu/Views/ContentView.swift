@@ -15,8 +15,7 @@ struct ContentView: View {
         ZStack {
             if !presentingLogin {
                 UIKitTabView([
-                    .init(view:
-                            FavouriteView(),
+                    .init(view: FavouriteView(),
                           barItem:
                             .init(title: "收藏",
                                   image: UIImage(systemName: "cube.box"),

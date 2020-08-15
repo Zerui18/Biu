@@ -22,7 +22,7 @@ protocol UpperRepresentable {
 extension BKAppEndpoint.BKUserSpaceResponse: UpperRepresentable {
     
     func getMid() -> Int {
-        card.mid
+        Int(card.mid)!
     }
     
     func getName() -> String {

@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct UpperMediasRow: View {
-    
-//    @Binding var works: [ResourceInfoModel]
-    
+//    @Binding var works: []
     var body: some View {
-        Color.white
+        
     }
 }
 

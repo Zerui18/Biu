@@ -20,6 +20,14 @@ public class SavedUpper: NSManagedObject {
         self.face = upperInfo.face
     }
     
+    /// Update info from another upper object.
+    func update(with upper: UpperRepresentable) {
+        self.name = upper.getName()
+        self.sign = upper.getSign()
+        self.face = upper.getFace()
+        self.banner = upper.getBanner()
+        self.bannerNight = upper.getBannerNight()
+    }
 }
 
 extension Sequence where Iterator.Element == SavedUpper {

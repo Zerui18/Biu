@@ -22,18 +22,27 @@ class UppersModel: ObservableObject {
     private var savedUppers: [SavedUpper]
     
     // MARK: Published
-    @Published var currentUpper: UpperRepresentable?
+    /// The SavedUpper copy of the currently displayed upper.
+    @Published var savedUpper: SavedUpper?
+    /// The remotely-loaded data of the currently displayed upper.
+    @Published var remoteUpper: BKAppEndpoint.BKUserSpaceResponse?
+    /// Error when loading remoteUpper.
     @Published var error: Error?
     
     // MARK: Cancellables
     private var loadUpperCancellable: AnyCancellable?
+    
+    /// Try to find a SavedUpper by id.
+    private func savedUpper(forMid mid: Int) -> SavedUpper? {
+        self.savedUppers.first(where: { $0.mid == mid })
+    }
     
     /// Convert an array of `Upper` objects from Bilikit to an array of `SavedUpper`, creating new ones if necessary.
     func savedUppers(from uppers: [MediaInfoDataModel.Upper]) -> [SavedUpper] {
         var savedUppers = [SavedUpper]()
         for upper in uppers {
             // Try to find existing SavedUpper.
-            if let savedUpper = self.savedUppers.first(where: { $0.mid == upper.mid }) {
+            if let savedUpper = self.savedUpper(forMid: upper.mid) {
                 savedUppers.append(savedUpper)
                 continue
             }
@@ -50,9 +59,17 @@ class UppersModel: ObservableObject {
     }
     
     /// Start loading information for a given upper `mid`,
-    func loadUpper(forMid mid: Int, updating savedUpper: SavedUpper? = nil) {
+    func loadUpper(with upper: UpperRepresentable) {
+        self.savedUpper = nil
+        self.remoteUpper = nil
+        self.error = nil
+        
+        if let saved = upper as? SavedUpper {
+            self.savedUpper = saved
+        }
+        
         loadUpperCancellable =
-            BKAppEndpoint.getUserSpace(forMid: mid)
+            BKAppEndpoint.getUserSpace(forMid: upper.getMid())
             .receive(on: RunLoop.main)
             .sink { (completion) in
                 if case let .failure(error) = completion {
@@ -62,8 +79,15 @@ class UppersModel: ObservableObject {
                     self.error = nil
                 }
             } receiveValue: { response in
-                self.currentUpper = response.data
+                self.remoteUpper = response.data
+                self.savedUpper?.update(with: response.data)
             }
     }
     
+}
+
+extension BKAppEndpoint.BKUserSpaceResponse.Media: Identifiable {
+    public var id: String {
+        bvid
+    }
 }

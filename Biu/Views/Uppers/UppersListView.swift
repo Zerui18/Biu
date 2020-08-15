@@ -29,11 +29,13 @@ struct UppersListView: View {
                     }
                 }
             }
+            
+            Color.clear
+                .frame(height: 100)
         }
         .introspectTableView {
             $0.tableFooterView = UIView()
         }
-        .padding(.bottom, 110)
         .navigationBarTitle(Text("Up主"))
     }
 }

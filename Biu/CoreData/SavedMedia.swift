@@ -43,3 +43,21 @@ public class SavedMedia: NSManagedObject {
         staff?[0] as? SavedUpper
     }
 }
+
+extension SavedMedia: MediaRepresentable {
+    func getBVId() -> String {
+        bvid!
+    }
+    
+    func getTitle() -> String {
+        title!
+    }
+    
+    func getThumbnailURL() -> URL {
+        thumbnailURL!
+    }
+    
+    func getAuthor() -> UpperRepresentable {
+        owner!
+    }
+}

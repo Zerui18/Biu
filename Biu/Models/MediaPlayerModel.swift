@@ -76,7 +76,11 @@ final class MediaPlayerModel: ObservableObject {
     private var imageTask: ImageTask?
     
     // MARK: Methods
-    func bind(_ playState: Binding<MediaPlayerView.PlayState>,  _ isSeeking: Binding<Bool>, _ currentTime: Binding<TimeInterval>, _ duration: Binding<TimeInterval>, _ thumbnailImage: Binding<SwiftUI.Image>) {
+    func bind(_ playState: Binding<MediaPlayerView.PlayState>,
+              _ isSeeking: Binding<Bool>,
+              _ currentTime: Binding<TimeInterval>,
+              _ duration: Binding<TimeInterval>,
+              _ thumbnailImage: Binding<SwiftUI.Image>) {
         self.playState = playState
         self.isSeeking = isSeeking
         self.currentTime = currentTime
@@ -84,20 +88,15 @@ final class MediaPlayerModel: ObservableObject {
         self.thumbnailImage = thumbnailImage
     }
     
-    func play(_ item: ResourceInfoModel) {
+    func play(_ item: MediaRepresentable) {
         // Check if the item is already downloaded.
-        if item.downloadTask.simpleState.value == .downloaded,
-           let media = DownloadsModel.shared.savedMedia(forId: item.bvid) {
-            play(media)
+        if let media = DownloadsModel.shared.savedMedia(forId: item.getBVId()) {
+            currentItem = MediaInfoDataModel(with: media)
         }
         // Otherwise proceed to loading.
         else {
-            startLoading(item: item)
+            startLoading(item)
         }
-    }
-    
-    func play(_ media: SavedMedia) {
-        currentItem = MediaInfoDataModel(with: media)
     }
     
     func seek(to seconds: TimeInterval, play: Bool) {
@@ -127,7 +126,7 @@ final class MediaPlayerModel: ObservableObject {
     }
     
     // MARK: Private Helpers
-    private func startLoading(item: ResourceInfoModel) {
+    private func startLoading(_ item: MediaRepresentable) {
         // Clear props.
         currentItem = nil
         isSeeking.wrappedValue = false
@@ -136,7 +135,7 @@ final class MediaPlayerModel: ObservableObject {
         // Remove tasks.
         loadItemCancellable?.cancel()
         // Load new item.
-        loadItemCancellable = BKMainEndpoint.getVideoInfo(forBV: item.bvid)
+        loadItemCancellable = BKMainEndpoint.getVideoInfo(forBV: item.getBVId())
             .flatMap { response in
                 BKAppEndpoint.getDashMaps(forAid: response.data.aid, cid: response.data.pages[0].cid)
                     .map {

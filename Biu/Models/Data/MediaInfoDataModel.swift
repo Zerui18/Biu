@@ -37,6 +37,13 @@ struct MediaInfoDataModel {
             self.face = upper.face
             self.title = upper.title
         }
+        
+        init(with upper: SavedUpper) {
+            self.name = upper.name!
+            self.mid = Int(upper.mid)
+            self.face = upper.face!
+            self.title = nil
+        }
     }
     
     /// Flag indicating whether this object is created from a SavedMedia object, in which case mediaURL would contain a local URL.
@@ -71,6 +78,50 @@ struct MediaInfoDataModel {
         self.isSavedMedia = true
         self.player = AVPlayer(url: savedMedia.localURL)
         self.staff = nil
-        self.owner = nil
+        self.owner = .init(with: savedMedia.owner!)
+    }
+}
+
+extension MediaInfoDataModel.Upper: UpperRepresentable {
+    func getMid() -> Int {
+        mid
+    }
+    
+    func getName() -> String {
+        name
+    }
+    
+    func getFace() -> URL {
+        face
+    }
+    
+    func getBanner() -> URL? {
+        nil
+    }
+    
+    func getBannerNight() -> URL? {
+        nil
+    }
+    
+    func getSign() -> String? {
+        nil
+    }
+}
+
+extension MediaInfoDataModel: MediaRepresentable {
+    func getBVId() -> String {
+        bvid
+    }
+    
+    func getTitle() -> String {
+        title
+    }
+    
+    func getThumbnailURL() -> URL {
+        thumbnailURL
+    }
+    
+    func getAuthor() -> UpperRepresentable {
+        owner!
     }
 }

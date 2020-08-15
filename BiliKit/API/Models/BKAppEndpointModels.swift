@@ -32,9 +32,10 @@ extension BKAppEndpoint {
     public struct BKUserSpaceResponse: Codable {
         public let card: Card
         public let images: Images
+        public let archive: Archive
         
         public struct Card: Codable {
-            public let mid: Int
+            public let mid: String
             public let name: String
             public let sex: String
             public let face: URL
@@ -43,11 +44,27 @@ extension BKAppEndpoint {
         
         public struct Images: Codable {
             public let banner: URL
-            public let bannerNight: URL?
+            public let _bannerNight: String
+            
+            public var bannerNight: URL? {
+                URL(string: _bannerNight)
+            }
             
             public enum CodingKeys: String, CodingKey {
-                case banner = "imgUrl", bannerNight = "night_imgurl"
+                case banner = "imgUrl", _bannerNight = "night_imgurl"
             }
+        }
+        
+        public struct Archive: Codable {
+            public let count: Int
+            public let item: [Media]
+        }
+        
+        public struct Media: Codable {
+            public let title: String
+            public let cover: URL
+            public let duration: Int
+            public let bvid: String
         }
     }
 }

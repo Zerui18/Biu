@@ -46,6 +46,7 @@ struct MediaPlayerView: View {
             let size = thumbnailSize(with: geometry.size)
             
             thumbnailImage
+                .resizable()
                 .frame(width: size.width, height: size.height)
                 .cornerRadius(size.height * 0.1)
                 .offset(x: isExpanded ? 0:10, y: isExpanded ? 30:0)

@@ -21,7 +21,7 @@ public enum BKAppEndpoint: String, BKEndpoint {
         let query = [
             "force_host" : "0",
             "fnval" : "16",
-            "qn" : "32",
+            "qn" : "120",
             "npcybs" : "0",
             "cid" : String(cid),
             "fnver" : "0",
