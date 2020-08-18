@@ -78,7 +78,7 @@ struct MediaPlayerView: View {
                                 isSeeking = isEditing
                                 shouldDisableDrag = isEditing
                                 if isEditing {
-                                    model.playPause()
+                                    model.togglePlaying()
                                 }
                                 else {
                                     // Seeking ended.
@@ -116,7 +116,7 @@ struct MediaPlayerView: View {
             }
             
             Button {
-                model.playPause()
+                model.togglePlaying()
             } label: {
                 let image = Image(systemName:
                                     playState != .playing ?

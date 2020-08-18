@@ -10,6 +10,7 @@ import Combine
 import BiliKit
 import AVFoundation
 import Nuke
+import MediaPlayer
 
 // MARK: Media Player Model
 final class MediaPlayerModel: ObservableObject {
@@ -17,41 +18,34 @@ final class MediaPlayerModel: ObservableObject {
     static let shared = MediaPlayerModel()
     
     // MARK: Init
-    init() {}
+    init() {
+        self.setupMPCommandCenter()
+    }
     
-    init(item: MediaInfoDataModel) {
+    convenience init(item: MediaInfoDataModel) {
+        self.init()
         self.currentItem = item
     }
     
     // MARK: Published
     @Published var currentItem: MediaInfoDataModel? {
         willSet {
-            // Clean up observations and tasks.
-            loadItemCancellable = nil
-            playRateObservation = nil
-            durationObservation = nil
-            self.currentItem?.player.removeTimeObserver(timeObservation as Any)
-            timeObservation = nil
-            imageTask = nil
+            // Cleanup before currentItem changes.
+            cleanup()
         }
         didSet {
             if let item = currentItem {
                 // Begin observation.
                 observePlayer(item.player)
-                // Play.
-                item.player.play()
                 // Start loading thumbnail.
-                imageTask =
-                    ImagePipeline.shared.loadImage(with: item.thumbnailURL) { result in
-                    if let image = try? result.get().image,
-                       // Check if we're still on the same item.
-                       self.currentItem?.aid == item.aid {
-                        self.thumbnailImage.wrappedValue = .init(uiImage: image)
-                    }
-                }
+                loadThumbnail(for: item)
+                // Set MPNowPlaying info.
+                setMPNowPlaying(for: item)
+                // Start playing when ready.
+                item.player.play()
             }
             else {
-                self.thumbnailImage.wrappedValue = .init("bg_placeholder")
+                thumbnailImage.wrappedValue = .init("bg_placeholder")
             }
         }
     }
@@ -62,14 +56,15 @@ final class MediaPlayerModel: ObservableObject {
     }
     
     // MARK: Bindings
-    var playState: Binding<MediaPlayerView.PlayState>!
-    var isSeeking: Binding<Bool>!
-    var currentTime: Binding<TimeInterval>!
-    var duration: Binding<TimeInterval>!
-    var thumbnailImage: Binding<SwiftUI.Image>!
+    private var playState: Binding<MediaPlayerView.PlayState>!
+    private var isSeeking: Binding<Bool>!
+    private var currentTime: Binding<TimeInterval>!
+    private var duration: Binding<TimeInterval>!
+    private var thumbnailImage: Binding<SwiftUI.Image>!
     
     // MARK: Private Props
     private var loadItemCancellable: AnyCancellable?
+    private var playerReadyObservation: NSKeyValueObservation?
     private var playRateObservation: NSKeyValueObservation?
     private var durationObservation: NSKeyValueObservation?
     private var timeObservation: Any?
@@ -99,37 +94,49 @@ final class MediaPlayerModel: ObservableObject {
         }
     }
     
+    // MARK: Play Controls
+    
     func seek(to seconds: TimeInterval, play: Bool) {
         guard let player = currentItem?.player else {
             return
         }
         let time = CMTime(seconds: seconds, preferredTimescale: player.currentItem?.asset.duration.timescale ?? 1)
+        self.pause()
         player.seek(to: time) { _ in
             if play {
-                player.play()
+                self.play()
             }
         }
     }
     
-    func playPause() {
+    func togglePlaying() {
         if playState.wrappedValue == .playing {
-            currentItem?.player.pause()
+            pause()
         }
         else {
-            currentItem?.player.play()
+            play()
         }
+    }
+    
+    func play() {
+        guard let item = currentItem else {
+            return
+        }
+        item.player.play()
     }
     
     func pause() {
-        playState.wrappedValue = .paused
-        currentItem?.player.pause()
+        guard let item = currentItem else {
+            return
+        }
+        item.player.pause()
     }
     
-    // MARK: Private Helpers
+    // MARK: Load
+    
     private func startLoading(_ item: MediaRepresentable) {
         // Clear props.
         currentItem = nil
-        isSeeking.wrappedValue = false
         currentTime.wrappedValue = 0
         duration.wrappedValue = 0
         // Remove tasks.
@@ -161,10 +168,30 @@ final class MediaPlayerModel: ObservableObject {
             }
     }
     
+    private func loadThumbnail(for item: MediaInfoDataModel) {
+        imageTask =
+            ImagePipeline.shared.loadImage(with: item.thumbnailURL) { [self] result in
+            if let image = try? result.get().image,
+               // Check if we're still on the same item.
+               currentItem?.aid == item.aid {
+                thumbnailImage.wrappedValue = .init(uiImage: image)
+                updateMPNowPlaying(thumbnailImage: image)
+            }
+        }
+    }
+    
+    private func cleanup() {
+        clearObservers()
+        imageTask = nil
+    }
+    
+    // MARK: Observervation
+    
     private func observePlayer(_ player: AVPlayer) {
-        playRateObservation = player.observe(\.rate) { [self] player, _ in
-            playState.wrappedValue =
-                player.rate != 0 ? .playing:.paused
+        playRateObservation = player.observe(\.timeControlStatus) { [self] player, _ in
+            let isPlaying = player.timeControlStatus == .playing
+            playState.wrappedValue = isPlaying ? .playing:.paused
+            updateMPNowPlaying(isPlaying: isPlaying)
         }
         
         durationObservation = player.currentItem?.observe(\.duration) { [self] item, _ in
@@ -177,5 +204,72 @@ final class MediaPlayerModel: ObservableObject {
                 currentTime.wrappedValue = time.seconds
             }
         }
+    }
+    
+    private func clearObservers() {
+        loadItemCancellable = nil
+        playRateObservation = nil
+        durationObservation = nil
+        if let ob = timeObservation {
+            currentItem?.player.removeTimeObserver(ob)
+        }
+        timeObservation = nil
+    }
+    
+    // MARK: Now Playing
+    
+    private func setMPNowPlaying(for item: MediaInfoDataModel) {
+        var info = [String:Any]()
+        info[MPMediaItemPropertyTitle] = item.title
+        info[MPMediaItemPropertyArtist] = item.owner!.name
+        info[MPMediaItemPropertyPlaybackDuration] = item.duration
+        info[MPNowPlayingInfoPropertyPlaybackRate] = 1
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = info
+    }
+    
+    private func setupMPCommandCenter() {
+        let center = MPRemoteCommandCenter.shared()
+        center.playCommand.addTarget { [self] _ in
+            if currentItem != nil {
+                play()
+                return .success
+            }
+            return .noActionableNowPlayingItem
+        }
+        
+        center.pauseCommand.addTarget { [self] _ in
+            if currentItem != nil {
+                pause()
+                return .success
+            }
+            return .noActionableNowPlayingItem
+        }
+        
+        center.changePlaybackPositionCommand.addTarget { [self] event in
+            if currentItem != nil {
+                seek(to: (event as! MPChangePlaybackPositionCommandEvent).positionTime, play: true)
+                return .success
+            }
+            return .noActionableNowPlayingItem
+        }
+    }
+    
+    private func updateMPNowPlaying(isPlaying: Bool) {
+        guard var info = MPNowPlayingInfoCenter.default().nowPlayingInfo else {
+            return
+        }
+        info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = currentItem!.player.currentTime().seconds
+        info[MPNowPlayingInfoPropertyPlaybackRate] = isPlaying ? 1:0
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = info
+    }
+    
+    private func updateMPNowPlaying(thumbnailImage: UIImage) {
+        guard var info = MPNowPlayingInfoCenter.default().nowPlayingInfo else {
+            return
+        }
+        info[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: thumbnailImage.size) { _ in
+            return thumbnailImage
+        }
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = info
     }
 }
