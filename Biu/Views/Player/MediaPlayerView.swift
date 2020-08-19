@@ -19,12 +19,6 @@ struct MediaPlayerView: View {
     @State private var currentTime: TimeInterval = 50
     @State private var duration: TimeInterval = 100
     @State private var isSeeking = false
-    @State private var thumbnailImage = Image("bg_placeholder")
-    
-    enum PlayState: String {
-        case playing, paused, loading
-    }
-    @State private var playState = PlayState.loading
     
     // MARK: Helper
     func thumbnailSize(with containerSize: CGSize) -> CGSize {
@@ -45,7 +39,7 @@ struct MediaPlayerView: View {
             // Thumbnail
             let size = thumbnailSize(with: geometry.size)
             
-            thumbnailImage
+            (model.currentItem?.cover ?? Image("bg_placeholder"))
                 .resizable()
                 .frame(width: size.width, height: size.height)
                 .cornerRadius(size.height * 0.1)
@@ -56,7 +50,7 @@ struct MediaPlayerView: View {
                        alignment: isExpanded ? .top:.leading)
             
             // Title
-            Text(model.title)
+            Text(model.displayInfo.title)
                 .animation(nil)
                 .font(isExpanded ? .headline:.subheadline)
                 .lineLimit(2)
@@ -78,17 +72,17 @@ struct MediaPlayerView: View {
                                 isSeeking = isEditing
                                 shouldDisableDrag = isEditing
                                 if isEditing {
-                                    model.togglePlaying()
+                                    model.toggleResumePause()
                                 }
                                 else {
                                     // Seeking ended.
-                                    model.seek(to: currentTime, play: true)
+                                    model.seek(to: currentTime)
                                 }
                             }
                     ) {
                         Text("hello")
                     }
-                    .disabled(playState == .loading)
+                    .disabled(!model.canControlItem)
 
                     // Time labels.
                     HStack {
@@ -116,10 +110,10 @@ struct MediaPlayerView: View {
             }
             
             Button {
-                model.togglePlaying()
+                model.toggleResumePause()
             } label: {
                 let image = Image(systemName:
-                                    playState != .playing ?
+                                    model.currentItemPaused ?
                                         "play.fill":"pause.fill")
                     .resizable()
                     .foregroundColor(.accentColor)
@@ -133,7 +127,7 @@ struct MediaPlayerView: View {
                     .frame(width: 24, height: 30)
                 }
             }
-            .disabled(playState == .loading)
+            .disabled(!model.canControlItem)
             .fixedSize()
             .padding(isExpanded ? .bottom:.trailing, isExpanded ? 200:20)
             .frame(maxWidth: .infinity,
@@ -149,7 +143,7 @@ struct MediaPlayerView: View {
         .cornerRadius(isExpanded ? 0:10)
         .animation(.spring())
         .onAppear {
-            model.bind($playState, $isSeeking, $currentTime, $duration, $thumbnailImage)
+            model.bind(to: .init(isSeeking: $isSeeking, currentTime: $currentTime, duration: $duration))
         }
     }
 }
@@ -160,20 +154,5 @@ struct AudioPlayerView_Previews: PreviewProvider {
             .previewLayout(.fixed(width: 375, height: 80))
         
 //        MediaPlayerView(isExpanded: .constant(true), shouldDisableDrag: .constant(true))
-    }
-}
-
-// MARK: TimeInterval + Format
-fileprivate extension TimeInterval {
-    func formattedDuration() -> String {
-        let intSelf = Int(self)
-        let (hours, remainder) = intSelf.quotientAndRemainder(dividingBy: 3600)
-        let (minutes, seconds) = remainder.quotientAndRemainder(dividingBy: 60)
-        if hours > 0 {
-            return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
-        }
-        else {
-            return String(format: "%02d:%02d", minutes, seconds)
-        }
     }
 }

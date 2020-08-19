@@ -26,7 +26,10 @@ struct FavouriteFolderView: View {
                         FavouriteItemCell(item: item)
                             .frame(height: 90)
                             .onTapGesture(count: 1) {
-                                MediaPlayerModel.shared.play(item)
+                                MediaPlayerModel.shared.replaceQueue(withItem: item)
+                            }
+                            .onTapGesture(count: 2) {
+                                MediaPlayerModel.shared.addToQueue(item)
                             }
                     }
                     .padding([.leading, .trailing, .bottom])

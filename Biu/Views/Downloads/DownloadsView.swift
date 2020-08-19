@@ -36,8 +36,11 @@ struct DownloadsView: View {
                     MediaCell(media: media)
                         .frame(width: 160)
                         .animation(nil)
-                        .onTapGesture {
-                            MediaPlayerModel.shared.play(media)
+                        .onTapGesture(count: 1) {
+                            MediaPlayerModel.shared.replaceQueue(withItem: media)
+                        }
+                        .onTapGesture(count: 2) {
+                            MediaPlayerModel.shared.addToQueue(media)
                         }
                 }
                 .gridStyle(

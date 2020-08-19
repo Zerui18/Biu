@@ -44,8 +44,11 @@ struct UpperSpaceSection<Content: View, Media: MediaRepresentable & Identifiable
                     ForEach(media) { media in
                         MediaCell(media: media, showAuthor: false)
                             .frame(minWidth: 130, minHeight: 145)
-                            .onTapGesture {
-                                MediaPlayerModel.shared.play(media)
+                            .onTapGesture(count: 1) {
+                                MediaPlayerModel.shared.replaceQueue(withItem: media)
+                            }
+                            .onTapGesture(count: 2) {
+                                MediaPlayerModel.shared.addToQueue(media)
                             }
                     }
                     

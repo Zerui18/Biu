@@ -26,7 +26,7 @@ final class DownloadsModel: ObservableObject {
         
         // Create storage folder if necessary.
         if !FileManager.default.fileExists(atPath: DownloadsModel.downloadsFolder.path) {
-            try! FileManager.default.createDirectory(at: DownloadsModel.downloadsFolder, withIntermediateDirectories: false, attributes: nil)
+            try! FileManager.default.createDirectory(at: DownloadsModel.downloadsFolder, withIntermediateDirectories: true, attributes: nil)
         }
         
         // Re-create Tetra tasks for all tasks which have yet to download.
