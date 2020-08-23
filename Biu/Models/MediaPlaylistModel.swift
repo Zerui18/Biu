@@ -1,5 +1,5 @@
 //
-//  MediaPlayerModel.swift
+//  MediaPlaylistModel.swift
 //  Biu
 //
 //  Created by Zerui Chen on 19/8/20.
@@ -20,42 +20,20 @@ class MediaPlayerModel: ObservableObject {
         case flow, random, repeatSingle, repeatQueue
     }
     
-    struct DisplayInfo {
-        let title: String
-        
-        static let empty = DisplayInfo(title: "")
-    }
-    
-    // MARK: Published
-    @Published var mode: Mode = .flow {
+    // MARK: Public Properties
+    var mode: Mode = .flow {
         didSet {
             if mode == .repeatQueue {
                 repeatItemIndex = currentItemIndex
             }
         }
     }
-    @Published var queue = [MediaPlaylistItemModel]()
+    
     @Published var currentItem: MediaPlaylistItemModel?
-    @Published var displayInfo: DisplayInfo = .empty
-    
-    var canSkipBackward: Bool {
-        currentItemIndex > 0
-    }
-    
-    var canSkipForward: Bool {
-        mode == .repeatQueue || currentItemIndex + 1 < queue.count
-    }
-    
-    var canControlItem: Bool {
-        currentItem?.controlsEnabled ?? false
-    }
-    
-    var currentItemPaused: Bool {
-        currentItem?.state == .paused
-    }
         
     // MARK: Private
     private var controlBindings: MediaControlBindings!
+    private var queue = [MediaPlaylistItemModel]()
     private var repeatItemIndex = 0 // Note: this might be -1.
     /// Index of the current item in the queue. Updates the currentItem on set.
     private var currentItemIndex = -1 {
@@ -68,13 +46,6 @@ class MediaPlayerModel: ObservableObject {
                 currentItem = queue[currentItemIndex]
             }
             currentItem?.play()
-            // Update displayInfo.
-            if let media = currentItem?.item {
-                displayInfo = .init(title: media.getCleanedTitle())
-            }
-            else {
-                displayInfo = .empty
-            }
         }
     }
     
@@ -130,9 +101,8 @@ extension MediaPlayerModel {
     }
     
     // MARK: Queue Control
-    /// Add the given media to queue at the specified position, defaults to -1 which represents the end.
-    func addToQueue(_ media: MediaRepresentable, position: Int = -1) {
-        let playlistItem = MediaPlaylistItemModel(withMedia: media, bindings: controlBindings) { [self] in
+    func add(_ item: MediaRepresentable) {
+        let playlistItem = MediaPlaylistItemModel(withItem: item, bindings: controlBindings) { [self] in
             if self.mode == .repeatSingle {
                 currentItem!.seek(to: 0)
             }
@@ -140,13 +110,7 @@ extension MediaPlayerModel {
                 skipToNext()
             }
         }
-        
-        if position == -1 {
-            queue.append(playlistItem)
-        }
-        else {
-            queue.insert(playlistItem, at: position)
-        }
+        queue.append(playlistItem)
         
         if queue.count == 1 {
             // Start playing.
@@ -159,11 +123,6 @@ extension MediaPlayerModel {
         currentItemIndex = -1
     }
     
-    func replaceQueue(withMedia media: MediaRepresentable) {
-        clearQueue()
-        addToQueue(media)
-    }
-    
     // MARK: Player Controls
     func resume() {
         currentItem?.resume()
@@ -171,10 +130,6 @@ extension MediaPlayerModel {
     
     func pause() {
         currentItem?.pause()
-    }
-    
-    func toggleResumePause() {
-        currentItem?.toggleResumePause()
     }
     
     func seek(to time: TimeInterval) {

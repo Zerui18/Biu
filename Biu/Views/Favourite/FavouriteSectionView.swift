@@ -1,5 +1,5 @@
 //
-//  FavouriteCategoryCell.swift
+//  FavouriteSectionView.swift
 //  Biu
 //
 //  Created by Zerui Chen on 8/7/20.
@@ -9,7 +9,7 @@ import SwiftUI
 import BiliKit
 
 /// Cell that displays a category and the folders it contains.
-struct FavouriteCategoryCell: View {
+struct FavouriteSectionView: View {
         
     /// The category this view should display.
     let category: FavouriteCategoryDataModel
@@ -20,10 +20,10 @@ struct FavouriteCategoryCell: View {
             // Heading.
             HStack {
                 Text(category.name)
-                    .font(.headline)
+                    .font(.platformItemTitle)
                 
                 Text(String(category.folders.count))
-                    .font(.subheadline)
+                    .font(.platformItemDesc)
                     .foregroundColor(.gray)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -37,7 +37,6 @@ struct FavouriteCategoryCell: View {
                     VStack {
                         LinkCard(folder: folder)
                             .frame(height: 80)
-                            .transition(.slide)
                         
                         Spacer()
                             .frame(height: 10)
@@ -53,7 +52,7 @@ struct FavouriteCategoryCell: View {
 
 struct FavouriteCategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        FavouriteCategoryCell(category: PlaceHolders.favouriteCategory)
+        FavouriteSectionView(category: PlaceHolders.favouriteCategory)
             .padding()
     }
 }

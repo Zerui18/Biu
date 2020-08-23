@@ -31,17 +31,13 @@ class ResourceInfoModel: Identifiable, ObservableObject {
     
     var downloadTask: TTask!
     
-    var localURL: URL {
-        DownloadsModel.downloadsFolder.appendingPathComponent("\(bvid).mp4")
-    }
-    
     init(bvid: String, title: String, thumbnailURL: URL, pageCount: Int, duration: Int) {
         self.bvid = bvid
         self.title = title
         self.thumbnailURL = thumbnailURL
         self.pageCount = pageCount
         self.duration = duration
-        self.downloadTask = Tetra.shared.downloadTask(forId: bvid, dstURL: localURL)
+        self.downloadTask = getDownloadTask()
     }
     
     static func create(with resourceInfo: BKResourceInfo) -> ResourceInfoModel {

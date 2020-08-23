@@ -57,12 +57,7 @@ struct DownloadingItemCell: View {
                 }
             }
         }
-        .padding(10)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            Color(.secondarySystemBackground)
-                .cornerRadius(10)
-        )
+        .card()
     }
 }
 

@@ -73,10 +73,10 @@ struct MediaInfoDataModel {
         self.title = savedMedia.title!
         self.desc = savedMedia.desc!
         self.duration = Int(savedMedia.duration)
-        self.mediaURL = savedMedia.localURL
+        self.mediaURL = savedMedia.getLocalURL()
         self.thumbnailURL = savedMedia.thumbnailURL!
         self.isSavedMedia = true
-        self.player = AVPlayer(url: savedMedia.localURL)
+        self.player = AVPlayer(url: savedMedia.getLocalURL())
         self.staff = nil
         self.owner = .init(with: savedMedia.owner!)
     }

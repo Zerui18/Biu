@@ -9,13 +9,9 @@ import SwiftUI
 
 struct MediaPlayerContainerView: View {
     
-    @State private var isPlayerExpanded = false {
-        didSet {
-            dragOffset = .zero
-        }
-    }
+    @State private var isPlayerExpanded = false
     @State private var shouldDisableDrag = false
-    @State private var dragOffset = CGSize.zero
+    @GestureState private var dragOffset: CGSize = .zero
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)) {
@@ -25,7 +21,8 @@ struct MediaPlayerContainerView: View {
                 .animation(.linear)
                 .zIndex(0)
                         
-            MediaPlayerView(isExpanded: $isPlayerExpanded, shouldDisableDrag: $shouldDisableDrag)
+            let mediaPlayer = MediaPlayerView(isExpanded: $isPlayerExpanded,
+                                              shouldDisableDrag: $shouldDisableDrag)
                 // Don't fill the width.
                 .padding([.leading, .trailing], isPlayerExpanded ? 0:15)
                 // Pad top when expended.
@@ -36,17 +33,20 @@ struct MediaPlayerContainerView: View {
                 .edgesIgnoringSafeArea(.bottom)
                 // Offset from bottom when collapsed.
                 .offset(y: isPlayerExpanded ? 0:-65)
+                // Drag offset.
+                .offset(dragOffset.compressed)
+                .animation(.interactiveSpring())
                 // Open/close.
                 .onTapGesture {
                     isPlayerExpanded.toggle()
                 }
+            #if !targetEnvironment(macCatalyst)
                 // Fun dragging effect.
-                .gesture(DragGesture(minimumDistance: 0,
+                mediaPlayer.gesture(DragGesture(minimumDistance: 0,
                                      coordinateSpace: .global)
                             .onChanged { gesture in
                                 // Player collapsed, apply drag effect & drag up.
                                 if !isPlayerExpanded {
-                                    dragOffset = gesture.translation
                                     if gesture.translation.height < -50 {
                                         isPlayerExpanded = true
                                     }
@@ -64,14 +64,14 @@ struct MediaPlayerContainerView: View {
                                 else if isPlayerExpanded && gesture.predictedEndTranslation.height > 150 {
                                     isPlayerExpanded = false
                                 }
-                                // No transition activated, return offset to zero.
-                                else {
-                                    dragOffset = .zero
-                                }
+                            }
+                            .updating($dragOffset) { (value, state, _) in
+                                state = value.translation.compressed
                             }, including: shouldDisableDrag ? .subviews:.all)
-                .offset(dragOffset.compressed)
-                .animation(.interactiveSpring())
                 .zIndex(1)
+            #else
+                mediaPlayer
+            #endif
         }
     }
 }

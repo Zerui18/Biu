@@ -22,8 +22,6 @@ struct QRLoginView: View {
                 Text("Generating QR Code")
             }
         }
-        .animation(.easeInOut)
-        .transition(.slide)
         .onAppear {
             modal.beginQRCodeGeneration()
         }

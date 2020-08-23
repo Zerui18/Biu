@@ -13,7 +13,7 @@ import SwiftUI
 
 class MediaPlaylistItemModel: ObservableObject {
     
-    init(withItem item: MediaRepresentable,
+    init(withMedia item: MediaRepresentable,
          bindings: MediaControlBindings,
          onComplete handler: @escaping () -> Void) {
         self.item = item
@@ -60,7 +60,7 @@ class MediaPlaylistItemModel: ObservableObject {
         
         isCurrentItem = true
         
-        if let savedMedia = item as? SavedMedia {
+        if let savedMedia = DownloadsModel.shared.savedMedia(forId: item.getBVId()) {
             playableItem = .init(with: savedMedia)
         }
         else {
@@ -96,7 +96,7 @@ class MediaPlaylistItemModel: ObservableObject {
                           preferredTimescale: player.currentItem?.asset.duration.timescale ?? 1)
         self.pause()
         player.seek(to: time) { _ in
-            self.play()
+            self.resume()
         }
     }
     
@@ -143,7 +143,7 @@ class MediaPlaylistItemModel: ObservableObject {
     
     private func loadCover() {
         imageTask =
-            ImagePipeline.shared.loadImage(with: item.getThumbnailURL()) { [self] result in
+            ImagePipeline.shared.loadImage(with: item.getThumbnailURL(), completion:  { [self] result in
                 guard let image = try? result.get().image else {
                     return
                 }
@@ -151,12 +151,14 @@ class MediaPlaylistItemModel: ObservableObject {
                 if isCurrentItem {
                     updateMPNowPlaying(thumbnailImage: image)
                 }
-        }
+            })
     }
     
     // MARK: Observation
     private func observePlayer() {
         let player = playableItem!.player
+        
+        // Play/pause status.
         playRateObservation = player.observe(\.timeControlStatus) { [weak self] player, _ in
             let isPlaying = player.timeControlStatus == .playing
             self?.state = isPlaying ? .playing:.paused
@@ -165,10 +167,12 @@ class MediaPlaylistItemModel: ObservableObject {
             }
         }
         
+        // Item duration.
         durationObservation = player.currentItem?.observe(\.duration) { [weak self] item, _ in
             self?.controlBindings.duration.wrappedValue = item.duration.seconds
         }
         
+        // Current time.
         timeObservation = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.5, preferredTimescale: 60), queue: nil) { [weak self] time in
             guard let bindings = self?.controlBindings else {
                 return
@@ -177,6 +181,18 @@ class MediaPlaylistItemModel: ObservableObject {
             if !bindings.isSeeking.wrappedValue {
                 bindings.currentTime.wrappedValue = time.seconds
             }
+        }
+        
+        // Finished playing.
+        var playerEndObserver: NSObjectProtocol!
+        playerEndObserver = NotificationCenter.default
+            .addObserver(forName: .AVPlayerItemDidPlayToEndTime,
+                         object: player.currentItem,
+                         queue: .main) { [weak playerEndObserver, weak self] (_) in
+                // Don't strongly retain observer in case it retains this block.
+                playerEndObserver.flatMap(NotificationCenter.default.removeObserver)
+                // Invoke completion.
+                self?.completionHandler()
         }
     }
     

@@ -34,6 +34,9 @@ struct ContentView: View {
             
             MediaPlayerContainerView()
                 .zIndex(1)
+            
+            PopMenuView()
+                .zIndex(2)
 
         }
         // Set presentingLogin based on $loggedIn.

@@ -28,7 +28,7 @@ struct MediaCell: View {
                     .frame(width: geometry.size.width, height: geometry.size.width / 1.6)
                     .cornerRadius(12)
                                 
-                Text(media.getTitle())
+                Text(media.getCleanedTitle())
                     .font(Font.caption.bold())
                     .lineLimit(compact ? 3:2)
                     .frame(maxWidth: geometry.size.width, alignment: .leading)
@@ -47,11 +47,7 @@ struct MediaCell: View {
                 }
             }
         }
-        .padding(8)
-        .background(
-            Color(.secondarySystemBackground)
-                .cornerRadius(18)
-        )
+        .card(cornerRadius: 18)
     }
 }
 

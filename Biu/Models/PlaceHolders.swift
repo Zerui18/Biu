@@ -23,7 +23,7 @@ struct PlaceHolders {
                                                 title: "【动画PV】冰糖-ファンサ《Fans》★【超电VUP】",
                                                 thumbnailURL: URL(string: "https://i0.hdslb.com/bfs/archive/e523109320dde93e7919cbfed4a780bc1a4a81e6.jpg")!,
                                                 pageCount: 1,
-                                                duration: 3601)
+                                                duration: 300)
     
 //    static let mediaInfo = MediaInfoDataModel(aid: 626292014, bvid: "BV1Wt4y1Q797", cid: 3434,
 //                                          title: "【动画PV】冰糖-ファンサ《Fans》★【超电VUP】",

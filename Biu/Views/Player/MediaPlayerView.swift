@@ -9,7 +9,8 @@ import SwiftUI
 
 struct MediaPlayerView: View {
     
-    @ObservedObject var model: MediaPlayerModel = .shared
+    @State var currentItem: MediaPlaylistItemModel?
+    let model: MediaPlayerModel = .shared
     
     // MARK: Binding
     @Binding var isExpanded: Bool
@@ -129,6 +130,7 @@ struct MediaPlayerView: View {
             }
             .disabled(!model.canControlItem)
             .fixedSize()
+            .contentShape(Circle())
             .padding(isExpanded ? .bottom:.trailing, isExpanded ? 200:20)
             .frame(maxWidth: .infinity,
                    maxHeight: .infinity,
@@ -144,6 +146,9 @@ struct MediaPlayerView: View {
         .animation(.spring())
         .onAppear {
             model.bind(to: .init(isSeeking: $isSeeking, currentTime: $currentTime, duration: $duration))
+        }
+        .onReceive(model.$currentItem) { item in
+            self.currentItem = item
         }
     }
 }

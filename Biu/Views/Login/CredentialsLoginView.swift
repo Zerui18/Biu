@@ -55,7 +55,6 @@ struct CredentialsLoginView: View {
             }
         }
         .textFieldStyle(BottomLineTextFieldStyle())
-        .transition(.slide)
         .animation(.easeIn)
     }
 }

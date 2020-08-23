@@ -54,12 +54,15 @@ struct LoginView: View {
                     }
                 }
                 
-                switch model.loginMode {
-                case .password:
-                    CredentialsLoginView()
-                case .qrCode:
-                    QRLoginView()
+                Group {
+                    switch model.loginMode {
+                    case .password:
+                        CredentialsLoginView()
+                    case .qrCode:
+                        QRLoginView()
+                    }
                 }
+                .transition(AnyTransition.opacity.animation(.easeIn))
                 
                 Spacer()
                 Spacer()
@@ -70,8 +73,13 @@ struct LoginView: View {
                 .background(Blur())
                 .opacity(model.loginState.isLoading ? 1:0)
                 .animation(.easeIn)
-            
         }
         .edgesIgnoringSafeArea(.bottom)
+    }
+}
+
+struct LoginView_Previews: PreviewProvider {
+    static var previews: some View {
+        LoginView()
     }
 }

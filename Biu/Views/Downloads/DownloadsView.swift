@@ -11,15 +11,27 @@ import Introspect
 
 struct DownloadsView: View {
     
-    @FetchRequest(sortDescriptors:
-                    [NSSortDescriptor(keyPath: \SavedMedia.timestamp, ascending: false)],
-                  predicate: NSPredicate(format: "isDownloaded == true"),
-                  animation: .easeIn)
-    private var downloadedSavedMedias: FetchedResults<SavedMedia>
+    let isPad = UIDevice.current.userInterfaceIdiom == .pad
+    @State var selection: String? = "recents"
     
     var body: some View {
         NavigationView {
-            List {
+            List(selection: $selection) {
+                if isPad {
+                    NavigationLink(
+                        destination:
+                            DownloadsRecentsGrid()
+                                .padding()
+                                .navigationBarTitle(Text("下载")),
+                        tag: "recents",
+                        selection: $selection
+                    ) {
+                        Image(systemName: "tray")
+                        Text("最近下载")
+                    }
+                    .tag("recents")
+                }
+                
                 NavigationLink(
                     destination: DownloadingView()) {
                     Image(systemName: "square.and.arrow.down.on.square")
@@ -31,29 +43,20 @@ struct DownloadsView: View {
                     Image(systemName: "person.circle")
                     Text("Up主")
                 }
-
-                Grid(downloadedSavedMedias) { media in
-                    MediaCell(media: media)
-                        .frame(width: 160)
-                        .animation(nil)
-                        .onTapGesture(count: 1) {
-                            MediaPlayerModel.shared.replaceQueue(withItem: media)
-                        }
-                        .onTapGesture(count: 2) {
-                            MediaPlayerModel.shared.addToQueue(media)
-                        }
+                
+                // Place grid directly if we're not on pad.
+                if !isPad {
+                    DownloadsRecentsGrid()
                 }
-                .gridStyle(
-                    ModularGridStyle(columns: .fixed(160), rows: .fixed(170), spacing: 20)
-                )
-                .padding([.top], 10)
-                .padding([.bottom], 100)
             }
             .introspectTableView {
                 $0.tableFooterView = UIView()
             }
-            .navigationBarTitle(Text("下载"))
+            .mapIf(!isPad) {
+                $0.navigationBarTitle(Text("下载"))
+            }
         }
+        .navigationViewStyle(DoubleColumnNavigationViewStyle())
     }
 }
 
@@ -72,5 +75,27 @@ struct DownloadsView_Previews: PreviewProvider {
         return DownloadsView()
             .colorScheme(.dark)
             .environment(\.managedObjectContext, context)
+    }
+}
+
+struct DownloadsRecentsGrid: View {
+    @FetchRequest(sortDescriptors:
+                    [NSSortDescriptor(keyPath: \SavedMedia.timestamp, ascending: false)],
+                  predicate: NSPredicate(format: "isDownloaded == true"),
+                  animation: .easeIn)
+    private var downloadedSavedMedias: FetchedResults<SavedMedia>
+    
+    var body: some View {
+        Grid(downloadedSavedMedias) { media in
+            MediaCell(media: media)
+                .frame(width: 160)
+                .animation(nil)
+                .makeInteractive(media: media)
+        }
+        .gridStyle(
+            ModularGridStyle(columns: .fixed(160), rows: .fixed(170), spacing: 20)
+        )
+        .padding([.top], 10)
+        .padding([.bottom], 100)
     }
 }

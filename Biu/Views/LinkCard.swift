@@ -31,7 +31,7 @@ struct LinkCard: View {
             // Title & count.
             VStack(alignment: .leading) {
                 Text(title)
-                    .font(.subheadline)
+                    .font(.platformItemTitle)
                     .bold()
                     // For preview to render correctly
                     .foregroundColor(Color(.label))
@@ -39,7 +39,7 @@ struct LinkCard: View {
                 Spacer()
 
                 Text(subtitle)
-                    .font(.caption)
+                    .font(.platformItemDesc)
                     .bold()
                     .foregroundColor(.secondary)
             }
@@ -51,13 +51,7 @@ struct LinkCard: View {
                 .font(.title)
                 .foregroundColor(Color("AccentColor"))
         }
-        .padding(10)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        // Card background & shadow
-        .background(
-            Color(.secondarySystemBackground)
-                .cornerRadius(10)
-        )
+        .card()
     }
 }
 

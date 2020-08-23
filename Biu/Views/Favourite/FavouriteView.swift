@@ -19,14 +19,14 @@ struct FavouriteView: View {
                 if let categories = model.favouriteCategories {
                     ScrollView {
                         ForEach(categories) { category in
-                            FavouriteCategoryCell(category: category)
+                            FavouriteSectionView(category: category)
                         }
                         .padding(.bottom, 10)
                         
                         Spacer()
                             .frame(height: 80)
                     }
-                    .padding()
+                    .padding([.leading, .trailing])
                 }
                 // Loading / error.
                 else {

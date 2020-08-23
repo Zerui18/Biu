@@ -32,12 +32,12 @@ final class DownloadsModel: ObservableObject {
         // Re-create Tetra tasks for all tasks which have yet to download.
         for media in savedMedias where !media.isDownloaded {
             // First check if media is actually downloaded.
-            if FileManager.default.fileExists(atPath: media.localURL.path) {
+            if FileManager.default.fileExists(atPath: media.getLocalURL().path) {
                 media.isDownloaded = true
             }
             else {
                 // Otherwise initialize new download task for it.
-                reinitiateDownload(forMedia: media)
+                reinitiateDownload(forSavedMedia: media)
             }
         }
     }
@@ -46,7 +46,7 @@ final class DownloadsModel: ObservableObject {
     
     @Published var resourceError: BKError?
     
-    static let downloadsFolder = FileManager.default
+    private static let downloadsFolder = FileManager.default
         .urls(for: .documentDirectory, in: .userDomainMask)[0]
         .appendingPathComponent("SavedMedias")
     
@@ -88,17 +88,8 @@ final class DownloadsModel: ObservableObject {
         return savedMedia
     }
     
-    /// Create a new SavedMedia and Tetra download for the given MediaInfoModel.
-    private func newDownload(forMedia media: MediaInfoDataModel) {
-        // Create the SavedMedia object and keep track of it.
-        let savedMedia = createSavedMedia(forMedia: media)
-        // Initialize the download task.
-        createTetraTask(forSavedMedia: savedMedia, mediaURL: media.mediaURL)
-        savedMedias.append(savedMedia)
-    }
-    
-    private func createTetraTask(forSavedMedia media: SavedMedia, mediaURL: URL) {
-        let ttask = tetra.downloadTask(forId: media.bvid!, dstURL: media.localURL)
+    private func startTetraTask(forSavedMedia media: SavedMedia, mediaURL: URL) {
+        let ttask = tetra.downloadTask(forId: media.bvid!, dstURL: media.getLocalURL())
         ttask.download(mediaURL) {
             // On success, mark media as downloaded.
             media.isDownloaded = true
@@ -106,16 +97,30 @@ final class DownloadsModel: ObservableObject {
         media.ttask = ttask
     }
     
+    /// Create a new SavedMedia and Tetra download for the given MediaInfoModel.
+    private func newDownload(forMedia media: MediaInfoDataModel) {
+        // Create the SavedMedia object and keep track of it.
+        let savedMedia = createSavedMedia(forMedia: media)
+        // Initialize the download task.
+        startTetraTask(forSavedMedia: savedMedia, mediaURL: media.mediaURL)
+        savedMedias.append(savedMedia)
+    }
+    
     // MARK: Public API
+    static func localURL(forMedia media: MediaRepresentable) -> URL {
+        downloadsFolder.appendingPathComponent("\(media.getBVId()).mp4")
+    }
+    
     func savedMedia(forId id: String) -> SavedMedia? {
         return savedMedias.first { $0.bvid! == id }
     }
     
-    /// Initiate a download for a given resource item.
-    func initiateDownload(forResource resource: ResourceInfoModel) {
-        resource.downloadTask.simpleState.value = .downloading
+    /// Initiate a download for a given media.
+    func initiateDownload(forMedia media: MediaRepresentable) {
+        let state = media.getDownloadTask().simpleState
+        state.value = .downloading
         // First retrieve the video info for the resource.
-        BKMainEndpoint.getVideoInfo(forBV: resource.bvid)
+        BKMainEndpoint.getVideoInfo(forBV: media.getBVId())
             .flatMap { response in
                 BKAppEndpoint.getDashMaps(forAid: response.data.aid, cid: response.data.pages[0].cid)
                     .map {
@@ -130,7 +135,7 @@ final class DownloadsModel: ObservableObject {
             .sink { (completion) in
                 if case .failure(let error) = completion {
                     self.resourceError = error
-                    resource.downloadTask.simpleState.value = .none
+                    state.value = .none
                 }
                 else {
                     self.resourceError = nil
@@ -143,8 +148,10 @@ final class DownloadsModel: ObservableObject {
             .store(in: &loadItemCancellables)
     }
     
-    func reinitiateDownload(forMedia media: SavedMedia) {
+    func reinitiateDownload(forSavedMedia media: SavedMedia) {
         // Retrieve a new dash map with download urls.
+        let state = media.getDownloadTask().simpleState
+        state.value = .downloading
         BKAppEndpoint.getDashMaps(forAid: Int(media.aid), cid: Int(media.cid))
             .map {
                 $0.data.dash.audio.sorted {
@@ -155,13 +162,14 @@ final class DownloadsModel: ObservableObject {
             .sink { (completion) in
                 if case .failure(let error) = completion {
                     self.resourceError = error
+                    state.value = .none
                 }
                 else {
                     self.resourceError = nil
                 }
             } receiveValue: { output in
                 // Create download for the media item.
-                self.createTetraTask(forSavedMedia: media, mediaURL: output.url)
+                self.startTetraTask(forSavedMedia: media, mediaURL: output.url)
             }
             .store(in: &loadItemCancellables)
     }

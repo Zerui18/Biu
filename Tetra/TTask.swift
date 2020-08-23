@@ -30,14 +30,6 @@ public class TTask: ObservableObject {
     private var progressObservation: NSKeyValueObservation?
     
     // MARK: Init
-//    /// Init a TTask fully and begin download.
-//    init(id: String, remoteURL: URL, targetURL: URL, onSuccess handler: @escaping ()-> Void) {
-//        self.id = id
-//        self.remoteURL = remoteURL
-//        self.dstURL = targetURL
-//        self.onSuccess = handler
-//        createTask()
-//    }
     
     /// Init a partial TTask, more information needs to be provided by calling .download before download starts.
     init(id: String, dstURL: URL) {
@@ -140,7 +132,7 @@ public class TTask: ObservableObject {
     // Simplified State to minimize update cost.
     public class SimpleState: ObservableObject {
         
-        public enum State: Int {
+        public enum State: Equatable {
             case none, downloading, downloaded
         }
         

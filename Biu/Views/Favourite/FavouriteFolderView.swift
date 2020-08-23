@@ -23,14 +23,9 @@ struct FavouriteFolderView: View {
                         .frame(height: 10)
                     
                     ForEach(items) { item in
-                        FavouriteItemCell(item: item)
-                            .frame(height: 90)
-                            .onTapGesture(count: 1) {
-                                MediaPlayerModel.shared.replaceQueue(withItem: item)
-                            }
-                            .onTapGesture(count: 2) {
-                                MediaPlayerModel.shared.addToQueue(item)
-                            }
+                        DownloadableMediaRow(item: item)
+                            .frame(height: 90.p)
+                            .makeInteractive(media: item)
                     }
                     .padding([.leading, .trailing, .bottom])
                     
