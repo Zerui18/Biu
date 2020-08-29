@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+let isPad = UIDevice.current.userInterfaceIdiom == .pad
+
 struct ContentView: View {
         
     @State private var presentingLogin = false

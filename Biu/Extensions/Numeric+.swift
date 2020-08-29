@@ -12,23 +12,13 @@ fileprivate let scalar: CGFloat = 1.5
 extension BinaryInteger {
     /// Platformized.
     var p: CGFloat {
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            return CGFloat(self) * scalar
-        }
-        else {
-            return CGFloat(self)
-        }
+        return isPad ? CGFloat(self) * scalar : CGFloat(self)
     }
 }
 
 extension BinaryFloatingPoint {
     /// Platformized.
     var p: CGFloat {
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            return CGFloat(self) * scalar
-        }
-        else {
-            return CGFloat(self)
-        }
+        return isPad ? CGFloat(self) * scalar : CGFloat(self)
     }
 }

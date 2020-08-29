@@ -20,6 +20,12 @@ struct MediaPlayerContainerView: View {
                 .opacity(isPlayerExpanded ? 0.4:0)
                 .animation(.linear)
                 .zIndex(0)
+                // Dismiss player on tap.
+                .onTapGesture {
+                    if isPlayerExpanded {
+                        isPlayerExpanded = false
+                    }
+                }
                         
             let mediaPlayer = MediaPlayerView(isExpanded: $isPlayerExpanded,
                                               shouldDisableDrag: $shouldDisableDrag)
@@ -28,7 +34,7 @@ struct MediaPlayerContainerView: View {
                 // Pad top when expended.
                 .padding(.top, isPlayerExpanded ? 60:0)
                 // Set height.
-                .frame(maxHeight: isPlayerExpanded ? .infinity:80)
+                .frame(maxWidth: 500, maxHeight: isPlayerExpanded ? 1000:80)
                 // Ignore bottom safe area when expanded.
                 .edgesIgnoringSafeArea(.bottom)
                 // Offset from bottom when collapsed.

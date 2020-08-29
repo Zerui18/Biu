@@ -49,7 +49,7 @@ struct MediaInfoDataModel {
     /// Flag indicating whether this object is created from a SavedMedia object, in which case mediaURL would contain a local URL.
     let isSavedMedia: Bool
     
-    let player: AVPlayer
+    var player: AVPlayer
     
     init(with videoInfo: BKMainEndpoint.VideoInfoResponse, mediaURL: URL) {
         self.aid = videoInfo.aid

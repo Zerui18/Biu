@@ -41,6 +41,7 @@ class MediaPlaylistItemModel: ObservableObject {
             if playableItem != nil && isCurrentItem {
                 resume()
                 observePlayer()
+                updateMPNowPlaying()
             }
         }
     }
@@ -72,10 +73,12 @@ class MediaPlaylistItemModel: ObservableObject {
     
     func resume() {
         playableItem!.player.play()
+        updateMPNowPlaying(isPlaying: true)
     }
     
     func pause() {
         playableItem!.player.pause()
+        updateMPNowPlaying(isPlaying: false)
     }
     
     func toggleResumePause() {
@@ -102,6 +105,11 @@ class MediaPlaylistItemModel: ObservableObject {
     
     /// Clear up resources.
     func stop() {
+        isCurrentItem = false
+        playRateObservation = nil
+        durationObservation = nil
+        timeObservation = nil
+        playableItem?.player.replaceCurrentItem(with: nil)
         playableItem = nil
     }
     
@@ -197,23 +205,32 @@ class MediaPlaylistItemModel: ObservableObject {
     }
     
     // MARK: MPNowPlayingInfoCenter
+    private func updateMPNowPlaying() {
+        guard let item = playableItem else {
+            return
+        }
+        
+        var info = [String:Any]()
+        info[MPMediaItemPropertyTitle] = item.title
+        info[MPMediaItemPropertyArtist] = item.owner!.name
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = info
+    }
+    
     private func updateMPNowPlaying(isPlaying: Bool) {
         guard var info = MPNowPlayingInfoCenter.default().nowPlayingInfo else {
             return
         }
         info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = playableItem!.player.currentTime().seconds
+        info[MPMediaItemPropertyPlaybackDuration] = playableItem!.player.currentItem?.duration.seconds
         info[MPNowPlayingInfoPropertyPlaybackRate] = isPlaying ? 1:0
         MPNowPlayingInfoCenter.default().nowPlayingInfo = info
     }
     
     private func updateMPNowPlaying(thumbnailImage: UIImage) {
-        guard var info = MPNowPlayingInfoCenter.default().nowPlayingInfo else {
-            return
-        }
-        info[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: thumbnailImage.size) { _ in
+        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] =
+            MPMediaItemArtwork(boundsSize: thumbnailImage.size) { _ in
             return thumbnailImage
         }
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = info
     }
     
 }

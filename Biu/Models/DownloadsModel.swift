@@ -40,6 +40,19 @@ final class DownloadsModel: ObservableObject {
                 reinitiateDownload(forSavedMedia: media)
             }
         }
+        
+//        // Clean.
+//        var cleaned = [SavedMedia]()
+//        for media in savedMedias {
+//            if !cleaned.contains(where: { $0.bvid == media.bvid }) {
+//                cleaned.append(media)
+//            }
+//            else {
+//                // Delete duplicate.
+//                mocGlobal.delete(media)
+//            }
+//        }
+//        try! mocGlobal.save()
     }
     
     let tetra = Tetra.shared
@@ -99,11 +112,17 @@ final class DownloadsModel: ObservableObject {
     
     /// Create a new SavedMedia and Tetra download for the given MediaInfoModel.
     private func newDownload(forMedia media: MediaInfoDataModel) {
-        // Create the SavedMedia object and keep track of it.
-        let savedMedia = createSavedMedia(forMedia: media)
-        // Initialize the download task.
-        startTetraTask(forSavedMedia: savedMedia, mediaURL: media.mediaURL)
-        savedMedias.append(savedMedia)
+        if let savedMedia = savedMedia(forId: media.getBVId()) {
+            // SavedMedia already exists.
+            startTetraTask(forSavedMedia: savedMedia, mediaURL: media.mediaURL)
+        }
+        else {
+            // Create the SavedMedia object and keep track of it.
+            let savedMedia = createSavedMedia(forMedia: media)
+            // Initialize the download task.
+            startTetraTask(forSavedMedia: savedMedia, mediaURL: media.mediaURL)
+            savedMedias.append(savedMedia)
+        }
     }
     
     // MARK: Public API

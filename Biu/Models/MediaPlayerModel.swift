@@ -7,6 +7,9 @@
 
 import MediaPlayer
 import SwiftUI
+import Combine
+
+fileprivate var cancellable: AnyCancellable?
 
 class MediaPlayerModel: ObservableObject {
     
@@ -35,7 +38,13 @@ class MediaPlayerModel: ObservableObject {
         }
     }
     @Published var queue = [MediaPlaylistItemModel]()
-    @Published var currentItem: MediaPlaylistItemModel?
+    @Published var currentItem: MediaPlaylistItemModel? {
+        willSet {
+            cancellable = newValue?.objectWillChange.sink { [weak self] _ in
+                self?.objectWillChange.send()
+            }
+        }
+    }
     @Published var displayInfo: DisplayInfo = .empty
     
     var canSkipBackward: Bool {
@@ -112,7 +121,7 @@ class MediaPlayerModel: ObservableObject {
             return .noSuchContent
         }
         
-        center.nextTrackCommand.addTarget { [self] event in
+        center.previousTrackCommand.addTarget { [self] event in
             if currentItemIndex - 1 >= 0 {
                 skipToLast()
                 return .success

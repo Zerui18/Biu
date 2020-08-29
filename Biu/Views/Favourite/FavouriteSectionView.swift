@@ -46,6 +46,7 @@ struct FavouriteSectionView: View {
             }
             .frame(maxWidth: .infinity)
             .background(Color.clear)
+            .padding([.top, .bottom], 10.p)
         }
     }
 }

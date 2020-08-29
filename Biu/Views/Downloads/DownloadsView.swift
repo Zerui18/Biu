@@ -11,7 +11,6 @@ import Introspect
 
 struct DownloadsView: View {
     
-    let isPad = UIDevice.current.userInterfaceIdiom == .pad
     @State var selection: String? = "recents"
     
     var body: some View {

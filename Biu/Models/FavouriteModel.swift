@@ -49,7 +49,7 @@ final class FavouriteModel: ObservableObject {
                     self.fetchCategoriesError = nil
                 }
             } receiveValue: { (categoryModels) in
-                self.favouriteCategories = categoryModels
+                self.favouriteCategories = categoryModels.filter { !$0.folders.isEmpty }
             }
     }
     

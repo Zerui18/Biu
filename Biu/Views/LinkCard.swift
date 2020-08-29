@@ -19,11 +19,13 @@ struct LinkCard: View {
         HStack {
             
             // Thumbnail.
-            thumbnailImage.image
-                .resizable()
-                .frame(width: 1.6 * 60, height: 60)
-                .background(Color.blue)
-                .cornerRadius(5)
+            if !isPad {
+                thumbnailImage.image
+                    .resizable()
+                    .frame(width: 1.6 * 60, height: 60)
+                    .background(Color.blue)
+                    .cornerRadius(5)
+            }
 
             Spacer()
                 .frame(width: 10)
@@ -32,7 +34,6 @@ struct LinkCard: View {
             VStack(alignment: .leading) {
                 Text(title)
                     .font(.platformItemTitle)
-                    .bold()
                     // For preview to render correctly
                     .foregroundColor(Color(.label))
 
@@ -40,7 +41,6 @@ struct LinkCard: View {
 
                 Text(subtitle)
                     .font(.platformItemDesc)
-                    .bold()
                     .foregroundColor(.secondary)
             }
             

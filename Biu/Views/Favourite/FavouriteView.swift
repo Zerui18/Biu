@@ -21,7 +21,7 @@ struct FavouriteView: View {
                         ForEach(categories) { category in
                             FavouriteSectionView(category: category)
                         }
-                        .padding(.bottom, 10)
+                        .padding(.bottom, 10.p)
                         
                         Spacer()
                             .frame(height: 80)

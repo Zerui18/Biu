@@ -23,7 +23,7 @@ struct DownloadableMediaRow: View {
     @State var isAnimatingRotation = false
     
     /// The resource displayed by this cell.
-    var item: ResourceInfoModel
+    let item: ResourceInfoModel
     
     var body: some View {
         HStack {

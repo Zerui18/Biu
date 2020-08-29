@@ -29,7 +29,7 @@ struct MediaCell: View {
                     .cornerRadius(12)
                                 
                 Text(media.getCleanedTitle())
-                    .font(Font.caption.bold())
+                    .font(.platformItemTitle)
                     .lineLimit(compact ? 3:2)
                     .frame(maxWidth: geometry.size.width, alignment: .leading)
                     .padding([.leading, .trailing], 3)
