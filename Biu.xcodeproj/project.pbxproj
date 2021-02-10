@@ -118,6 +118,7 @@
 		BFCECEB524F2687E0089855D /* PopMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCECEB424F2687E0089855D /* PopMenuModel.swift */; };
 		BFD0D48624C15DC000597AF6 /* CGSize+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD0D48524C15DC000597AF6 /* CGSize+.swift */; };
 		BFD0D48824C16E2100597AF6 /* MediaPlayerContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD0D48724C16E2100597AF6 /* MediaPlayerContainerView.swift */; };
+		BFEEBD0F24FE291700904608 /* MediaActionsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEEBD0E24FE291700904608 /* MediaActionsButton.swift */; };
 		BFFFEB2324B4BD470090B444 /* FavouriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFFEB2224B4BD470090B444 /* FavouriteView.swift */; };
 		BFFFEB2724B4BE020090B444 /* FavouriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFFEB2624B4BE010090B444 /* FavouriteModel.swift */; };
 		D4084FF449AC60447D0438E6 /* Pods_Biu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0292B466E730C5716B9EA52 /* Pods_Biu.framework */; };
@@ -292,6 +293,7 @@
 		BFCECEB424F2687E0089855D /* PopMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopMenuModel.swift; sourceTree = "<group>"; };
 		BFD0D48524C15DC000597AF6 /* CGSize+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+.swift"; sourceTree = "<group>"; };
 		BFD0D48724C16E2100597AF6 /* MediaPlayerContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerContainerView.swift; sourceTree = "<group>"; };
+		BFEEBD0E24FE291700904608 /* MediaActionsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaActionsButton.swift; sourceTree = "<group>"; };
 		BFFFEB2224B4BD470090B444 /* FavouriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteView.swift; sourceTree = "<group>"; };
 		BFFFEB2624B4BE010090B444 /* FavouriteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteModel.swift; sourceTree = "<group>"; };
 		F17FD41073F3EDA6ED72F3FA /* Pods-BiliKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BiliKit.debug.xcconfig"; path = "Target Support Files/Pods-BiliKit/Pods-BiliKit.debug.xcconfig"; sourceTree = "<group>"; };
@@ -390,6 +392,7 @@
 				BF08F47624E055A10036D334 /* MediaCell.swift */,
 				BFAB91EC24B5657500EFA921 /* LinkCard.swift */,
 				BF69E3A624E41D860003211B /* LoadingOrErrorView.swift */,
+				BFEEBD0E24FE291700904608 /* MediaActionsButton.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -1049,6 +1052,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFEEBD0F24FE291700904608 /* MediaActionsButton.swift in Sources */,
 				BF5C91FA24F21AAD00E885B8 /* Numeric+.swift in Sources */,
 				BFBDD7F524B576E40018761B /* PlaceHolders.swift in Sources */,
 				BF789D5624BF375900DFBAE8 /* QRLoginView.swift in Sources */,

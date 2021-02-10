@@ -10,7 +10,12 @@ import SwiftUI
 extension View {
     
     func makeInteractive(media: MediaRepresentable) -> some View {
-        onTapGesture(count: 2) {
+        #if targetEnvironment(macCatalyst)
+        return onTapGesture {
+            MediaPlayerModel.shared.replaceQueue(withMedia: media)
+        }
+        #else
+        return onTapGesture(count: 2) {
             MediaPlayerModel.shared.addToQueue(media)
         }
         .onTapGesture {
@@ -19,6 +24,7 @@ extension View {
         .onLongPressGesture {
             PopMenuModel.shared.selectedMedia = media
         }
+        #endif
     }
     
     func card(cornerRadius: CGFloat = 10.p) -> some View {

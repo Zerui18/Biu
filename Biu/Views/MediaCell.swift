@@ -39,7 +39,7 @@ struct MediaCell: View {
                 
                 if compact {
                     Text(media.getAuthor().getName())
-                        .font(.caption)
+                        .font(.platformItemDesc)
                         .foregroundColor(Color(.secondaryLabel))
                         .lineLimit(1)
                         .frame(maxWidth: geometry.size.width, alignment: .leading)

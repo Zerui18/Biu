@@ -79,6 +79,16 @@ extension BKPassportEndpoint {
         /// Login process status explaination.
         let message: String
     }
+    
+    public struct Oauth2Info: Codable {
+        let accessToken: String
+        let expiresIn: Int
+        let mid: Int
+        
+        enum CodingKeys: String, CodingKey {
+            case accessToken = "access_token", expiresIn = "expires_in", mid
+        }
+    }
 
 //    /// Stage during login process.
 //    public enum LoginState {

@@ -59,6 +59,28 @@ struct DownloadsView: View {
     }
 }
 
+struct DownloadsRecentsGrid: View {
+    @FetchRequest(sortDescriptors:
+                    [NSSortDescriptor(keyPath: \SavedMedia.timestamp, ascending: false)],
+                  predicate: NSPredicate(format: "isDownloaded == true"),
+                  animation: .easeIn)
+    private var downloadedSavedMedias: FetchedResults<SavedMedia>
+    
+    var body: some View {
+        Grid(downloadedSavedMedias) { media in
+            MediaCell(media: media)
+                .frame(width: 160.p)
+                .animation(nil)
+                .makeInteractive(media: media)
+        }
+        .gridStyle(
+            ModularGridStyle(columns: .fixed(160.p), rows: .fixed(170.p), spacing: 20.p)
+        )
+        .padding([.top], 10)
+        .padding([.bottom], 100)
+    }
+}
+
 struct DownloadsView_Previews: PreviewProvider {
     static var previews: some View {
         let context = AppDelegate.shared.persistentContainer.viewContext
@@ -74,27 +96,5 @@ struct DownloadsView_Previews: PreviewProvider {
         return DownloadsView()
             .colorScheme(.dark)
             .environment(\.managedObjectContext, context)
-    }
-}
-
-struct DownloadsRecentsGrid: View {
-    @FetchRequest(sortDescriptors:
-                    [NSSortDescriptor(keyPath: \SavedMedia.timestamp, ascending: false)],
-                  predicate: NSPredicate(format: "isDownloaded == true"),
-                  animation: .easeIn)
-    private var downloadedSavedMedias: FetchedResults<SavedMedia>
-    
-    var body: some View {
-        Grid(downloadedSavedMedias) { media in
-            MediaCell(media: media)
-                .frame(width: 160)
-                .animation(nil)
-                .makeInteractive(media: media)
-        }
-        .gridStyle(
-            ModularGridStyle(columns: .fixed(160), rows: .fixed(170), spacing: 20)
-        )
-        .padding([.top], 10)
-        .padding([.bottom], 100)
     }
 }

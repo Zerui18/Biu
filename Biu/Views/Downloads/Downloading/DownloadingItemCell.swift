@@ -35,7 +35,7 @@ struct DownloadingItemCell: View {
             // Title & duration/count & downloaded.
             VStack(alignment: .leading) {
                 Text(media.title!)
-                    .font(.subheadline)
+                    .font(.platformItemTitle)
                     .lineLimit(2)
 
                 Spacer()
@@ -47,12 +47,12 @@ struct DownloadingItemCell: View {
                     }
                     else if case let .failure(error) = media.downloadState {
                         Text(error.localizedDescription)
-                            .font(.caption)
+                            .font(.platformItemDesc)
                     }
                 }
                 else {
                     Text(Int(media.duration).formattedDuration())
-                        .font(.caption)
+                        .font(.platformItemTitle)
                         .foregroundColor(.gray)
                 }
             }

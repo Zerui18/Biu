@@ -17,11 +17,19 @@ public extension URLSession {
                 $0.0
             }
             .tryMap { data in
-//                print(String(data: data, encoding: .utf8)!)
                 do {
                     return try JSONDecoder().decode(DataType.self, from: data)
                 }
                 catch let error as DecodingError {
+                    let dict = try! JSONSerialization.jsonObject(with: data, options: []) as! [String:Any]
+                    if let code = dict["code"] as? Int, code == -101 {
+                        // Auth error.
+                        // Logout cuz access_token is invalid.
+                        if BKClient.shared.isLoggedIn {
+                            BKClient.shared.logout()
+                        }
+                        throw BKError.authenticationNeeded
+                    }
                     let rawText = String(data: data, encoding: .utf8)!
                     throw BKError.decodingError(error: error, raw: rawText)
                 }

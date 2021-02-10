@@ -14,6 +14,7 @@ public enum BKPassportEndpoint: String, BKEndpoint {
     // MARK: Endpoints
     case getKey = "/api/oauth2/getKey"
     case login = "/api/v3/oauth2/login"
+    case oauth2Info = "/api/v2/oauth2/info"
     case getQRCode = "/qrcode/getLoginUrl"
     case getQRLoginInfo = "/qrcode/getLoginInfo"
     
@@ -33,6 +34,25 @@ public enum BKPassportEndpoint: String, BKEndpoint {
         params["username"] = username
         params["password"] = password
         return BKPassportEndpoint.login.createRequest(using: .post, withQuery: params)
+    }
+    
+    /// Check if the current user is logged in with a working access_token.
+    public static func loginCheck() -> AnyPublisher<Bool, Never> {
+        BKClient.shared.fromUserInfo { (passport) -> AnyPublisher<BKResponse<BKPassportEndpoint.Oauth2Info>, BKError> in
+            BKPassportEndpoint.oauth2Info
+                .createRequest(using: .get, withQuery: ["access_token" : passport.accessToken])
+                .fetch()
+        }
+        .map { response in
+            print("got oauth2Info: \(response)")
+            return true
+        }
+        .mapError({ (err) -> BKError in
+            print(err)
+            return err
+        })
+        .replaceError(with: false)
+        .eraseToAnyPublisher()
     }
     
     /// Creates a QRCode url request.

@@ -7,9 +7,12 @@
 
 import Foundation
 import Nuke
+import Combine
 
 /// Placeholder models for testing.
 struct PlaceHolders {
+    
+    static var trash = Set<AnyCancellable>()
     
     static let favouriteFolder = FavouriteFolderDataModel(id: 234, title: "默认收藏夹", mediaCount: 15, thumbnailURL: URL(string: "https://i0.hdslb.com/bfs/archive/e523109320dde93e7919cbfed4a780bc1a4a81e6.jpg")!)
     
